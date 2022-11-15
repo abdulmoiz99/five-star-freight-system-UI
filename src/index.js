@@ -4,6 +4,7 @@ import './tailwind.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
 import { Login } from './componenets/Auth/Login'
+import { Dashboard } from './views/Dashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -11,6 +12,8 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/login" element={< Login />}></Route>
+      <Route path="/dashboard" element={< Dashboard />}></Route>
+
     </Routes>
   </BrowserRouter>,
 )
