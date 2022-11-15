@@ -1,10 +1,10 @@
 import React from 'react'
 import Sidebar from '../componenets/Sidebar/Sidebar'
 import NavBar from '../componenets/NavBar/AdminNavbar'
-// import { AddReport } from '../componenets/Cards/AddReport'
 import FooterAdmin from '../componenets/Footers/FooterAdmin'
 import { getStorage, IsAdmin } from '../shared/LoacalStorage'
 import HeaderBar from '../componenets/Headers/HeaderBar'
+import { AddShipment } from '../componenets/Cards/AddShipment'
 
 export class Dashboard extends React.Component {
   render() {
@@ -17,7 +17,7 @@ export class Dashboard extends React.Component {
           <div className="px-4 md:px-10 mx-auto w-full -m-24">
             <div className="flex flex-wrap">
               <div className="w-full px-4">
-                {/* <AddReport /> */}
+                <AddShipment />
               </div>
             </div>
           </div>
