@@ -55,6 +55,111 @@ export default function Sidebar({ isAdmin }) {
                       Create New Order
                     </Link>
                   </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        'text-xs uppercase py-3 font-bold block ' +
+                        (window.location.href.indexOf('/OrderStatus') !== -1
+                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
+                          : 'text-blueGray-700 hover:text-blueGray-500')
+                      }
+                      to="/CreateShipment"
+                    >
+                      <i
+                        className={
+                          'fas fa-tv mr-2 text-sm ' +
+                          (window.location.href.indexOf('/CreateShipment') !== -1
+                            ? 'opacity-75'
+                            : 'text-blueGray-300')
+                        }
+                      ></i>{' '}
+                      Order status
+                    </Link>
+                  </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        'text-xs uppercase py-3 font-bold block ' +
+                        (window.location.href.indexOf('/Bids') !== -1
+                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
+                          : 'text-blueGray-700 hover:text-blueGray-500')
+                      }
+                      to="/CreateShipment"
+                    >
+                      <i
+                        className={
+                          'fas fa-tv mr-2 text-sm ' +
+                          (window.location.href.indexOf('/Bids') !== -1
+                            ? 'opacity-75'
+                            : 'text-blueGray-300')
+                        }
+                      ></i>{' '}
+                      Bids
+                    </Link>
+                  </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        'text-xs uppercase py-3 font-bold block ' +
+                        (window.location.href.indexOf('/FreightSpend') !== -1
+                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
+                          : 'text-blueGray-700 hover:text-blueGray-500')
+                      }
+                      to="/CreateShipment"
+                    >
+                      <i
+                        className={
+                          'fas fa-tv mr-2 text-sm ' +
+                          (window.location.href.indexOf('/FreightSpend') !== -1
+                            ? 'opacity-75'
+                            : 'text-blueGray-300')
+                        }
+                      ></i>{' '}
+                      Freight Spend
+                    </Link>
+                  </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        'text-xs uppercase py-3 font-bold block ' +
+                        (window.location.href.indexOf('/Carriers') !== -1
+                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
+                          : 'text-blueGray-700 hover:text-blueGray-500')
+                      }
+                      to="/CreateShipment"
+                    >
+                      <i
+                        className={
+                          'fas fa-tv mr-2 text-sm ' +
+                          (window.location.href.indexOf('/Carriers') !== -1
+                            ? 'opacity-75'
+                            : 'text-blueGray-300')
+                        }
+                      ></i>{' '}
+                      Carriers
+                    </Link>
+                  </li>
+                  <li className="items-center">
+                    <Link
+                      className={
+                        'text-xs uppercase py-3 font-bold block ' +
+                        (window.location.href.indexOf('/Options') !== -1
+                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
+                          : 'text-blueGray-700 hover:text-blueGray-500')
+                      }
+                      to="/CreateShipment"
+                    >
+                      <i
+                        className={
+                          'fas fa-tv mr-2 text-sm ' +
+                          (window.location.href.indexOf('/Options') !== -1
+                            ? 'opacity-75'
+                            : 'text-blueGray-300')
+                        }
+                      ></i>{' '}
+                      Options
+                    </Link>
+                  </li>
                 </div>
 
               ) : (
