@@ -6,13 +6,13 @@ import { getStorage, IsAdmin } from '../shared/LoacalStorage'
 import HeaderBar from '../componenets/Headers/HeaderBar'
 import { AddShipment } from '../componenets/Cards/AddShipment'
 
-export class Dashboard extends React.Component {
+export class CreateShipment extends React.Component {
   render() {
     return (
       <>
         <Sidebar isAdmin={IsAdmin()} />
         <div className="relative md:ml-64 bg-blueGray-100">
-          <NavBar PageName="Dashboard" />
+          <NavBar PageName="Create New Order" />
           <HeaderBar />
           <div className="px-4 md:px-10 mx-auto w-full -m-24">
             <div className="flex flex-wrap">

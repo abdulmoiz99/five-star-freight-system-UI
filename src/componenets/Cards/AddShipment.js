@@ -123,7 +123,7 @@ export class AddShipment extends React.Component {
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <h6 className="text-blueGray-700 text-xl font-bold">
-                Create New Shipment
+                Create New Order
               </h6>
               <button
                 className="bg-emerald-500 text-white active:bg-emerald-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -136,192 +136,6 @@ export class AddShipment extends React.Component {
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form onSubmit={this.handleSubmission}>
               {this.renderAlert()}
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Pickup Details
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Pickup Address{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      State{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div><div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Zip{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      date and time{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="datetime-local"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Delivery Details
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Delivery Address{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      State{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div><div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Zip{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      date and time{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
-                      onChange={this.handleChange}
-                      type="datetime-local"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Shipment Details
               </h6>
@@ -513,6 +327,193 @@ export class AddShipment extends React.Component {
                   </div>
                 </div>
               </div>
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Pickup Details
+              </h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-12/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Pickup Address{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      State{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div><div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Zip{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      date and time{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="datetime-local"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Delivery Details
+              </h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-12/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Delivery Address{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      State{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div><div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Zip{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      date and time{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required={!this.state.isDraft}
+                      name="BusinessName"
+                      value={this.state.BusinessName}
+                      onChange={this.handleChange}
+                      type="datetime-local"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+              </div>
+
+
 
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
