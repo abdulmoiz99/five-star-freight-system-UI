@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../NavBar/AuthNavbar'
 import Alert from '../Alerts/Alert'
 import { setStorage, clearStorage } from '../../shared/LoacalStorage'
+import IMAGE from '../../assets/img/LoginImage.PNG'
 
 export class Login extends Component {
   constructor(props) {
@@ -64,6 +65,7 @@ export class Login extends Component {
         <section className="relative w-full h-full py-40 min-h-screen">
           <div
             className="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
+            style={{ backgroundImage: `url(${IMAGE})` }}
           ></div>
           <div className="container mx-auto px-5 h-full">
             <div className="flex content-center items-center justify-center h-full">
@@ -116,14 +118,14 @@ export class Login extends Component {
                         />
                       </div>
                       <div className="text-center mt-6">
-                      {!this.state.isLoading ? (
-                        <button
-                          className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                          type="submit"
-                        >
-                          Sign In
-                        </button>
-                         ) : (
+                        {!this.state.isLoading ? (
+                          <button
+                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="submit"
+                          >
+                            Sign In
+                          </button>
+                        ) : (
                           <button
                             className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                             disabled
