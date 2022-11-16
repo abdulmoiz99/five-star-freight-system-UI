@@ -88,7 +88,7 @@ export default function Sidebar({ isAdmin }) {
                       ? 'text-lightBlue-500 hover:text-lightBlue-600'
                       : 'text-blueGray-700 hover:text-blueGray-500')
                   }
-                  to="/Auth"
+                  to="/Login"
                 >
                   <i
                     className={

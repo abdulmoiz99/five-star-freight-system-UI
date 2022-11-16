@@ -28,14 +28,14 @@ export class Login extends Component {
     }
 
     const response = await fetch(
-      'https://youco2api.azurewebsites.net/api/Authentication/login',
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Authentication/login-shipper',
       body,
     )
     const data = await response.json()
     // when response is sucess
     if (data.success === true) {
       setStorage('token', data.result.token.code) // save value in local storage
-     
+      window.location.href = '/Dashboard'
     } else if (data.success === false) {
       this.setState({ displayAlert: true, AlertMessage: data.errors[0] })
     }
