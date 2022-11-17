@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
 import { Login } from './componenets/Auth/Login'
 import { CreateShipment } from './views/CreateShipment';
+import { ViewShipment } from './views/ViewShipment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -13,6 +14,7 @@ root.render(
     <Routes>
       <Route path="/login" element={< Login />}></Route>
       <Route path="/CreateShipment" element={< CreateShipment />}></Route>
+      <Route path="/ViewShipments" element={< ViewShipment />}></Route>
 
     </Routes>
   </BrowserRouter>,
