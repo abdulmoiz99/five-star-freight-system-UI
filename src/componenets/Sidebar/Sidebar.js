@@ -73,7 +73,7 @@ export default function Sidebar({ isAdmin }) {
                             : 'text-blueGray-300')
                         }
                       ></i>{' '}
-                     load statuss
+                     load status
                     </Link>
                   </li>
                   <li className="items-center">

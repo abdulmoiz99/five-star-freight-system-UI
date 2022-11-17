@@ -1,9 +1,9 @@
 import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
-import axios from 'axios'
 import Select from 'react-select'
 import { typesOfTrucks, lengthOfTrucks, typesOfCommodities } from '../../shared/DropDownCache'
+import { Link } from 'react-router-dom'
 
 export class AddShipment extends React.Component {
   constructor(props) {
@@ -30,13 +30,33 @@ export class AddShipment extends React.Component {
       Temperature: '',
       QuantityOfPallets: '',
       QuantityOfTrucks: '',
-      AlreadyHasAppointment: '',
       ShippingNotes: '',
       DeliveryNotes: '',
     }
   }
   componentDidMount() {
     this.setState({ GeneratingReport: false })
+  }
+  clearForm = () => {
+    this.setState({
+      PickUpAddress: '',
+      PickUpState: '',
+      PickUpZip: '',
+      PickUpDateTime: '',
+      DeliveryAddress: '',
+      DeliveryState: '',
+      DeliveryZip: '',
+      DeliveryDateTime: '',
+      PONumber: '',
+      TypeOfTruck: '',
+      LengthOfTruck: '',
+      Commodities: '',
+      Temperature: '',
+      QuantityOfPallets: '',
+      QuantityOfTrucks: '',
+      ShippingNotes: '',
+      DeliveryNotes: '',
+    })
   }
   handleSubmission = async (event) => {
     event.preventDefault()
@@ -57,44 +77,49 @@ export class AddShipment extends React.Component {
       Temperature,
       QuantityOfPallets,
       QuantityOfTrucks,
-      AlreadyHasAppointment,
       ShippingNotes,
       DeliveryNotes,
     } = this.state
-
+    const pickupLocations = [
+      { address: PickUpAddress, state: PickUpState, zip: PickUpZip, dateTime: PickUpDateTime },
+    ];
+    const deliveryLocations = [
+      { address: DeliveryAddress, state: DeliveryState, zip: DeliveryZip, dateTime: DeliveryDateTime },
+    ];
     let token = getStorage('token')
+
     try {
-      let url = `https://youco2api.azurewebsites.net/api/Business/add`
-      const resp = await axios.post(url, {
-        params: {
-          PickUpAddress: PickUpAddress,
-          PickUpState: PickUpState,
-          PickUpZip: PickUpZip,
-          PickUpDateTime: PickUpDateTime,
-          DeliveryAddress: DeliveryAddress,
-          DeliveryState: DeliveryState,
-          DeliveryZip: DeliveryZip,
-          DeliveryDateTime: DeliveryDateTime,
-          PONumber: PONumber,
-          TypeOfTruck: TypeOfTruck,
-          LengthOfTruck: LengthOfTruck,
-          Commodities: Commodities,
-          Temperature: Temperature,
-          QuantityOfPallets: QuantityOfPallets,
-          QuantityOfTrucks: QuantityOfTrucks,
-          AlreadyHasAppointment: AlreadyHasAppointment,
-          ShippingNotes: ShippingNotes,
-          DeliveryNotes: DeliveryNotes,
-        },
+      const body = {
+        method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-      if (resp.data.success === true) {
-        this.props.onSelect(event)
-        this.props.UpdateReportStatus(event)
-      } else if (resp.data.success === false) {
-        this.setState({ displayAlert: true, AlertMessage: resp.data.errors[0], success: false, })
+        body: JSON.stringify({
+          purchaseOrderNumber: PONumber,
+          truckType: TypeOfTruck,
+          truckLength: LengthOfTruck,
+          truckCount: QuantityOfTrucks,
+          comodities: Commodities,
+          weight: 0,
+          temperature: Temperature ? Temperature : 0,
+          palletCount: QuantityOfPallets ? QuantityOfPallets : 0,
+          shippingNotes: ShippingNotes,
+          deliveryNotes: DeliveryNotes,
+          pickupLocations: pickupLocations,
+          deliveryLocations: deliveryLocations
+        }),
+      }
+      const response = await fetch(
+        'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/create-order',
+        body,
+      )
+      const data = await response.json()
+      if (data.success === true) {
+        this.setState({ displayAlert: true, AlertMessage: "Shipment created successfully.", success: true, })
+        this.clearForm();
+      } else if (data.success === false) {
+        this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
       }
     } catch (e) {
       console.log(e)
@@ -125,16 +150,17 @@ export class AddShipment extends React.Component {
               <h6 className="text-blueGray-700 text-xl font-bold">
                 Create New Order
               </h6>
-              <button
+              <Link
+                to="/viewShipments"
                 className="bg-emerald-500 text-white active:bg-emerald-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
               >
                 View Shipments
-              </button>
+              </Link>
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form onSubmit={this.handleSubmission}>
+              <br />
               {this.renderAlert()}
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Shipment Details
@@ -153,9 +179,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="PONumber"
+                      value={this.state.PONumber}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -170,13 +196,17 @@ export class AddShipment extends React.Component {
                       htmlFor="grid-password"
                     >
                       Type of Truck
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
                     </label>
                     <Select
                       options={typesOfTrucks}
-                      value={{ value: this.state.MainVentilationSource, label: this.state.MainVentilationSource }}
+                      value={{ value: this.state.typesOfTrucks, label: this.state.typesOfTrucks }}
                       onChange={(selectedOption) => {
                         this.setState({
-                          MainVentilationSource: selectedOption.value,
+                          typesOfTrucks: selectedOption.value,
                         })
                       }}
                     />
@@ -196,10 +226,10 @@ export class AddShipment extends React.Component {
                     </label>
                     <Select
                       options={lengthOfTrucks}
-                      value={{ value: this.state.MainVentilationSource, label: this.state.MainVentilationSource }}
+                      value={{ value: this.state.lengthOfTrucks, label: this.state.lengthOfTrucks }}
                       onChange={(selectedOption) => {
                         this.setState({
-                          MainVentilationSource: selectedOption.value,
+                          lengthOfTrucks: selectedOption.value,
                         })
                       }}
                     />
@@ -209,12 +239,18 @@ export class AddShipment extends React.Component {
                   <div className="relative w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Commodities
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
                     </label>
                     <Select
                       options={typesOfCommodities}
-                      value={{ value: this.state.RegionId, label: this.state.RegionName }}
+                      value={{ value: this.state.typesOfCommodities, label: this.state.typesOfCommodities }}
                       onChange={(selectedOption) => {
-                        this.setState({ RegionId: selectedOption.value, RegionName: selectedOption.label })
+                        this.setState({
+                          typesOfCommodities: selectedOption.value,
+                        })
                       }}
                     />
                   </div>
@@ -226,15 +262,10 @@ export class AddShipment extends React.Component {
                       htmlFor="grid-password"
                     >
                       Temperature (Degrees)
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *{' '}
-                      </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="Address"
-                      value={this.state.Address}
+                      name="Temperature"
+                      value={this.state.Temperature}
                       onChange={this.handleChange}
                       type="number"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -248,15 +279,10 @@ export class AddShipment extends React.Component {
                       htmlFor="grid-password"
                     >
                       Quantity of pallets {' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="AreaOfBuilding"
-                      value={this.state.AreaOfBuilding}
+                      name="QuantityOfPallets"
+                      value={this.state.QuantityOfPallets}
                       onChange={this.handleChange}
                       type="Number"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -271,29 +297,17 @@ export class AddShipment extends React.Component {
                       htmlFor="grid-password"
                     >
                       Quantity of trucks
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
                     </label>
                     <input
-                      name="EPCRating"
-                      value={this.state.EPCRating}
+                      required
+                      name="QuantityOfTrucks"
+                      value={this.state.QuantityOfTrucks}
                       onChange={this.handleChange}
                       type="Number"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Already has Appointment
-                    </label>
-                    <input
-                      name="DECRating"
-                      value={this.state.DECRating}
-                      onChange={this.handleChange}
-                      type="datetime-local"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -304,10 +318,10 @@ export class AddShipment extends React.Component {
                       Shipping notes
                     </label>
                     <input
-                      name="MainVentilationSourceCapacity"
-                      value={this.state.MainVentilationSourceCapacity}
+                      name="ShippingNotes"
+                      value={this.state.ShippingNotes}
                       onChange={this.handleChange}
-                      type="Number"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -318,10 +332,10 @@ export class AddShipment extends React.Component {
                       Delivery notes
                     </label>
                     <input
-                      name="MainVentilationSourceCapacity"
-                      value={this.state.MainVentilationSourceCapacity}
+                      name="DeliveryNotes"
+                      value={this.state.DeliveryNotes}
                       onChange={this.handleChange}
-                      type="Number"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -344,9 +358,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="PickUpAddress"
+                      value={this.state.PickUpAddress}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -366,9 +380,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="PickUpState"
+                      value={this.state.PickUpState}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -387,9 +401,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="PickUpZip"
+                      value={this.state.PickUpZip}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -409,9 +423,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="PickUpDateTime"
+                      value={this.state.PickUpDateTime}
                       onChange={this.handleChange}
                       type="datetime-local"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -437,9 +451,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="DeliveryAddress"
+                      value={this.state.DeliveryAddress}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -459,9 +473,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="DeliveryState"
+                      value={this.state.DeliveryState}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -480,9 +494,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="DeliveryZip"
+                      value={this.state.DeliveryZip}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -502,9 +516,9 @@ export class AddShipment extends React.Component {
                       </span>
                     </label>
                     <input
-                      required={!this.state.isDraft}
-                      name="BusinessName"
-                      value={this.state.BusinessName}
+                      required
+                      name="DeliveryDateTime"
+                      value={this.state.DeliveryDateTime}
                       onChange={this.handleChange}
                       type="datetime-local"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
