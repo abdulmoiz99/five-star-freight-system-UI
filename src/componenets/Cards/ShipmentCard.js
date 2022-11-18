@@ -46,32 +46,40 @@ export class ShipmentCard extends React.Component {
     this.setState({ GeneratingReport: false })
     this.CheckEdit();
   }
-  CheckEdit = () => {
+  CheckEdit = async () => {
     const id = new URLSearchParams(window.location.search).get('id');
     this.setState({ isEdit: id ? true : false })
     if (id) {
+      let token = getStorage('token')
+      const response = await fetch(
+        `https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/order-details?orderId=${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      const data = await response.json()
       this.setState({
-        PickUpAddress: 'TEST',
-        PickUpState: 'TEST',
-        PickUpCity: 'TEST',
-        PickUpZip: 'TEST',
-        PickUpDateTime: '',
-        DeliveryAddress: 'TEST',
-        DeliveryState: 'TEST',
-        DeliveryCity: 'TEST',
-        DeliveryZip: 'TEST',
-        DeliveryDateTime: '',
-        PONumber: 'A0000123000TEST',
-        TypeOfTruck: '',
-        LengthOfTruck: '',
-        Commodities: '',
-        Temperature: '',
-        QuantityOfPallets: '',
-        QuantityOfTrucks: '',
-        Price: '2',
-        Weight: '3',
-        ShippingNotes: '3',
-        DeliveryNotes: '',
+        PickUpAddress: data.result.pickupLocations[0].address,
+        PickUpState: data.result.pickupLocations[0].state,
+        PickUpCity: data.result.pickupLocations[0].city,
+        PickUpZip: data.result.pickupLocations[0].zip,
+        PickUpDateTime: data.result.pickupLocations[0].dateTime,
+        DeliveryAddress: data.result.deliveryLocations[0].address,
+        DeliveryState: data.result.deliveryLocations[0].state,
+        DeliveryCity: data.result.deliveryLocations[0].city,
+        DeliveryZip: data.result.deliveryLocations[0].zip,
+        DeliveryDateTime: data.result.deliveryLocations[0].dateTime,
+        PONumber: data.result.purchaseOrderNumber,
+        TypeOfTruck: data.result.truckType,
+        LengthOfTruck: data.result.truckLength,
+        Commodities: data.result.comodities,
+        Temperature: data.result.temperature,
+        QuantityOfPallets: data.result.palletCount,
+        QuantityOfTrucks: data.result.truckCount,
+        Price: data.result.price,
+        Weight: data.result.weight,
+        ShippingNotes: data.result.shippingNotes,
+        DeliveryNotes: data.result.deliveryNotes,
       })
     }
   }
