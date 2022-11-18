@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from '../componenets/Sidebar/Sidebar'
 import NavBar from '../componenets/NavBar/AdminNavbar'
 import FooterAdmin from '../componenets/Footers/FooterAdmin'
-import { getStorage, IsAdmin } from '../shared/LoacalStorage'
+import { IsAdmin } from '../shared/LoacalStorage'
 import HeaderBar from '../componenets/Headers/HeaderBar'
 import { ShipmentCard } from '../componenets/Cards/ShipmentCard'
 

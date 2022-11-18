@@ -36,7 +36,7 @@ export class Login extends Component {
     // when response is sucess
     if (data.success === true) {
       setStorage('token', data.result.token.code) // save value in local storage
-      window.location.href = '/CreateShipment'
+      window.location.href = '/Shipment'
     } else if (data.success === false) {
       this.setState({ displayAlert: true, AlertMessage: data.errors[0] })
     }
