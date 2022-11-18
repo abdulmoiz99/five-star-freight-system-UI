@@ -35,6 +35,7 @@ export class AddShipment extends React.Component {
       QuantityOfPallets: '',
       QuantityOfTrucks: '',
       Price: '',
+      Weight: '',
       ShippingNotes: '',
       DeliveryNotes: '',
     }
@@ -62,6 +63,7 @@ export class AddShipment extends React.Component {
       QuantityOfPallets: '',
       QuantityOfTrucks: '',
       Price: '',
+      Weight: '',
       ShippingNotes: '',
       DeliveryNotes: '',
     })
@@ -88,14 +90,15 @@ export class AddShipment extends React.Component {
       QuantityOfPallets,
       QuantityOfTrucks,
       Price,
+      Weight,
       ShippingNotes,
       DeliveryNotes,
     } = this.state
     const pickupLocations = [
-      { address: PickUpAddress, state: PickUpState, city: PickUpCity, zip: PickUpZip, dateTime: PickUpDateTime },
+      { address: PickUpAddress, state: PickUpState, city: PickUpCity, zip: PickUpZip, dateTime: PickUpDateTime ? PickUpDateTime : null },
     ];
     const deliveryLocations = [
-      { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime },
+      { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime ? DeliveryDateTime : null },
     ];
     let token = getStorage('token')
 
@@ -112,7 +115,7 @@ export class AddShipment extends React.Component {
           truckLength: LengthOfTruck,
           truckCount: QuantityOfTrucks,
           comodities: Commodities,
-          weight: 0,
+          weight: Weight,
           temperature: Temperature ? Temperature : 0,
           palletCount: QuantityOfPallets ? QuantityOfPallets : 0,
           price: Price,
@@ -215,10 +218,10 @@ export class AddShipment extends React.Component {
                     </label>
                     <Select
                       options={typesOfTrucks}
-                      value={{ value: this.state.typesOfTrucks, label: this.state.typesOfTrucks }}
+                      value={{ value: this.state.TypeOfTruck, label: this.state.TypeOfTruck }}
                       onChange={(selectedOption) => {
                         this.setState({
-                          typesOfTrucks: selectedOption.value,
+                          TypeOfTruck: selectedOption.value,
                         })
                       }}
                     />
@@ -238,10 +241,10 @@ export class AddShipment extends React.Component {
                     </label>
                     <Select
                       options={lengthOfTrucks}
-                      value={{ value: this.state.lengthOfTrucks, label: this.state.lengthOfTrucks }}
+                      value={{ value: this.state.LengthOfTruck, label: this.state.LengthOfTruck }}
                       onChange={(selectedOption) => {
                         this.setState({
-                          lengthOfTrucks: selectedOption.value,
+                          LengthOfTruck: selectedOption.value,
                         })
                       }}
                     />
@@ -258,10 +261,10 @@ export class AddShipment extends React.Component {
                     </label>
                     <Select
                       options={typesOfCommodities}
-                      value={{ value: this.state.typesOfCommodities, label: this.state.typesOfCommodities }}
+                      value={{ value: this.state.Commodities, label: this.state.Commodities }}
                       onChange={(selectedOption) => {
                         this.setState({
-                          typesOfCommodities: selectedOption.value,
+                          Commodities: selectedOption.value,
                         })
                       }}
                     />
@@ -346,6 +349,25 @@ export class AddShipment extends React.Component {
                       onChange={this.handleChange}
                       type="Number"
                       className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Weight
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required
+                      name="Weight"
+                      value={this.state.Weight}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </div>

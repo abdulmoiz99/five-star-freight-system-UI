@@ -40,10 +40,10 @@ export class OpenShipmentTable extends React.Component {
               </span>
             </th>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickupLocations[0].dateTime}
+              {report.pickUpDateTime?}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.deliveryLocations[0].dateTime}
+              {report.deliveryDateTime}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
@@ -51,7 +51,7 @@ export class OpenShipmentTable extends React.Component {
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <button
                 className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                id={report.reportId}
+                id={report.id}
                 onClick={() => this.handleView(report.id)}
               >
                 View Details
