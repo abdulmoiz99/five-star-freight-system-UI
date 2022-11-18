@@ -4,6 +4,8 @@ import Alert from '../Alerts/Alert'
 import Select from 'react-select'
 import { typesOfTrucks, lengthOfTrucks, typesOfCommodities } from '../../shared/DropDownCache'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDollar } from '@fortawesome/free-solid-svg-icons'
 
 export class AddShipment extends React.Component {
   constructor(props) {
@@ -17,10 +19,12 @@ export class AddShipment extends React.Component {
     this.state = {
       PickUpAddress: '',
       PickUpState: '',
+      PickUpCity: '',
       PickUpZip: '',
       PickUpDateTime: '',
       DeliveryAddress: '',
       DeliveryState: '',
+      DeliveryCity: '',
       DeliveryZip: '',
       DeliveryDateTime: '',
       PONumber: '',
@@ -30,6 +34,7 @@ export class AddShipment extends React.Component {
       Temperature: '',
       QuantityOfPallets: '',
       QuantityOfTrucks: '',
+      Price: '',
       ShippingNotes: '',
       DeliveryNotes: '',
     }
@@ -41,10 +46,12 @@ export class AddShipment extends React.Component {
     this.setState({
       PickUpAddress: '',
       PickUpState: '',
+      PickUpCity: '',
       PickUpZip: '',
       PickUpDateTime: '',
       DeliveryAddress: '',
       DeliveryState: '',
+      DeliveryCity: '',
       DeliveryZip: '',
       DeliveryDateTime: '',
       PONumber: '',
@@ -54,6 +61,7 @@ export class AddShipment extends React.Component {
       Temperature: '',
       QuantityOfPallets: '',
       QuantityOfTrucks: '',
+      Price: '',
       ShippingNotes: '',
       DeliveryNotes: '',
     })
@@ -64,10 +72,12 @@ export class AddShipment extends React.Component {
     const {
       PickUpAddress,
       PickUpState,
+      PickUpCity,
       PickUpZip,
       PickUpDateTime,
       DeliveryAddress,
       DeliveryState,
+      DeliveryCity,
       DeliveryZip,
       DeliveryDateTime,
       PONumber,
@@ -77,14 +87,15 @@ export class AddShipment extends React.Component {
       Temperature,
       QuantityOfPallets,
       QuantityOfTrucks,
+      Price,
       ShippingNotes,
       DeliveryNotes,
     } = this.state
     const pickupLocations = [
-      { address: PickUpAddress, state: PickUpState, zip: PickUpZip, dateTime: PickUpDateTime },
+      { address: PickUpAddress, state: PickUpState, city: PickUpCity, zip: PickUpZip, dateTime: PickUpDateTime },
     ];
     const deliveryLocations = [
-      { address: DeliveryAddress, state: DeliveryState, zip: DeliveryZip, dateTime: DeliveryDateTime },
+      { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime },
     ];
     let token = getStorage('token')
 
@@ -104,6 +115,7 @@ export class AddShipment extends React.Component {
           weight: 0,
           temperature: Temperature ? Temperature : 0,
           palletCount: QuantityOfPallets ? QuantityOfPallets : 0,
+          price: Price,
           shippingNotes: ShippingNotes,
           deliveryNotes: DeliveryNotes,
           pickupLocations: pickupLocations,
@@ -314,6 +326,31 @@ export class AddShipment extends React.Component {
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
                   <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Price
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <span class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                      <FontAwesomeIcon icon={faDollar} />
+                    </span>
+                    <input
+                      required
+                      name="Price"
+                      value={this.state.Price}
+                      onChange={this.handleChange}
+                      type="Number"
+                      className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Shipping notes
                     </label>
@@ -367,7 +404,7 @@ export class AddShipment extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="w-full lg:w-4/12 px-4">
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -388,7 +425,30 @@ export class AddShipment extends React.Component {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
-                </div><div className="w-full lg:w-4/12 px-4">
+                </div>
+                <div className="w-full lg:w-3/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      City{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required
+                      name="PickUpCity"
+                      value={this.state.PickUpCity}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -410,20 +470,15 @@ export class AddShipment extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="w-full lg:w-4/12 px-4">
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date and time{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
+                      date and time
                     </label>
                     <input
-                      required
                       name="PickUpDateTime"
                       value={this.state.PickUpDateTime}
                       onChange={this.handleChange}
@@ -460,7 +515,7 @@ export class AddShipment extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="w-full lg:w-4/12 px-4">
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -481,7 +536,30 @@ export class AddShipment extends React.Component {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
-                </div><div className="w-full lg:w-4/12 px-4">
+                </div>
+                <div className="w-full lg:w-3/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      City{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required
+                      name="DeliveryCity"
+                      value={this.state.DeliveryCity}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -503,20 +581,15 @@ export class AddShipment extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="w-full lg:w-4/12 px-4">
+                <div className="w-full lg:w-3/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date and time{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
+                      date and time
                     </label>
                     <input
-                      required
                       name="DeliveryDateTime"
                       value={this.state.DeliveryDateTime}
                       onChange={this.handleChange}
