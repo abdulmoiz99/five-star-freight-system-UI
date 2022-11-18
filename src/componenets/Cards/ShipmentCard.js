@@ -7,14 +7,16 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
 
-export class AddShipment extends React.Component {
+export class ShipmentCard extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       displayAlert: false,
       success: true,
       AlertMessage: '',
       GeneratingReport: true,
+      isEdit: false
     }
     this.state = {
       PickUpAddress: '',
@@ -42,6 +44,36 @@ export class AddShipment extends React.Component {
   }
   componentDidMount() {
     this.setState({ GeneratingReport: false })
+    this.CheckEdit();
+  }
+  CheckEdit = () => {
+    const id = new URLSearchParams(window.location.search).get('id');
+    this.setState({ isEdit: id ? true : false })
+    if (id) {
+      this.setState({
+        PickUpAddress: 'TEST',
+        PickUpState: 'TEST',
+        PickUpCity: 'TEST',
+        PickUpZip: 'TEST',
+        PickUpDateTime: '',
+        DeliveryAddress: 'TEST',
+        DeliveryState: 'TEST',
+        DeliveryCity: 'TEST',
+        DeliveryZip: 'TEST',
+        DeliveryDateTime: '',
+        PONumber: 'A0000123000TEST',
+        TypeOfTruck: '',
+        LengthOfTruck: '',
+        Commodities: '',
+        Temperature: '',
+        QuantityOfPallets: '',
+        QuantityOfTrucks: '',
+        Price: '2',
+        Weight: '3',
+        ShippingNotes: '3',
+        DeliveryNotes: '',
+      })
+    }
   }
   clearForm = () => {
     this.setState({
@@ -162,8 +194,8 @@ export class AddShipment extends React.Component {
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">
-                Create New Order
+              <h6 className="text-blueGray-700 text-xl font-bold uppercase">
+                {this.state.isEdit ? "PO# " + this.state.PONumber : "Create New Order"}
               </h6>
               <Link
                 to="/viewShipments"
@@ -339,7 +371,7 @@ export class AddShipment extends React.Component {
                         *
                       </span>
                     </label>
-                    <span class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
                       <FontAwesomeIcon icon={faDollar} />
                     </span>
                     <input
@@ -623,26 +655,27 @@ export class AddShipment extends React.Component {
               </div>
 
 
-
-              <div className="w-full lg:w-12/12 px-4">
-                <div className="relative w-full mb-3">
-                  {!this.state.GeneratingReport ? (
-                    <>
-                      <button
-                        className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                        onClick={() => this.setState({ isDraft: false })}
-                        type="submit"
-                      >
-                        Create Shipment
+              {!this.state.isEdit ?
+                <div className="w-full lg:w-12/12 px-4">
+                  <div className="relative w-full mb-3">
+                    {!this.state.GeneratingReport ? (
+                      <>
+                        <button
+                          className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                          onClick={() => this.setState({ isDraft: false })}
+                          type="submit"
+                        >
+                          Create Shipment
+                        </button>
+                      </>
+                    ) : (
+                      <button className="bg-blueGray-700 text-white active:bg-lightBlue-400 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" disabled>
+                        Creating...
                       </button>
-                    </>
-                  ) : (
-                    <button className="bg-blueGray-700 text-white active:bg-lightBlue-400 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" disabled>
-                      Creating...
-                    </button>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
+                : null}
             </form>
           </div>
         </div>

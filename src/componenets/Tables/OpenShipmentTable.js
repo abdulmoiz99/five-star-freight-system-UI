@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle} from '@fortawesome/free-solid-svg-icons'
 import { getStorage } from '../../shared/LoacalStorage'
+import { Link } from 'react-router-dom'
 
 export class OpenShipmentTable extends React.Component {
   constructor(props) {
@@ -25,10 +26,6 @@ export class OpenShipmentTable extends React.Component {
       loading: false,
     })
   }
-
-  handleView = async (reportId) => {
-   console.log(reportId)
-  }
   reportReportList(reportList) {
     return (
       <>
@@ -49,13 +46,12 @@ export class OpenShipmentTable extends React.Component {
               <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
-              <button
+              <Link
+                to={"/ShipmentDetails?id=" + report.id}
                 className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                id={report.id}
-                onClick={() => this.handleView(report.id)}
               >
                 View Details
-              </button>
+              </Link>
             </td>
           </tr>
         ))
