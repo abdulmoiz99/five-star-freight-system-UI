@@ -40,7 +40,7 @@ export class OpenShipmentTable extends React.Component {
               </span>
             </th>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickUpDateTime?}
+              {report.pickUpDateTime}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.deliveryDateTime}
