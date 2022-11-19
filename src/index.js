@@ -8,6 +8,9 @@ import { ViewShipment } from './views/ViewShipment';
 import { Shipment } from './views/Shipment';
 import { ShipmentDetail } from './views/ShipmentDetail';
 import { ShipperBids } from './views/Bids/ShipperBids';
+import { ViewCarriers } from './views/Carriers/ViewCarriers';
+import { AddCarrier } from './views/Carriers/AddCarrier';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -19,8 +22,8 @@ root.render(
       <Route path="/ShipmentDetails" element={< ShipmentDetail />}></Route>
       <Route path="/ViewShipments" element={< ViewShipment />}></Route>
       <Route path="/ShipperBids" element={< ShipperBids />}></Route>
-
-
+      <Route path="/Carriers" element={< ViewCarriers />}></Route>
+      <Route path="/AddCarrier" element={< AddCarrier />}></Route>
     </Routes>
   </BrowserRouter>,
 )
