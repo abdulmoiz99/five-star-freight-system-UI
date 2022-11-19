@@ -2,7 +2,7 @@ import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
-import { typesOfTrucks, lengthOfTrucks, typesOfCommodities } from '../../shared/DropDownCache'
+import { typesOfTrucks, lengthOfTrucks, typesOfCommodities, carriers } from '../../shared/DropDownCache'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
@@ -40,6 +40,7 @@ export class ShipmentCard extends React.Component {
       Weight: '',
       ShippingNotes: '',
       DeliveryNotes: '',
+      isLoadQuoted: ''
     }
   }
   componentDidMount() {
@@ -106,6 +107,7 @@ export class ShipmentCard extends React.Component {
       Weight: '',
       ShippingNotes: '',
       DeliveryNotes: '',
+      isLoadQuoted: ''
     })
   }
   handleSubmission = async (event) => {
@@ -185,6 +187,11 @@ export class ShipmentCard extends React.Component {
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
+    })
+  }
+  handleCheck = (event) => {
+    this.setState({
+      isLoadQuoted: event.target.checked,
     })
   }
   renderAlert = () => {
@@ -369,31 +376,6 @@ export class ShipmentCard extends React.Component {
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
                   <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Price
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                      <FontAwesomeIcon icon={faDollar} />
-                    </span>
-                    <input
-                      required
-                      name="Price"
-                      value={this.state.Price}
-                      onChange={this.handleChange}
-                      type="Number"
-                      className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
-                    />
-                  </div>
-                </div>
-                <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Weight
                       <span style={{ color: 'red', justifyContent: 'center' }}>
@@ -440,6 +422,77 @@ export class ShipmentCard extends React.Component {
                   </div>
                 </div>
               </div>
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Load Status
+              </h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label className="inline-flex items-center cursor-pointer">
+                      <input
+                        id="customCheckLogin"
+                        type="checkbox"
+                        name='isLoadQuoted'
+                        value={this.state.isLoadQuoted}
+                        onChange={this.handleCheck}
+                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                      />
+                      <span className="ml-2 text-md font-bold text-blueGray-600">
+                        Load Already Quoted?
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              {this.state.isLoadQuoted ?
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-4/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Price
+                        <span style={{ color: 'red', justifyContent: 'center' }}>
+                          {' '}
+                          *
+                        </span>
+                      </label>
+                      <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                        <FontAwesomeIcon icon={faDollar} />
+                      </span>
+                      <input
+                        required
+                        name="Price"
+                        value={this.state.Price}
+                        onChange={this.handleChange}
+                        type="Number"
+                        className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-4/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                        Carrier
+                        <span style={{ color: 'red', justifyContent: 'center' }}>
+                          {' '}
+                          *
+                        </span>
+                      </label>
+                      <Select
+                        options={carriers}
+                        value={{ value: this.state.Carrier, label: this.state.Carrier }}
+                        onChange={(selectedOption) => {
+                          this.setState({
+                            Carrier: selectedOption.value,
+                          })
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                : null}
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Pickup Details
               </h6>
@@ -544,7 +597,7 @@ export class ShipmentCard extends React.Component {
                       name="PickUpDateTime"
                       value={this.state.PickUpDateTime}
                       onChange={this.handleChange}
-                      type="datetime-local"
+                      type="date"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -655,7 +708,7 @@ export class ShipmentCard extends React.Component {
                       name="DeliveryDateTime"
                       value={this.state.DeliveryDateTime}
                       onChange={this.handleChange}
-                      type="datetime-local"
+                      type="date"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -670,10 +723,9 @@ export class ShipmentCard extends React.Component {
                       <>
                         <button
                           className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                          onClick={() => this.setState({ isDraft: false })}
                           type="submit"
                         >
-                          Create Shipment
+                          {this.state.isLoadQuoted ? "Create Shipment" : "Need Quote"}
                         </button>
                       </>
                     ) : (
@@ -686,7 +738,7 @@ export class ShipmentCard extends React.Component {
                 : null}
             </form>
           </div>
-        </div>
+        </div >
       </>
     )
   }

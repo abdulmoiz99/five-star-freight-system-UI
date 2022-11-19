@@ -20,3 +20,7 @@ export const typesOfCommodities = [
   { value: 'Commodities1', label: 'Commodities1' },
   { value: 'Commodities2', label: 'Commodities2' },
 ]
+export const carriers = [
+  { value: 'carrier1', label: 'carrier1' },
+  { value: 'carrier2', label: 'carrier2' },
+]
