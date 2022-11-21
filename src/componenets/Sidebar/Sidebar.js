@@ -34,7 +34,7 @@ export default function Sidebar({ isAdmin }) {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               {!isAdmin ? (
                 <div>
-                  <li className="items-center">
+                  {/* <li className="items-center">
                     <Link
                       className={
                         'text-xs uppercase py-3 font-bold block ' +
@@ -117,7 +117,7 @@ export default function Sidebar({ isAdmin }) {
                       ></i>{' '}
                       Freight Spend
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="items-center">
                     <Link
                       className={
@@ -139,7 +139,7 @@ export default function Sidebar({ isAdmin }) {
                       Carriers
                     </Link>
                   </li>
-                  <li className="items-center">
+                  {/* <li className="items-center">
                     <Link
                       className={
                         'text-xs uppercase py-3 font-bold block ' +
@@ -159,7 +159,7 @@ export default function Sidebar({ isAdmin }) {
                       ></i>{' '}
                       Options
                     </Link>
-                  </li>
+                  </li> */}
                 </div>
 
               ) : (

@@ -29,6 +29,33 @@ export class CarrierTable extends React.Component {
   reportReportList(reportList) {
     return (
       <>
+        <tr>
+          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
+            <span className="ml-3 font-bold text-blueGray-600"  >
+              Carrier 1
+            </span>
+          </th>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+            Carrier@mail.com
+          </td>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+            9231423232323
+          </td>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+            0112323
+          </td>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+            0112323
+          </td>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+            <Link
+              to={"/CarrierDetails?id="}
+              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            >
+              Details
+            </Link>
+          </td>
+        </tr>
         {reportList?.map((report) => (
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
@@ -47,7 +74,7 @@ export class CarrierTable extends React.Component {
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <Link
-                to={"/ShipmentDetails?id=" + report.id}
+                to={"/CarrierDetails?id=" + report.id}
                 className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               >
                 View Details
@@ -86,19 +113,19 @@ export class CarrierTable extends React.Component {
               <thead>
                 <tr>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    PO Number
+                    Carrier Name
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Pick up date
+                    Contact Email
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Delivery date
+                    Phone Number
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Total Bids
+                    MC Number
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Status
+                    DOT Number
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Actions
