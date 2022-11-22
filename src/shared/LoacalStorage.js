@@ -14,17 +14,36 @@ export const clearStorage = () => {
 }
 export const IsAdmin = () => {
   return false;
-  var token = localStorage.getItem('token')
-  var decoded = jwt_decode(token)
-  if (decoded.roleId === '2') {
-    return true
-  } else {
-    return false
-  }
 }
 export const getUserId = () => {
   var token = localStorage.getItem('token')
   var decoded = jwt_decode(token)
   return decoded.userId;
+}
+export const getUserRole = () => {
+  var token = localStorage.getItem('token')
+  var decoded = jwt_decode(token)
+  if (decoded.roleId === '1') {
+    return "ADMIN"
+  }
+  else if (decoded.roleId === '2') {
+    return "CARRIER"
+  }
+  else {
+    return "SHIPPER"
+  }
+}
+export const getDefaultRoute = () => {
+  var token = localStorage.getItem('token')
+  var decoded = jwt_decode(token)
+  if (decoded.roleId === '1') {
+    return '/Shippers'
+  }
+  else if (decoded.roleId === '2') {
+    return "/Shipment"
+  }
+  else {
+    return "/Shipment"
+  }
 }
 

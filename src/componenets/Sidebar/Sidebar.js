@@ -1,12 +1,18 @@
 /*eslint-disable*/
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { getUserRole } from '../../shared/LoacalStorage'
+import AdminSideBar from './AdminSideBar'
+import CarrierSideBar from './CarrierSideBar'
+import ShipperSideBar from './ShipperSideBar'
 
 // import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 // import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function Sidebar({ isAdmin }) {
   const [collapseShow, setCollapseShow] = React.useState('hidden')
+  const [role] = React.useState(getUserRole())
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -32,180 +38,24 @@ export default function Sidebar({ isAdmin }) {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {!isAdmin ? (
-                <div>
-                  {/* <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/Shipment') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/Shipment"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/Shipment') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Create New Order
-                    </Link>
-                  </li>
-                  <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/viewShipments') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/viewShipments"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/viewShipments') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                     load status
-                    </Link>
-                  </li>
-                  <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/ShipperBids') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/ShipperBids"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/ShipperBids') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Bids
-                    </Link>
-                  </li>
-                  <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/FreightSpend') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/Shipment"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/FreightSpend') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Freight Spend
-                    </Link>
-                  </li> */}
-                  <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/Shippers') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/Shippers"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/Shippers') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Shipper
-                    </Link>
-                  </li>
-                  <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/Carriers') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/Carriers"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/Carriers') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Carriers
-                    </Link>
-                  </li>
-                  {/* <li className="items-center">
-                    <Link
-                      className={
-                        'text-xs uppercase py-3 font-bold block ' +
-                        (window.location.href.indexOf('/Options') !== -1
-                          ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                          : 'text-blueGray-700 hover:text-blueGray-500')
-                      }
-                      to="/Shipment"
-                    >
-                      <i
-                        className={
-                          'fas fa-tv mr-2 text-sm ' +
-                          (window.location.href.indexOf('/Options') !== -1
-                            ? 'opacity-75'
-                            : 'text-blueGray-300')
-                        }
-                      ></i>{' '}
-                      Options
-                    </Link>
-                  </li> */}
-                </div>
-
-              ) : (
-                <li className="items-center">
-                  <Link
-                    className={
-                      'text-xs uppercase py-3 font-bold block ' +
-                      (window.location.href.indexOf('/AdminPage') !== -1
-                        ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                        : 'text-blueGray-700 hover:text-blueGray-500')
-                    }
-                    to="/AdminPage"
-                  >
-                    <i
-                      className={
-                        'fas fa-tools mr-2 text-sm ' +
-                        (window.location.href.indexOf('/AdminPage') !== -1
-                          ? 'opacity-75'
-                          : 'text-blueGray-300')
-                      }
-                    ></i>{' '}
-                    Reports
-                  </Link>
-                </li>
-              )}
+              {role == "ADMIN" ? (
+                <>
+                  <AdminSideBar />
+                </>
+              ) : null
+              }
+              {role == "SHIPPER" ? (
+                <>
+                  <ShipperSideBar />
+                </>
+              ) : null
+              }
+              {role == "CARRIER" ? (
+                <>
+                  <CarrierSideBar />
+                </>
+              ) : null
+              }
               <li className="items-center">
                 <Link
                   className={

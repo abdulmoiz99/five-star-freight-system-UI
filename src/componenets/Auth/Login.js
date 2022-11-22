@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../NavBar/AuthNavbar'
 import Alert from '../Alerts/Alert'
-import { setStorage, clearStorage } from '../../shared/LoacalStorage'
+import { setStorage, clearStorage, getDefaultRoute } from '../../shared/LoacalStorage'
 import IMAGE from '../../assets/img/LoginImage.PNG'
 
 export class Login extends Component {
@@ -36,7 +36,7 @@ export class Login extends Component {
     // when response is sucess
     if (data.success === true) {
       setStorage('token', data.result.token.code) // save value in local storage
-      window.location.href = '/Shippers'
+      window.location.href = getDefaultRoute()
     } else if (data.success === false) {
       this.setState({ displayAlert: true, AlertMessage: data.errors[0] })
     }

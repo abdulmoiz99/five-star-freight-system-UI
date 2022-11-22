@@ -19,7 +19,6 @@ export class CarrierTable extends React.Component {
       },
     )
     const data = await response.json()
-    console.log(data)
     this.setState({
       reportList: data.result,
       loading: false,
