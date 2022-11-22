@@ -1,6 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
@@ -10,17 +8,18 @@ export class CarrierTable extends React.Component {
     this.state = { report: [], reportList: [], loading: true }
   }
   componentDidMount() {
-    // this.populateTableData()
+    this.populateTableData()
   }
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders',
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/carriers',
       {
         headers: { Authorization: `Bearer ${token}` },
       },
     )
     const data = await response.json()
+    console.log(data)
     this.setState({
       reportList: data.result,
       loading: false,
@@ -29,57 +28,33 @@ export class CarrierTable extends React.Component {
   reportReportList(reportList) {
     return (
       <>
-        <tr>
-          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-            <span className="ml-3 font-bold text-blueGray-600"  >
-              Carrier 1
-            </span>
-          </th>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            Carrier@mail.com
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            9231423232323
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            0112323
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            0112323
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            <Link
-              to={"/CarrierDetails?id="}
-              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            >
-              Details
-            </Link>
-          </td>
-        </tr>
         {reportList?.map((report) => (
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
               <span className="ml-3 font-bold text-blueGray-600"  >
-                {report.purchaseOrderNumber}
+                {report.name}
               </span>
             </th>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickUpDateTime}
+              {report.contactEmail}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.deliveryDateTime}
+              {report.phoneNumber}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
+              {report.mcNumber}
             </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+              {report.dotNumber}
+            </td>
+            {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <Link
                 to={"/CarrierDetails?id=" + report.id}
                 className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               >
-                View Details
+                 Details
               </Link>
-            </td>
+            </td> */}
           </tr>
         ))
         }
@@ -108,7 +83,6 @@ export class CarrierTable extends React.Component {
             </div>
           </div>
           <div className="block w-full overflow-x-auto">
-            {/* Projects table */}
             <table className="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
@@ -127,9 +101,9 @@ export class CarrierTable extends React.Component {
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     DOT Number
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  {/* <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Actions
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>{this.reportReportList(this.state.reportList)}</tbody>

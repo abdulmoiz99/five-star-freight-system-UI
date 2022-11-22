@@ -1,6 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
@@ -10,12 +8,12 @@ export class ShipperTable extends React.Component {
     this.state = { report: [], reportList: [], loading: true }
   }
   componentDidMount() {
-    // this.populateTableData()
+    this.populateTableData()
   }
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders',
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/shippers',
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -29,56 +27,25 @@ export class ShipperTable extends React.Component {
   reportReportList(reportList) {
     return (
       <>
-        <tr>
-          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-            <span className="ml-3 font-bold text-blueGray-600"  >
-              Shipper 1
-            </span>
-          </th>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            Shipper details here
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            Karachi, Pakistan
-          </td>
-        
-          <td className="border-t-0  align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-            <Link
-              to={"/ShipperDetails?id="}
-              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            >
-              Details
-            </Link>
-            <Link
-              to={"/AssignCarriers?id="}
-              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold  text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
-            >
-              CARRIERS
-            </Link>
-          </td>
-        </tr>
         {reportList?.map((report) => (
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
               <span className="ml-3 font-bold text-blueGray-600"  >
-                {report.purchaseOrderNumber}
+                {report.name}
               </span>
             </th>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickUpDateTime}
+              {report.details}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.deliveryDateTime}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
+              {report.taxId}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <Link
-                to={"/CarrierDetails?id=" + report.id}
-                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                to={"/AssignCarriers?id=" + report.id}
+                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold  text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
               >
-                View Details
+                CARRIERS
               </Link>
             </td>
           </tr>
