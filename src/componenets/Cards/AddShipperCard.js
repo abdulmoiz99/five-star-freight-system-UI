@@ -3,142 +3,54 @@ import { getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import { Link } from 'react-router-dom'
 
-
 export class AddShipperCard extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       displayAlert: false,
       success: true,
       AlertMessage: '',
       GeneratingReport: true,
-      isEdit: false
     }
     this.state = {
-      PickUpAddress: '',
-      PickUpState: '',
-      PickUpCity: '',
-      PickUpZip: '',
-      PickUpDateTime: '',
-      DeliveryAddress: '',
-      DeliveryState: '',
-      DeliveryCity: '',
-      DeliveryZip: '',
-      DeliveryDateTime: '',
-      PONumber: '',
-      TypeOfTruck: '',
-      LengthOfTruck: '',
-      Commodities: '',
-      Temperature: '',
-      QuantityOfPallets: '',
-      QuantityOfTrucks: '',
-      Price: '',
-      Weight: '',
-      ShippingNotes: '',
-      DeliveryNotes: '',
-      isLoadQuoted: ''
+      Name: '',
+      Email: '',
+      Password: '',
+      ConfirmPassword: '',
+      Address: '',
+      Details: '',
+      Commodity: '',
+      TaxId: ''
     }
   }
   componentDidMount() {
     this.setState({ GeneratingReport: false })
-    this.CheckEdit();
-  }
-  CheckEdit = async () => {
-    const id = new URLSearchParams(window.location.search).get('id');
-    this.setState({ isEdit: id ? true : false })
-    if (id) {
-      let token = getStorage('token')
-      const response = await fetch(
-        `https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/order-details?orderId=${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-      const data = await response.json()
-      this.setState({
-        PickUpAddress: data.result.pickupLocations[0].address,
-        PickUpState: data.result.pickupLocations[0].state,
-        PickUpCity: data.result.pickupLocations[0].city,
-        PickUpZip: data.result.pickupLocations[0].zip,
-        PickUpDateTime: data.result.pickupLocations[0].dateTime,
-        DeliveryAddress: data.result.deliveryLocations[0].address,
-        DeliveryState: data.result.deliveryLocations[0].state,
-        DeliveryCity: data.result.deliveryLocations[0].city,
-        DeliveryZip: data.result.deliveryLocations[0].zip,
-        DeliveryDateTime: data.result.deliveryLocations[0].dateTime,
-        PONumber: data.result.purchaseOrderNumber,
-        TypeOfTruck: data.result.truckType,
-        LengthOfTruck: data.result.truckLength,
-        Commodities: data.result.comodities,
-        Temperature: data.result.temperature,
-        QuantityOfPallets: data.result.palletCount,
-        QuantityOfTrucks: data.result.truckCount,
-        Price: data.result.price,
-        Weight: data.result.weight,
-        ShippingNotes: data.result.shippingNotes,
-        DeliveryNotes: data.result.deliveryNotes,
-      })
-    }
   }
   clearForm = () => {
     this.setState({
-      PickUpAddress: '',
-      PickUpState: '',
-      PickUpCity: '',
-      PickUpZip: '',
-      PickUpDateTime: '',
-      DeliveryAddress: '',
-      DeliveryState: '',
-      DeliveryCity: '',
-      DeliveryZip: '',
-      DeliveryDateTime: '',
-      PONumber: '',
-      TypeOfTruck: '',
-      LengthOfTruck: '',
-      Commodities: '',
-      Temperature: '',
-      QuantityOfPallets: '',
-      QuantityOfTrucks: '',
-      Price: '',
-      Weight: '',
-      ShippingNotes: '',
-      DeliveryNotes: '',
-      isLoadQuoted: ''
+      Name: '',
+      Email: '',
+      Password: '',
+      ConfirmPassword: '',
+      Address: '',
+      Details: '',
+      Commodity: '',
+      TaxId: ''
     })
   }
   handleSubmission = async (event) => {
     event.preventDefault()
     this.setState({ displayAlert: false, GeneratingReport: true })
     const {
-      PickUpAddress,
-      PickUpState,
-      PickUpCity,
-      PickUpZip,
-      PickUpDateTime,
-      DeliveryAddress,
-      DeliveryState,
-      DeliveryCity,
-      DeliveryZip,
-      DeliveryDateTime,
-      PONumber,
-      TypeOfTruck,
-      LengthOfTruck,
-      Commodities,
-      Temperature,
-      QuantityOfPallets,
-      QuantityOfTrucks,
-      Price,
-      Weight,
-      ShippingNotes,
-      DeliveryNotes,
+      Name,
+      Email,
+      Password,
+      ConfirmPassword,
+      Address,
+      Details,
+      Commodity,
+      TaxId,
     } = this.state
-    const pickupLocations = [
-      { address: PickUpAddress, state: PickUpState, city: PickUpCity, zip: PickUpZip, dateTime: PickUpDateTime ? PickUpDateTime : null },
-    ];
-    const deliveryLocations = [
-      { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime ? DeliveryDateTime : null },
-    ];
     let token = getStorage('token')
 
     try {
@@ -149,28 +61,23 @@ export class AddShipperCard extends React.Component {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          purchaseOrderNumber: PONumber,
-          truckType: TypeOfTruck,
-          truckLength: LengthOfTruck,
-          truckCount: QuantityOfTrucks,
-          comodities: Commodities,
-          weight: Weight,
-          temperature: Temperature ? Temperature : 0,
-          palletCount: QuantityOfPallets ? QuantityOfPallets : 0,
-          price: Price,
-          shippingNotes: ShippingNotes,
-          deliveryNotes: DeliveryNotes,
-          pickupLocations: pickupLocations,
-          deliveryLocations: deliveryLocations
+          name: Name,
+          email: Email,
+          password: Password,
+          confirmPassword: ConfirmPassword,
+          address: Address,
+          details: Details,
+          commodity: Commodity,
+          taxId: TaxId
         }),
       }
       const response = await fetch(
-        'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/create-order',
+        'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/add-shipper',
         body,
       )
       const data = await response.json()
       if (data.success === true) {
-        this.setState({ displayAlert: true, AlertMessage: "Shipment created successfully.", success: true, })
+        this.setState({ displayAlert: true, AlertMessage: "Shipper created successfully.", success: true, })
         this.clearForm();
       } else if (data.success === false) {
         this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
@@ -180,15 +87,9 @@ export class AddShipperCard extends React.Component {
     }
     this.setState({ GeneratingReport: false })
   }
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
-    })
-  }
-  handleCheck = (event) => {
-    this.setState({
-      isLoadQuoted: event.target.checked,
     })
   }
   renderAlert = () => {
@@ -239,10 +140,10 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="Email"
+                      value={this.state.Email}
                       onChange={this.handleChange}
-                      type="text"
+                      type="Email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -261,10 +162,11 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      autoComplete="new-password"
+                      name="Password"
+                      value={this.state.Password}
                       onChange={this.handleChange}
-                      type="text"
+                      type="Password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -283,10 +185,10 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="ConfirmPassword"
+                      value={this.state.ConfirmPassword}
                       onChange={this.handleChange}
-                      type="text"
+                      type="Password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
@@ -310,8 +212,8 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="Name"
+                      value={this.state.Name}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -332,8 +234,8 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="Details"
+                      value={this.state.Details}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -354,8 +256,8 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="Address"
+                      value={this.state.Address}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -376,8 +278,8 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="Commodity"
+                      value={this.state.Commodity}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -398,8 +300,8 @@ export class AddShipperCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PONumber"
-                      value={this.state.PONumber}
+                      name="TaxId"
+                      value={this.state.TaxId}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -407,9 +309,6 @@ export class AddShipperCard extends React.Component {
                   </div>
                 </div>
               </div>
-
-
-
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
                   {!this.state.GeneratingReport ? (
