@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle} from '@fortawesome/free-solid-svg-icons'
 import { getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
@@ -10,12 +10,12 @@ export class ShipperBidsTable extends React.Component {
     this.state = { report: [], reportList: [], loading: true }
   }
   componentDidMount() {
-    // this.populateTableData()
+    this.populateTableData()
   }
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders',
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders?isOpen=true',
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -43,7 +43,10 @@ export class ShipperBidsTable extends React.Component {
               {report.deliveryDateTime}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
+              0
+            </td>
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> OPEN
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <Link
@@ -68,7 +71,7 @@ export class ShipperBidsTable extends React.Component {
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3 className="font-bold text-lg text-blueGray-700"  >
-                   Bids
+                  Bids
                 </h3>
               </div>
             </div>
@@ -88,10 +91,10 @@ export class ShipperBidsTable extends React.Component {
                     Delivery date
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Total Bids
+                    Total bids
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Status
+                    Bid Status
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Actions

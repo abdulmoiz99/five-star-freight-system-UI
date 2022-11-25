@@ -15,7 +15,7 @@ export class OpenShipmentTable extends React.Component {
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders',
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders?isOpen=false',
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -41,6 +41,9 @@ export class OpenShipmentTable extends React.Component {
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.deliveryDateTime}
+            </td>
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+              {report.carrierName}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
@@ -86,6 +89,9 @@ export class OpenShipmentTable extends React.Component {
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Delivery date
+                  </th>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                    Carrier
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Driver Status
