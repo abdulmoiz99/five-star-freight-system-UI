@@ -2,7 +2,7 @@ import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
-import { typesOfTrucks, lengthOfTrucks, typesOfCommodities, carriers } from '../../shared/DropDownCache'
+import { typesOfTrucks, lengthOfTrucks, typesOfCommodities } from '../../shared/DropDownCache'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
@@ -16,6 +16,7 @@ export class ShipmentCard extends React.Component {
       success: true,
       AlertMessage: '',
       GeneratingReport: true,
+      Carriers: [],
       isEdit: false
     }
     this.state = {
@@ -45,7 +46,25 @@ export class ShipmentCard extends React.Component {
   }
   componentDidMount() {
     this.setState({ GeneratingReport: false })
+    this.populateCarriers()
     this.CheckEdit();
+  }
+  populateCarriers = async () => {
+    let token = getStorage('token')
+    const response = await fetch(
+      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/carriers',
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
+    const data = await response.json()
+    this.setState({
+      CarrierDropDown: data.result,
+
+    })
+    this.setState({
+      Carriers: data.result.map((element) => ({ value: element.id, label: element.name }))
+    })
   }
   CheckEdit = async () => {
     const id = new URLSearchParams(window.location.search).get('id');
@@ -107,7 +126,7 @@ export class ShipmentCard extends React.Component {
       Weight: '',
       ShippingNotes: '',
       DeliveryNotes: '',
-      isLoadQuoted: ''
+      isLoadQuoted: false
     })
   }
   handleSubmission = async (event) => {
@@ -131,6 +150,8 @@ export class ShipmentCard extends React.Component {
       Temperature,
       QuantityOfPallets,
       QuantityOfTrucks,
+      isLoadQuoted,
+      Carrier,
       Price,
       Weight,
       ShippingNotes,
@@ -160,9 +181,10 @@ export class ShipmentCard extends React.Component {
           weight: Weight,
           temperature: Temperature ? Temperature : 0,
           palletCount: QuantityOfPallets ? QuantityOfPallets : 0,
-          price: Price,
+          price: isLoadQuoted ? Price : 0,
           shippingNotes: ShippingNotes,
           deliveryNotes: DeliveryNotes,
+          carrierId: isLoadQuoted ? Carrier : null,
           pickupLocations: pickupLocations,
           deliveryLocations: deliveryLocations
         }),
@@ -462,7 +484,7 @@ export class ShipmentCard extends React.Component {
                         <FontAwesomeIcon icon={faDollar} />
                       </span>
                       <input
-                        required
+                        required={this.state.isLoadQuoted}
                         name="Price"
                         value={this.state.Price}
                         onChange={this.handleChange}
@@ -481,11 +503,12 @@ export class ShipmentCard extends React.Component {
                         </span>
                       </label>
                       <Select
-                        options={carriers}
-                        value={{ value: this.state.Carrier, label: this.state.Carrier }}
+                        options={this.state.Carriers}
+                        value={{ value: this.state.Carrier, label: this.state.CarrierLabel }}
                         onChange={(selectedOption) => {
                           this.setState({
                             Carrier: selectedOption.value,
+                            CarrierLabel: selectedOption.label,
                           })
                         }}
                       />
