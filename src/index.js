@@ -14,6 +14,8 @@ import { ViewShipper } from './views/Shippers/ViewShipper';
 import { AddShipper } from './views/Shippers/AddShipper';
 import { AssignCarriers } from './views/Shippers/AssignCarriers';
 import { ViewShipperCarrier } from './views/Carriers/ViewShipperCarrier';
+import { BidInfo } from './views/Bids/BidInfo';
+import { ViewBids } from './views/Bids/ViewBids';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -32,6 +34,8 @@ root.render(
       <Route path="/AddShipper" element={< AddShipper />}></Route>
       <Route path="/Shippers" element={< ViewShipper />}></Route>
       <Route path="/AssignCarriers" element={< AssignCarriers />}></Route>
+      <Route path="/BidInfo" element={< BidInfo />}></Route>
+      <Route path="/ViewBids" element={< ViewBids />}></Route>
 
     </Routes>
   </BrowserRouter>,

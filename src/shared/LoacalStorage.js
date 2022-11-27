@@ -40,10 +40,12 @@ export const getDefaultRoute = () => {
     return '/Shippers'
   }
   else if (decoded.roleId === '2') {
-    return "/Shipment"
+    return "/ShipperBids"
   }
   else {
     return "/Shipment"
   }
 }
-
+export const baseURL = () => {
+  return "https://fivestartlogisticsapi.azurewebsites.net"
+}
