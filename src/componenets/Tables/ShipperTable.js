@@ -12,8 +12,13 @@ export class ShipperTable extends React.Component {
   componentDidMount() {
     this.populateTableData()
   }
-  handleChange = (event) => {
-    console.log(event.target.value)
+  handleSearch = (event) => {
+    const filterDataSet = this.state.report.filter(
+      d => d.name.includes(event.target.value)
+    );
+    this.setState({
+      reportList: filterDataSet,
+    })
   }
   populateTableData = async () => {
     let token = getStorage('token')
@@ -25,6 +30,7 @@ export class ShipperTable extends React.Component {
     )
     const data = await response.json()
     this.setState({
+      report: data.result,
       reportList: data.result,
       loading: false,
     })
@@ -77,7 +83,7 @@ export class ShipperTable extends React.Component {
             </span>
             <input
               type="text"
-              onChange={this.handleChange}
+              onChange={this.handleSearch}
               placeholder="Search by name of company"
               className="px-3 py-3 placeholder-blueGray-400 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10" />
           </div>
