@@ -1,12 +1,19 @@
 import React from 'react'
-import { getStorage } from '../../shared/LoacalStorage'
+import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faSearch, faTrash, faTruck } from '@fortawesome/free-solid-svg-icons'
+import Alert from '../Alerts/Alert'
 
 export class ShipperTable extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      displayAlert: false,
+      success: true,
+      AlertMessage: '',
+      Processing: true,
+    }
     this.state = { report: [], reportList: [], loading: true }
   }
   componentDidMount() {
@@ -14,7 +21,7 @@ export class ShipperTable extends React.Component {
   }
   handleSearch = (event) => {
     const filterDataSet = this.state.report.filter(
-      d => d.name.includes(event.target.value)
+      d => d.name.toLowerCase().includes(event.target.value.toLowerCase())
     );
     this.setState({
       reportList: filterDataSet,
@@ -34,6 +41,37 @@ export class ShipperTable extends React.Component {
       reportList: data.result,
       loading: false,
     })
+  }
+  renderAlert = () => {
+    if (this.state.displayAlert) {
+      return (
+        <>
+          <Alert message={this.state.AlertMessage} success={this.state.success} />
+        </>
+      )
+    }
+  }
+  deleteCarrier = async (Uid) => {
+    this.setState({ displayAlert: false })
+    let token = getStorage('token')
+    const body = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    const response = await fetch(
+      `${baseURL()}/api/Admin/delete-user?userId=${Uid}`,
+      body,
+    )
+    const data = await response.json()
+    if (data.success === true) {
+      this.populateTableData()
+      this.setState({ displayAlert: true, AlertMessage: "Shipper deleted successfully", success: true, })
+    } else if (data.success === false) {
+      this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
+    }
   }
   reportReportList(reportList) {
     return (
@@ -62,7 +100,9 @@ export class ShipperTable extends React.Component {
               >
                 <FontAwesomeIcon icon={faTruck} />
               </Link>
-              <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+              <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"
+                onClick={() => this.deleteCarrier(report.id)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
             </td>
@@ -90,6 +130,7 @@ export class ShipperTable extends React.Component {
         </div>
 
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white" >
+          {this.renderAlert()}
           <div className="rounded-t mb-0 px-4 py-3 border-0">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
