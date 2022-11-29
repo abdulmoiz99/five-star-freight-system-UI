@@ -2,7 +2,7 @@ import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
-import { typesOfTrucks, lengthOfTrucks, typesOfCommodities } from '../../shared/DropDownCache'
+import { typesOfTrucks, lengthOfTrucks } from '../../shared/DropDownCache'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
@@ -321,21 +321,22 @@ export class ShipmentCard extends React.Component {
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
                   <div className="relative w-full mb-3">
-                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      Commodities
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Commodities<span style={{ color: 'red', justifyContent: 'center' }}>
                         {' '}
                         *
                       </span>
                     </label>
-                    <Select
-                      options={typesOfCommodities}
-                      value={{ value: this.state.Commodities, label: this.state.Commodities }}
-                      onChange={(selectedOption) => {
-                        this.setState({
-                          Commodities: selectedOption.value,
-                        })
-                      }}
+                    <input
+                      required
+                      name="Commodities"
+                      value={this.state.Commodities}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </div>
@@ -614,7 +615,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date and time
+                      date 
                     </label>
                     <input
                       name="PickUpDateTime"
@@ -725,7 +726,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date and time
+                      date 
                     </label>
                     <input
                       name="DeliveryDateTime"

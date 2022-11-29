@@ -1,6 +1,8 @@
 import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export class CarrierTable extends React.Component {
   constructor(props) {
@@ -9,6 +11,9 @@ export class CarrierTable extends React.Component {
   }
   componentDidMount() {
     this.populateTableData()
+  }
+  handleChange = (event) => {
+    console.log(event.target.value)
   }
   populateTableData = async () => {
     let token = getStorage('token')
@@ -46,14 +51,14 @@ export class CarrierTable extends React.Component {
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.dotNumber}
             </td>
-            {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
-              <Link
-                to={"/CarrierDetails?id=" + report.id}
-                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              >
-                 Details
-              </Link>
-            </td> */}
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
+              <button className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+              <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </td>
           </tr>
         ))
         }
@@ -64,6 +69,18 @@ export class CarrierTable extends React.Component {
   render() {
     return (
       <>
+        <div className="w-full lg:w-3/12 md:w-6/12px-4 right">
+          <div className="relative w-full mb-3">
+            <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
+            <input
+              type="text"
+              onChange={this.handleChange}
+              placeholder="Search by MC#"
+              className="px-3 py-3 placeholder-blueGray-400 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10" />
+          </div>
+        </div>
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white" >
           <div className="rounded-t mb-0 px-4 py-3 border-0">
             <div className="flex flex-wrap items-center">
@@ -100,9 +117,9 @@ export class CarrierTable extends React.Component {
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     DOT Number
                   </th>
-                  {/* <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Actions
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               <tbody>{this.reportReportList(this.state.reportList)}</tbody>
