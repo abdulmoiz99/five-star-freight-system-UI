@@ -1,5 +1,5 @@
 import React from 'react'
-import { getStorage } from '../../shared/LoacalStorage'
+import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import { Link } from 'react-router-dom'
 
@@ -26,6 +26,7 @@ export class AddCarrrierCard extends React.Component {
       TaxId: '',
       CarrierOrBroker: '',
       AccountingEmail: '',
+      CertNumber: '',
     }
   }
   componentDidMount() {
@@ -63,6 +64,7 @@ export class AddCarrrierCard extends React.Component {
       TaxId,
       CarrierOrBroker,
       AccountingEmail,
+      CertNumber,
     } = this.state
     let token = getStorage('token')
 
@@ -86,10 +88,11 @@ export class AddCarrrierCard extends React.Component {
           taxId: TaxId,
           carrierOrBroker: CarrierOrBroker,
           accountingEmail: AccountingEmail,
+          certNumber: CertNumber,
         }),
       }
       const response = await fetch(
-        'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/add-carrier',
+        `${baseURL()}/api/Admin/add-carrier`,
         body,
       )
       const data = await response.json()
@@ -414,6 +417,28 @@ export class AddCarrrierCard extends React.Component {
                       value={this.state.AccountingEmail}
                       onChange={this.handleChange}
                       type="Email"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Cert Number
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required
+                      name="CertNumber"
+                      value={this.state.CertNumber}
+                      onChange={this.handleChange}
+                      type="number"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
