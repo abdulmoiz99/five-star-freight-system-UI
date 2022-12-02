@@ -1,5 +1,5 @@
 import React from 'react'
-import { getStorage } from '../../shared/LoacalStorage'
+import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
 import { typesOfTrucks, lengthOfTrucks } from '../../shared/DropDownCache'
@@ -66,6 +66,18 @@ export class ShipmentCard extends React.Component {
       Carriers: data.result.map((element) => ({ value: element.id, label: element.name }))
     })
   }
+  RecallCommodity = async () => {
+    console.log("sending request")
+    let token = getStorage('token')
+    const response = await fetch(
+      `${baseURL()}/api/Shipment/comodities`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
+    const data = await response.json()
+    this.setState({ Commodities: data.result })
+  }
   CheckEdit = async () => {
     const id = new URLSearchParams(window.location.search).get('id');
     this.setState({ isEdit: id ? true : false })
@@ -101,6 +113,9 @@ export class ShipmentCard extends React.Component {
         ShippingNotes: data.result.shippingNotes,
         DeliveryNotes: data.result.deliveryNotes,
       })
+    }
+    else {
+      this.RecallCommodity()
     }
   }
   clearForm = () => {
@@ -615,7 +630,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date 
+                      date
                     </label>
                     <input
                       name="PickUpDateTime"
@@ -726,7 +741,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      date 
+                      date
                     </label>
                     <input
                       name="DeliveryDateTime"
