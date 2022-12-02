@@ -1,5 +1,6 @@
 import React from 'react'
 import { getStorage } from '../../shared/LoacalStorage'
+import { Link } from 'react-router-dom'
 
 export class ShipperCarrierTable extends React.Component {
   constructor(props) {
@@ -57,6 +58,12 @@ export class ShipperCarrierTable extends React.Component {
                   Carriers
                 </h3>
               </div>
+              <Link
+                to="/ShipperCarriers/RequestCarrier"
+                className="bg-emerald-500 text-white active:bg-emerald-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              >
+                Request New Carrier
+              </Link>
             </div>
           </div>
           <div className="block w-full overflow-x-auto">
