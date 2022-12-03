@@ -4,7 +4,7 @@ import NavBar from '../../componenets/NavBar/AdminNavbar'
 import FooterAdmin from '../../componenets/Footers/FooterAdmin'
 import { IsAdmin } from '../../shared/LoacalStorage'
 import HeaderBar from '../../componenets/Headers/HeaderBar'
-import { ShipperTable } from '../../componenets/Tables/ShipperTable'
+import ShipperTable from '../../componenets/Tables/ShipperTable'
 
 export class ViewShipper extends React.Component {
   render() {
