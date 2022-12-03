@@ -12,6 +12,7 @@ export class AddCarrrierCard extends React.Component {
       success: true,
       AlertMessage: '',
       GeneratingReport: true,
+      isEdit: false
     }
     this.state = {
       Name: '',
@@ -31,6 +32,34 @@ export class AddCarrrierCard extends React.Component {
   }
   componentDidMount() {
     this.setState({ GeneratingReport: false })
+    this.CheckEdit();
+  }
+  CheckEdit = async () => {
+    const id = new URLSearchParams(window.location.search).get('id');
+    this.setState({ isEdit: id ? true : false })
+    if (id) {
+      let token = getStorage('token')
+      const response = await fetch(
+        `${baseURL()}/api/Admin/carrier?carrierId=${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      const data = await response.json()
+      this.setState({
+        Name: data.result.name,
+        Email: data.result.email,
+        Address: data.result.address,
+        PhoneNumber: data.result.phoneNumber,
+        ContactEmail: data.result.contactEmail,
+        McNumber: data.result.mcNumber,
+        DotNumber: data.result.dotNumber,
+        TaxId: data.result.taxId,
+        CarrierOrBroker: data.result.carrierOrBroker,
+        AccountingEmail: data.result.accountingEmail,
+        CertNumber: data.result.certNumber,
+      })
+    }
   }
   clearForm = () => {
     this.setState({
@@ -50,6 +79,7 @@ export class AddCarrrierCard extends React.Component {
   }
   handleSubmission = async (event) => {
     event.preventDefault()
+    const id = new URLSearchParams(window.location.search).get('id');
     this.setState({ displayAlert: false, GeneratingReport: true })
     const {
       Name,
@@ -65,6 +95,7 @@ export class AddCarrrierCard extends React.Component {
       CarrierOrBroker,
       AccountingEmail,
       CertNumber,
+      isEdit
     } = this.state
     let token = getStorage('token')
 
@@ -76,6 +107,7 @@ export class AddCarrrierCard extends React.Component {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
+          id: id,
           name: Name,
           email: Email,
           password: Password,
@@ -91,14 +123,25 @@ export class AddCarrrierCard extends React.Component {
           certNumber: CertNumber,
         }),
       }
-      const response = await fetch(
-        `${baseURL()}/api/Admin/add-carrier`,
-        body,
-      )
+      let response
+      if (isEdit) {
+        response = await fetch(
+          `${baseURL()}/api/Admin/edit-carrier`,
+          body,
+        )
+      }
+      else {
+        response = await fetch(
+          `${baseURL()}/api/Admin/add-carrier`,
+          body,
+        )
+      }
       const data = await response.json()
+      let message = isEdit ? "Carrier Updated Successfully." : "Carrier created successfully.";
       if (data.success === true) {
-        this.setState({ displayAlert: true, AlertMessage: "Carrier created successfully.", success: true, })
-        this.clearForm();
+        this.setState({ displayAlert: true, AlertMessage: message, success: true, })
+        if (!this.state.isEdit)
+          this.clearForm();
       } else if (data.success === false) {
         this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
       }
@@ -129,7 +172,7 @@ export class AddCarrrierCard extends React.Component {
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <h6 className="text-blueGray-700 text-xl font-bold uppercase">
-                Create New Carrier
+                {this.state.isEdit ? "Edit Carrier" : "Create New Carrier"}
               </h6>
               <Link
                 to="/Carriers"
@@ -169,51 +212,55 @@ export class AddCarrrierCard extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Passwrd{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      autoComplete="new-password"
-                      name="Password"
-                      value={this.state.Password}
-                      onChange={this.handleChange}
-                      type="Password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Confirm Password{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="ConfirmPassword"
-                      value={this.state.ConfirmPassword}
-                      onChange={this.handleChange}
-                      type="Password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
+                {!this.state.isEdit ?
+                  <>
+                    <div className="w-full px-4">
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Passwrd{' '}
+                          <span style={{ color: 'red', justifyContent: 'center' }}>
+                            {' '}
+                            *
+                          </span>
+                        </label>
+                        <input
+                          required={!this.state.isEdit}
+                          autoComplete="new-password"
+                          name="Password"
+                          value={this.state.Password}
+                          onChange={this.handleChange}
+                          type="Password"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full px-4">
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Confirm Password{' '}
+                          <span style={{ color: 'red', justifyContent: 'center' }}>
+                            {' '}
+                            *
+                          </span>
+                        </label>
+                        <input
+                          required={!this.state.isEdit}
+                          name="ConfirmPassword"
+                          value={this.state.ConfirmPassword}
+                          onChange={this.handleChange}
+                          type="Password"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        />
+                      </div>
+                    </div>
+                  </>
+                  : null}
               </div>
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Carrier Details
@@ -455,12 +502,12 @@ export class AddCarrrierCard extends React.Component {
                         className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                         type="submit"
                       >
-                        Add Carrier
+                        {this.state.isEdit ? "Update" : "Add Carrier"}
                       </button>
                     </>
                   ) : (
                     <button className="bg-blueGray-700 text-white active:bg-lightBlue-400 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" disabled>
-                      Creating...
+                      {this.state.isEdit ? "Updating..." : "Creating...."}
                     </button>
                   )}
                 </div>
