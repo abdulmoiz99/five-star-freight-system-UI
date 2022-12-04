@@ -1,35 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
-import { Link } from 'react-router-dom'
+import { Input } from '../_Global/_Input';
+import { FH6, H6 } from '../_Global/_Heading';
+import { LoadingButton, NavigationButton, SubmitButton } from '../_Global/_Button';
 
-export class AddShipperCard extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      displayAlert: false,
-      success: true,
-      AlertMessage: '',
-      GeneratingReport: true,
-      isEdit: false
-    }
-    this.state = {
-      Name: '',
-      Email: '',
-      Password: '',
-      ConfirmPassword: '',
-      Address: '',
-      Commodity: '',
-      TaxId: ''
-    }
-  }
-  componentDidMount() {
-    this.setState({ GeneratingReport: false })
-    this.CheckEdit();
-  }
-  CheckEdit = async () => {
+export function AddShipperCard() {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [address, setAddress] = useState();
+  const [commodity, setCommodity] = useState();
+  const [taxId, setTaxId] = useState();
+
+  const [alert, setAlert] = useState({
+    display: false,
+    message: '',
+    success: false
+  })
+  const [isLoading, setLoading] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+
+  useEffect(() => {
+    CheckEdit();
+  }, []);
+
+  const CheckEdit = async () => {
     const id = new URLSearchParams(window.location.search).get('id');
-    this.setState({ isEdit: id ? true : false })
+    setEdit(id ? true : false)
     if (id) {
       let token = getStorage('token')
       const response = await fetch(
@@ -39,42 +38,28 @@ export class AddShipperCard extends React.Component {
         },
       )
       const data = await response.json()
-      this.setState({
-        Name: data.result.name,
-        Email: data.result.email,
-        Address: data.result.address,
-        Commodity: data.result.commodity,
-        TaxId: data.result.taxId,
-      })
+      if (data.success) {
+        setName(data.result.name)
+        setEmail(data.result.email)
+        setAddress(data.result.address)
+        setCommodity(data.result.commodity)
+        setTaxId(data.result.taxId)
+      }
     }
   }
-  clearForm = () => {
-    this.setState({
-      Name: '',
-      Email: '',
-      Password: '',
-      ConfirmPassword: '',
-      Address: '',
-      Commodity: '',
-      TaxId: ''
-    })
+  const clearForm = () => {
+    setName('')
+    setEmail('')
+    setAddress('')
+    setCommodity('')
+    setTaxId('')
   }
-  handleSubmission = async (event) => {
+  const handleSubmission = async (event) => {
     event.preventDefault()
     const id = new URLSearchParams(window.location.search).get('id');
-    this.setState({ displayAlert: false, GeneratingReport: true })
-    const {
-      Name,
-      Email,
-      Password,
-      ConfirmPassword,
-      Address,
-      Commodity,
-      TaxId,
-      isEdit
-    } = this.state
+    setAlert({ ...alert, display: false });
+    setLoading(true)
     let token = getStorage('token')
-
     try {
       const body = {
         method: 'POST',
@@ -84,13 +69,13 @@ export class AddShipperCard extends React.Component {
         },
         body: JSON.stringify({
           id: id,
-          name: Name,
-          email: Email,
-          password: Password,
-          confirmPassword: ConfirmPassword,
-          address: Address,
-          commodity: Commodity,
-          taxId: TaxId
+          name: name,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          address: address,
+          commodity: commodity,
+          taxId: taxId
         }),
       }
       let response
@@ -107,245 +92,77 @@ export class AddShipperCard extends React.Component {
         )
       }
       const data = await response.json()
-      let message = isEdit ? "Shipper Updated Successfully." : "Shipper created successfully.";
-      if (data.success === true) {
-        this.setState({ displayAlert: true, AlertMessage: message, success: true, })
-        if (!this.state.isEdit)
-          this.clearForm();
-      } else if (data.success === false) {
-        this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
+      if (data.success) {
+        setAlert({
+          ...alert,
+          display: true,
+          message: isEdit ? "Shipper Updated Successfully." : "Shipper created successfully.",
+          success: true
+        });
+        if (isEdit)
+          clearForm();
+      }
+      else {
+        setAlert({
+          ...alert,
+          display: true,
+          message: data.errors[0],
+          success: false
+        });
+
       }
     } catch (e) {
       console.log(e)
     }
-    this.setState({ GeneratingReport: false })
+    setLoading(false)
   }
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    })
-  }
-  renderAlert = () => {
-    if (this.state.displayAlert) {
-      return (
-        <>
-          <Alert message={this.state.AlertMessage} success={this.state.success} />
-        </>
-      )
+  const renderAlert = () => {
+    if (alert.display) {
+      return (<Alert message={alert.message} success={alert.success} />)
     }
   }
-  render() {
-    return (
-      <>
-        <div className="relative flex flex-col min-w-0 break-words w-full lg:w-4/12 mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-          <div className="rounded-t bg-white mb-0 px-6 py-6">
-            <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold uppercase">
-                {this.state.isEdit ? "Edit Shipper" : "Create New Shipper"}
-              </h6>
-              <Link
-                to="/Shippers"
-                className="bg-emerald-500 text-white active:bg-emerald-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              >
-                View Shippers
-              </Link>
+  return (
+    <>
+      <div className="relative flex flex-col min-w-0 break-words w-full lg:w-4/12 mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div className="rounded-t bg-white mb-0 px-6 py-6">
+          <div className="text-center flex justify-between">
+            <FH6 Text={isEdit ? "Edit Shipper" : "Create New Shipper"} />
+            <NavigationButton To="/Shippers" Text="View Shippers" />
+          </div>
+        </div>
+        <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          <form onSubmit={handleSubmission}>
+            <br />
+            {renderAlert()}
+            <H6 Text=" Login Details" />
+            <div className="flex flex-wrap">
+              <Input Label="Email" State={email} Setter={setEmail} type="Email" />
+              {!isEdit ?
+                <>
+                  <Input Label="Password" State={password} Setter={setPassword} type="Password" />
+                  <Input Label="Confirm Password" State={confirmPassword} Setter={setConfirmPassword} type="Password" />
+                </>
+                : null}
             </div>
-          </div>
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <form onSubmit={this.handleSubmission}>
-              <br />
-              {this.renderAlert()}
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Login Details
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email{' '}
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="Email"
-                      value={this.state.Email}
-                      onChange={this.handleChange}
-                      type="Email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                {!this.state.isEdit ?
-                  <>
-                    <div className="w-full px-4">
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Passwrd{' '}
-                          <span style={{ color: 'red', justifyContent: 'center' }}>
-                            {' '}
-                            *
-                          </span>
-                        </label>
-                        <input
-                          required={!this.state.isEdit}
-                          autoComplete="new-password"
-                          name="Password"
-                          value={this.state.Password}
-                          onChange={this.handleChange}
-                          type="Password"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full px-4">
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Confirm Password{' '}
-                          <span style={{ color: 'red', justifyContent: 'center' }}>
-                            {' '}
-                            *
-                          </span>
-                        </label>
-                        <input
-                          required={!this.state.isEdit}
-                          name="ConfirmPassword"
-                          value={this.state.ConfirmPassword}
-                          onChange={this.handleChange}
-                          type="Password"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        />
-                      </div>
-                    </div>
-                  </>
-                  : null}
+            <H6 Text=" Shipper Details" />
+            <div className="flex flex-wrap">
+              <Input Label="Name" State={name} Setter={setName} type="text" />
+              <Input Label="Address" State={address} Setter={setAddress} type="text" />
+              <Input Label="Commodity" State={commodity} Setter={setCommodity} type="text" />
+              <Input Label="Tax Id" State={taxId} Setter={setTaxId} type="text" />
+            </div>
+            <div className="w-full lg:w-12/12 px-4">
+              <div className="relative w-full mb-3">
+                {!isLoading ? (
+                  <SubmitButton Text={isEdit ? "Update" : "Add Shipper"} />
+                ) : (
+                  <LoadingButton Text={isEdit ? "Updating..." : "Creating...."} />
+                )}
               </div>
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Shipper Details
-              </h6>
-              <div className="flex flex-wrap">
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Name
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="Name"
-                      value={this.state.Name}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Address
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="Address"
-                      value={this.state.Address}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Commodity
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="Commodity"
-                      value={this.state.Commodity}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-4">
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      TaxId
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
-                    </label>
-                    <input
-                      required
-                      name="TaxId"
-                      value={this.state.TaxId}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full lg:w-12/12 px-4">
-                <div className="relative w-full mb-3">
-                  {!this.state.GeneratingReport ? (
-                    <>
-                      <button
-                        className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                        type="submit"
-                      >
-                        {this.state.isEdit ? "Update" : "Add Shipper"}
-                      </button>
-                    </>
-                  ) : (
-                    <button className="bg-blueGray-700 text-white active:bg-lightBlue-400 font-bold uppercase text-md px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" disabled>
-                       {this.state.isEdit ? "Updating..." : "Creating...."}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </form>
-          </div>
-        </div >
-      </>
-    )
-  }
+            </div>
+          </form>
+        </div>
+      </div >
+    </>
+  )
 }

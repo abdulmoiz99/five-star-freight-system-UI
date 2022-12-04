@@ -6,24 +6,22 @@ import { IsAdmin } from '../../shared/LoacalStorage'
 import HeaderBar from '../../componenets/Headers/HeaderBar'
 import { AddCarrrierCard } from '../../componenets/Cards/AddCarrrierCard'
 
-export class EditCarrier extends React.Component {
-  render() {
-    return (
-      <>
-        <Sidebar isAdmin={IsAdmin()} />
-        <div className="relative md:ml-64 bg-blueGray-100">
-          <NavBar PageName="Update Carrier" />
-          <HeaderBar />
-          <div className="px-4 md:px-10 mx-auto w-full -m-24">
-            <div className="flex flex-wrap">
-              <div className="w-full px-4">
-                <AddCarrrierCard />
-              </div>
+export function EditCarrier() {
+  return (
+    <>
+      <Sidebar isAdmin={IsAdmin()} />
+      <div className="relative md:ml-64 bg-blueGray-100">
+        <NavBar PageName="Update Carrier" />
+        <HeaderBar />
+        <div className="px-4 md:px-10 mx-auto w-full -m-24">
+          <div className="flex flex-wrap">
+            <div className="w-full px-4">
+              <AddCarrrierCard />
             </div>
           </div>
         </div>
-        <FooterAdmin />
-      </>
-    )
-  }
+      </div>
+      <FooterAdmin />
+    </>
+  )
 }
