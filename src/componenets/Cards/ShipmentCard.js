@@ -564,7 +564,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      State{' '}
+                      City{' '}
                       <span style={{ color: 'red', justifyContent: 'center' }}>
                         {' '}
                         *
@@ -572,8 +572,8 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PickUpState"
-                      value={this.state.PickUpState}
+                      name="PickUpCity"
+                      value={this.state.PickUpCity}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -586,7 +586,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      City{' '}
+                      State{' '}
                       <span style={{ color: 'red', justifyContent: 'center' }}>
                         {' '}
                         *
@@ -594,8 +594,8 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="PickUpCity"
-                      value={this.state.PickUpCity}
+                      name="PickUpState"
+                      value={this.state.PickUpState}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -675,7 +675,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      State{' '}
+                      City{' '}
                       <span style={{ color: 'red', justifyContent: 'center' }}>
                         {' '}
                         *
@@ -683,8 +683,8 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="DeliveryState"
-                      value={this.state.DeliveryState}
+                      name="DeliveryCity"
+                      value={this.state.DeliveryCity}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -697,7 +697,7 @@ export class ShipmentCard extends React.Component {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      City{' '}
+                      State{' '}
                       <span style={{ color: 'red', justifyContent: 'center' }}>
                         {' '}
                         *
@@ -705,8 +705,8 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
-                      name="DeliveryCity"
-                      value={this.state.DeliveryCity}
+                      name="DeliveryState"
+                      value={this.state.DeliveryState}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"

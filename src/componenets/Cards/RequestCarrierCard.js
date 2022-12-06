@@ -162,13 +162,8 @@ export class RequestCarrierCard extends React.Component {
                       htmlFor="grid-password"
                     >
                       MC Number
-                      <span style={{ color: 'red', justifyContent: 'center' }}>
-                        {' '}
-                        *
-                      </span>
                     </label>
                     <input
-                      required
                       name="McNumber"
                       value={this.state.McNumber}
                       onChange={this.handleChange}

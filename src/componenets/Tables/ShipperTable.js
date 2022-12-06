@@ -16,8 +16,8 @@ function ShipperTable() {
 
   var columns = [
     { name: "Shipper Name" },
-    { name: "Details" },
-    { name: "Address" },
+    { name: "Email" },
+    { name: "Tax Id" },
     { name: "Actions" },
   ]
 
@@ -85,7 +85,7 @@ function ShipperTable() {
               </span>
             </th>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.details}
+              {report.email}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.taxId}
