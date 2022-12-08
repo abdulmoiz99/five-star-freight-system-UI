@@ -30,7 +30,7 @@ export class CarrierTable extends React.Component {
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/carriers',
+      `${baseURL()}/api/Admin/carriers`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },

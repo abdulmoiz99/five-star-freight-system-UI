@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import { getStorage, getUserRole } from '../../shared/LoacalStorage'
+import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
 export class ShipperBidsTable extends React.Component {
@@ -15,7 +15,7 @@ export class ShipperBidsTable extends React.Component {
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/orders?isOpen=true',
+      `${baseURL()}/api/Shipment/orders?isOpen=true`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },

@@ -17,6 +17,7 @@ export class ShipmentCard extends React.Component {
       AlertMessage: '',
       GeneratingReport: true,
       Carriers: [],
+      SelectedBiders: [],
       isEdit: false
     }
     this.state = {
@@ -52,7 +53,7 @@ export class ShipmentCard extends React.Component {
   populateCarriers = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/carriers',
+      `${baseURL()}/api/Shipment/carriers`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -67,7 +68,6 @@ export class ShipmentCard extends React.Component {
     })
   }
   RecallCommodity = async () => {
-    console.log("sending request")
     let token = getStorage('token')
     const response = await fetch(
       `${baseURL()}/api/Shipment/comodities`,
@@ -84,7 +84,7 @@ export class ShipmentCard extends React.Component {
     if (id) {
       let token = getStorage('token')
       const response = await fetch(
-        `https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/order-details?orderId=${id}`,
+        `${baseURL()}/api/Shipment/order-details?orderId=${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -167,6 +167,7 @@ export class ShipmentCard extends React.Component {
       QuantityOfTrucks,
       isLoadQuoted,
       Carrier,
+      SelectedBiders,
       Price,
       Weight,
       ShippingNotes,
@@ -179,7 +180,7 @@ export class ShipmentCard extends React.Component {
       { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime ? DeliveryDateTime : null },
     ];
     let token = getStorage('token')
-
+    console.log(SelectedBiders)
     try {
       const body = {
         method: 'POST',
@@ -200,12 +201,13 @@ export class ShipmentCard extends React.Component {
           shippingNotes: ShippingNotes,
           deliveryNotes: DeliveryNotes,
           carrierId: isLoadQuoted ? Carrier : null,
+          carrierIds: SelectedBiders,
           pickupLocations: pickupLocations,
           deliveryLocations: deliveryLocations
         }),
       }
       const response = await fetch(
-        'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/create-order',
+        `${baseURL()}/api/Shipment/create-order`,
         body,
       )
       const data = await response.json()
@@ -230,6 +232,11 @@ export class ShipmentCard extends React.Component {
     this.setState({
       isLoadQuoted: event.target.checked,
     })
+  }
+  handleMultiSelect = (e) => {
+    this.setState({
+      SelectedBiders: Array.isArray(e) ? e.map(x => x.value) : []
+    });
   }
   renderAlert = () => {
     if (this.state.displayAlert) {
@@ -461,7 +468,7 @@ export class ShipmentCard extends React.Component {
                 </div>
               </div>
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Load Status
+                Load Details
               </h6>
               <div className="flex flex-wrap">
                 <div className="w-full lg:w-4/12 px-4">
@@ -531,7 +538,25 @@ export class ShipmentCard extends React.Component {
                     </div>
                   </div>
                 </div>
-                : null}
+                : <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Carrier avialble for quote
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <Select
+                      closeMenuOnSelect={false}
+                      isMulti
+                      options={this.state.Carriers}
+                      isClearable
+                      onChange={this.handleMultiSelect}
+                    />
+                  </div>
+                </div>
+              }
               <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Pickup Details
               </h6>

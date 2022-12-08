@@ -47,5 +47,7 @@ export const getDefaultRoute = () => {
   }
 }
 export const baseURL = () => {
-  return "https://fivestartlogisticsapi.azurewebsites.net"
+  // return "https://fivestartlogisticsapi.azurewebsites.net"
+  return "https://localhost:51004"
+
 }

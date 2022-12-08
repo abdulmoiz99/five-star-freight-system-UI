@@ -1,5 +1,5 @@
 import React from 'react'
-import { getStorage } from '../../shared/LoacalStorage'
+import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import Alert from '../Alerts/Alert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -34,7 +34,7 @@ export class AssignCarrierTable extends React.Component {
     const id = new URLSearchParams(window.location.search).get('id');
     let carriers;
     const response = await fetch(
-      `https://fivestartlogisticsapi.azurewebsites.net/api/Admin/carriers?shipperId=${id}`,
+      `${baseURL()}/api/Admin/carriers?shipperId=${id}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -78,7 +78,7 @@ export class AssignCarrierTable extends React.Component {
         }),
       }
       const response = await fetch(
-        'https://fivestartlogisticsapi.azurewebsites.net/api/Admin/assign-carriers',
+        `${baseURL()}/api/Admin/assign-carriers`,
         body,
       )
       const data = await response.json()

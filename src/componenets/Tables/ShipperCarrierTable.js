@@ -1,5 +1,5 @@
 import React from 'react'
-import { getStorage } from '../../shared/LoacalStorage'
+import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
 export class ShipperCarrierTable extends React.Component {
@@ -13,7 +13,7 @@ export class ShipperCarrierTable extends React.Component {
   populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
-      'https://fivestartlogisticsapi.azurewebsites.net/api/Shipment/carriers',
+      `${baseURL()}/api/Shipment/carriers`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },
