@@ -25,10 +25,9 @@ function ShipmentDetailsCard() {
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full  shadow-lg rounded">
                 <div className="p-4 flex-auto">
                     <div className="relative">
-                        <h3 className="mb-4 mt-2 text-blueGray-600 text-2xl text-center font-bold">  Bid Details  </h3>
 
-                        <hr className="my-4 md:min-w-full" />
                         <Header Text = "Shipment Info" />
+                        <Label Key="Load ID: " Value={data.loadId} />
                         <Label Key="PO#: " Value={data.purchaseOrderNumber} />
                         <Label Key="Type of truck: " Value={data.truckType} />
                         <Label Key="Length of truck:" Value={data.truckLength} />
@@ -56,7 +55,6 @@ function ShipmentDetailsCard() {
                         <Label Key="City: " Value={data.deliveryLocations?.[0].city} />
                         <Label Key="Zip: " Value={data.deliveryLocations?.[0].zip} />
                         <Label Key="Date: " Value={data.deliveryLocations?.[0].dateTime} />
-                        <hr className="my-4 md:min-w-full" />
 
                     </div >
                 </div >

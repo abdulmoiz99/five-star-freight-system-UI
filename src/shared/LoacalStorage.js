@@ -33,6 +33,17 @@ export const getUserRole = () => {
     return "SHIPPER"
   }
 }
+export const IsCarrier = () => {
+  var token = localStorage.getItem('token')
+  var decoded = jwt_decode(token)
+  if (decoded.roleId === '2') {
+    return true;
+  }
+  else {
+    return false;
+
+  }
+}
 export const getDefaultRoute = () => {
   var token = localStorage.getItem('token')
   var decoded = jwt_decode(token)

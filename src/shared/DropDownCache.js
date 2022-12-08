@@ -24,3 +24,14 @@ export const carriers = [
   { value: 'carrier1', label: 'carrier1' },
   { value: 'carrier2', label: 'carrier2' },
 ]
+export const driverStatus = [
+  { value: 'Pending', label: 'Pending' },
+  { value: 'Dispatched', label: 'Dispatched' },
+  { value: 'In Route', label: 'In Route' },
+  { value: 'At Shipper', label: 'At Shipper' },
+  { value: 'In Route to Receiver', label: 'In Route to Receiver' },
+  { value: 'At Receiver', label: 'At Receiver' },
+  { value: 'Delivered', label: 'Delivered' },
+  { value: 'Ready to invoice', label: 'Ready to invoice' },
+  { value: 'Invoiced', label: 'Invoiced' },
+]

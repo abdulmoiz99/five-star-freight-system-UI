@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle} from '@fortawesome/free-solid-svg-icons'
-import { baseURL, getStorage } from '../../shared/LoacalStorage'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
 export class OpenShipmentTable extends React.Component {
@@ -55,6 +55,16 @@ export class OpenShipmentTable extends React.Component {
               >
                 View Details
               </Link>
+              {
+                IsCarrier() ?
+                  <Link
+                    to={"/viewShipments/DriverStatus?id=" + report.id}
+                    className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  >
+                    Status
+                  </Link>
+                  : null
+              }
             </td>
           </tr>
         ))
