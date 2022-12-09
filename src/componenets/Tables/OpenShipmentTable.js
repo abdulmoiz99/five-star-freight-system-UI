@@ -1,6 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 
@@ -33,9 +31,12 @@ export class OpenShipmentTable extends React.Component {
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
               <span className="ml-3 font-bold text-blueGray-600"  >
-                {report.purchaseOrderNumber}
+                {report.loadId}
               </span>
             </th>
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+              {report.purchaseOrderNumber}
+            </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.pickUpDateTime}
             </td>
@@ -46,7 +47,7 @@ export class OpenShipmentTable extends React.Component {
               {report.carrierName}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> delivered
+              {report.driverStatus}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               <Link
@@ -91,6 +92,9 @@ export class OpenShipmentTable extends React.Component {
             <table className="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                    Order Id
+                  </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     PO Number
                   </th>

@@ -41,7 +41,7 @@ function ShipmentDetailsCard() {
 
                         <hr className="my-4 md:min-w-full" />
                         <Header Text = "Pick Up Details" />
-                        <Label Key="State: " Value={data.pickupLocations?.[0].address} />
+                        <Label Key="State: " Value={data.pickupLocations?.[0].state} />
                         <Label Key=" Address: " Value={data.pickupLocations?.[0].address} />
                         <Label Key="City: " Value={data.pickupLocations?.[0].city} />
                         <Label Key="Zip: " Value={data.pickupLocations?.[0].zip} />
@@ -50,7 +50,7 @@ function ShipmentDetailsCard() {
                         <hr className="my-4 md:min-w-full" />
 
                         <Header Text = "Delivery Details" />
-                        <Label Key="State: " Value={data.deliveryLocations?.[0].address} />
+                        <Label Key="State: " Value={data.deliveryLocations?.[0].state} />
                         <Label Key=" Address: " Value={data.deliveryLocations?.[0].address} />
                         <Label Key="City: " Value={data.deliveryLocations?.[0].city} />
                         <Label Key="Zip: " Value={data.deliveryLocations?.[0].zip} />

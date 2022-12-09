@@ -6,7 +6,6 @@ function BidDetailsTable() {
   const [reportList, setReportList] = useState([]);
   //Alert Handlers
   const [displayAlert, setDisplayAlert] = useState(false);
-  const [setProccesing] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -29,7 +28,6 @@ function BidDetailsTable() {
 
   const assignCarrier = async (id) => {
     setDisplayAlert(false)
-    setProccesing(true)
     let token = getStorage('token')
     try {
       const body = {
@@ -57,7 +55,6 @@ function BidDetailsTable() {
     } catch (e) {
       console.log(e)
     }
-    setProccesing(false)
   }
   const reportReportList = (reportList) => {
     return (
