@@ -17,7 +17,6 @@ export class ShipmentCard extends React.Component {
       AlertMessage: '',
       GeneratingReport: true,
       Carriers: [],
-      options: [],
       SelectedBiders: [],
       isEdit: false
     }
@@ -66,10 +65,7 @@ export class ShipmentCard extends React.Component {
     })
     this.setState({
       Carriers: data.result.map((element) => ({ value: element.id, label: element.name }))
-    },
-      () => {
-        this.setState({ options: this.state.Carriers })
-      })
+    })
   }
   RecallCommodity = async () => {
     let token = getStorage('token')
@@ -237,16 +233,10 @@ export class ShipmentCard extends React.Component {
       isLoadQuoted: event.target.checked,
     })
   }
-  handleMultiSelect = (event) => {
-    // this.setState({
-    //   SelectedBiders: Array.isArray(e) ? e.map(x => x.value) : []
-    // });
-    if (event.find(item => item.value.includes('All'))) {
-      console.log("We have selected ALL")
-    }
-    else {
-      console.log("Removed")
-    }
+  handleMultiSelect = (e) => {
+    this.setState({
+      SelectedBiders: Array.isArray(e) ? e.map(x => x.value) : []
+    });
   }
   renderAlert = () => {
     if (this.state.displayAlert) {
@@ -557,17 +547,13 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    {this.state.options ?
-                      < Select
-                        hasSelectAll
-                        closeMenuOnSelect={false}
-                        isMulti
-                        options={[{ label: "All", value: "All" }, ...this.state.options]}
-                        isClearable
-                        onChange={this.handleMultiSelect}
-                      /> : null
-                    }
-
+                    <Select
+                      closeMenuOnSelect={false}
+                      isMulti
+                      options={this.state.Carriers}
+                      isClearable
+                      onChange={this.handleMultiSelect}
+                    />
                   </div>
                 </div>
               }
