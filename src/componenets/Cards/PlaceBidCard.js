@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 
@@ -10,10 +10,39 @@ function PlaceBidCard() {
   const [processing, setProccesing] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const [lastBid, setLastBid] = useState({
+    amount: 0,
+    message: '',
+    hasLastBid: false
+  })
+  
   const clearForm = () => {
     setAmount('');
     setMessage('')
+  }
+  useEffect(() => {
+    GetLastBid();
+  }, []);
+
+  const GetLastBid = async () => {
+    const id = new URLSearchParams(window.location.search).get('id');
+    if (id) {
+      let token = getStorage('token')
+      const response = await fetch(
+        `${baseURL()}/api/Bidding/last-bid?orderId=${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      const data = await response.json()
+      if (data.success && data.result != null) {
+        setLastBid({
+          amount: data.result.amount,
+          message: data.result.message,
+          hasLastBid: true
+        });
+      }
+    }
   }
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -43,6 +72,7 @@ function PlaceBidCard() {
       setSuccess(data.success)
       if (data.success === true) {
         setAlertMessage("Bid placed successfully.")
+        GetLastBid();
         clearForm();
       } else if (data.success === false) {
         setAlertMessage(data.errors[0])
@@ -56,6 +86,21 @@ function PlaceBidCard() {
     if (displayAlert) {
       return (
         <Alert message={alertMessage} success={success} />
+      )
+    }
+  }
+  const renderLastBid = () => {
+    if (lastBid.hasLastBid) {
+      return (
+        <div className="text-white px-6 py-4 border-0 rounded relative mb-4 bg-blueGray-600">
+          <span className="inline-block align-middle mr-6 font-bold"> LAST BID  </span>
+          <h5 className="text-lg font-normal leading-normal mt-1  mb-2">
+            Amount: ${lastBid.amount}
+          </h5>
+          <h5 className="text-lg font-normal leading-normal mt-1  mb-2">
+            Message: {lastBid.message}
+          </h5>
+        </div>
       )
     }
   }
@@ -73,6 +118,7 @@ function PlaceBidCard() {
           <form onSubmit={handleSubmit} >
             <br />
             {renderAlert()}
+            {renderLastBid()}
             <div className="flex flex-wrap">
 
               <Input Label="Bid Amount" State={amount} Setter={setAmount} type="number" />

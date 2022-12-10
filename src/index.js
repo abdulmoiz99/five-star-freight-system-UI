@@ -30,9 +30,9 @@ root.render(
     <Routes>
       <Route path="/login" element={< Login />}></Route>
       <Route path="/Shipment" element={< Shipment />}></Route>
-      <Route path="/ShipmentDetails" element={< ShipmentDetail />}></Route>
       <Route path="/ViewShipments" element={< ViewShipment />}></Route>
       <Route path="/ViewShipments/DriverStatus" element={< DriverStatus />}></Route>
+      <Route path="/ViewShipments/Details" element={< ShipmentDetail />}></Route>
 
       <Route path="/ShipperBids" element={< ShipperBids />}></Route>
       <Route path="/AddCarrier" element={< AddCarrier />}></Route>

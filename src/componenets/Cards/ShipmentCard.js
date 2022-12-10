@@ -180,7 +180,6 @@ export class ShipmentCard extends React.Component {
       { address: DeliveryAddress, state: DeliveryState, city: DeliveryCity, zip: DeliveryZip, dateTime: DeliveryDateTime ? DeliveryDateTime : null },
     ];
     let token = getStorage('token')
-    console.log(SelectedBiders)
     try {
       const body = {
         method: 'POST',
@@ -433,7 +432,7 @@ export class ShipmentCard extends React.Component {
                       name="Weight"
                       value={this.state.Weight}
                       onChange={this.handleChange}
-                      type="text"
+                      type="number"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>

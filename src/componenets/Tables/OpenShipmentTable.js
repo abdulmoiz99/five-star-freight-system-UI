@@ -1,6 +1,8 @@
 import React from 'react'
 import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 export class OpenShipmentTable extends React.Component {
   constructor(props) {
@@ -30,7 +32,7 @@ export class OpenShipmentTable extends React.Component {
         {reportList?.map((report) => (
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-              <span className="ml-3 font-bold text-blueGray-600"  >
+              <span className="font-bold text-blueGray-600"  >
                 {report.loadId}
               </span>
             </th>
@@ -50,12 +52,6 @@ export class OpenShipmentTable extends React.Component {
               {report.driverStatus}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
-              <Link
-                to={"/ShipmentDetails?id=" + report.id}
-                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              >
-                View Details
-              </Link>
               {
                 IsCarrier() ?
                   <Link
@@ -64,7 +60,13 @@ export class OpenShipmentTable extends React.Component {
                   >
                     Status
                   </Link>
-                  : null
+                  :
+                  <Link
+                    to={"/ViewShipments/Details?id=" + report.id}
+                    className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </Link>
               }
             </td>
           </tr>

@@ -30,7 +30,7 @@ function AssignShipperTable() {
         {reportList?.map((report) => (
           <tr key={Math.random()}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-              <span className="ml-3 font-bold text-blueGray-600"  >
+              <span className="font-bold text-blueGray-600"  >
                 {report.name}
               </span>
             </th>

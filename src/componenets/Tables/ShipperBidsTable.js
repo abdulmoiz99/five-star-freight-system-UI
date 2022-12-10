@@ -1,8 +1,8 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 export class ShipperBidsTable extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export class ShipperBidsTable extends React.Component {
         {reportList?.map((report) => (
           <tr key={report.id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-              <span className="ml-3 font-bold text-blueGray-600"  >
+              <span className="font-bold text-blueGray-600"  >
                 {report.purchaseOrderNumber}
               </span>
             </th>
@@ -42,8 +42,8 @@ export class ShipperBidsTable extends React.Component {
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.deliveryDateTime}
             </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              <FontAwesomeIcon icon={faCircle} color="#1AFC3F" /> OPEN
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 font-semibold">
+              {report.bidCount}
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               {getUserRole() === "CARRIER" ?
@@ -57,7 +57,7 @@ export class ShipperBidsTable extends React.Component {
                   to={"/ViewBids?id=" + report.id}
                   className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
-                  view bids
+                  <FontAwesomeIcon icon={faEye} />
                 </Link>
               }
             </td>
@@ -95,7 +95,7 @@ export class ShipperBidsTable extends React.Component {
                     Delivery date
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Bid Status
+                    Total Bids
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Actions

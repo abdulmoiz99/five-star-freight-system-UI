@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { baseURL, getStorage } from '../../shared/LoacalStorage';
+import { NavigationButton } from '../_Global/_Button';
 
 function ShipmentDetailsCard() {
     const [data, setData] = useState([]);
@@ -19,14 +20,13 @@ function ShipmentDetailsCard() {
     useEffect(() => {
         getShipmentDetails()
     }, []);
-   
+
     return (
         <>
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full  shadow-lg rounded">
                 <div className="p-4 flex-auto">
                     <div className="relative">
-
-                        <Header Text = "Shipment Info" />
+                        <Header Text="Shipment Info" />
                         <Label Key="Load ID: " Value={data.loadId} />
                         <Label Key="PO#: " Value={data.purchaseOrderNumber} />
                         <Label Key="Type of truck: " Value={data.truckType} />
@@ -40,20 +40,15 @@ function ShipmentDetailsCard() {
                         <Label Key="Delivery notes: " Value={data.deliveryNotes} />
 
                         <hr className="my-4 md:min-w-full" />
-                        <Header Text = "Pick Up Details" />
-                        <Label Key="State: " Value={data.pickupLocations?.[0].state} />
-                        <Label Key=" Address: " Value={data.pickupLocations?.[0].address} />
-                        <Label Key="City: " Value={data.pickupLocations?.[0].city} />
-                        <Label Key="Zip: " Value={data.pickupLocations?.[0].zip} />
+                        <Header Text="Pick Up Details" />
+
+                        <Label Value={data.pickupLocations?.[0].address + ": " + data.pickupLocations?.[0].state + ", " + data.pickupLocations?.[0].city + ", " + data.pickupLocations?.[0].zip} />
                         <Label Key="Date: " Value={data.pickupLocations?.[0].dateTime} />
 
                         <hr className="my-4 md:min-w-full" />
 
-                        <Header Text = "Delivery Details" />
-                        <Label Key="State: " Value={data.deliveryLocations?.[0].state} />
-                        <Label Key=" Address: " Value={data.deliveryLocations?.[0].address} />
-                        <Label Key="City: " Value={data.deliveryLocations?.[0].city} />
-                        <Label Key="Zip: " Value={data.deliveryLocations?.[0].zip} />
+                        <Header Text="Delivery Details" />
+                        <Label Value={data.deliveryLocations?.[0].address + ": " + data.deliveryLocations?.[0].state + ", " + data.deliveryLocations?.[0].city + ", " + data.deliveryLocations?.[0].zip} />
                         <Label Key="Date: " Value={data.deliveryLocations?.[0].dateTime} />
 
                     </div >
