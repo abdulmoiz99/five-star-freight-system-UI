@@ -2375,6 +2375,10 @@ select {
   --tw-text-opacity: 1;
   color: rgba(2, 132, 199, var(--tw-text-opacity));
 }
+.text-lightBlue-800 {
+  --tw-text-opacity: 1;
+  color: rgba(7, 89, 133, var(--tw-text-opacity));
+}
 
 .text-teal-500 {
   --tw-text-opacity: 1;

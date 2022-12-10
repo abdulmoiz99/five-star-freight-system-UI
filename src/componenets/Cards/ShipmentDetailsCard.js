@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { baseURL, getStorage } from '../../shared/LoacalStorage';
-import { NavigationButton } from '../_Global/_Button';
 
 function ShipmentDetailsCard() {
     const [data, setData] = useState([]);
