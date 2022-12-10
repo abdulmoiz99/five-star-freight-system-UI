@@ -22,6 +22,7 @@ import { EditCarrier } from './views/Carriers/EditCarrier';
 import { AssignShippers } from './views/Carriers/AssignShippers';
 import { DriverStatus } from './views/Shipment/DriverStatus';
 import { FreightSpend } from './views/FreightSpend/FreightSpend';
+import { Settings } from './views/Settings/Settings';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -52,6 +53,9 @@ root.render(
       <Route path="/AssignShippers" element={< AssignShippers />}></Route>
 
       <Route path="/FreightSpend" element={< FreightSpend />}></Route>
+
+      <Route path="/Settings" element={< Settings />}></Route>
+
 
     </Routes>
   </BrowserRouter>,
