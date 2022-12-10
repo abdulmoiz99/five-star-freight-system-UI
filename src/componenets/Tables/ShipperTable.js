@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faSearch, faTrash, faTruck } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../Alerts/Alert'
 import Table from './_Table'
+import { NoRecordCheck } from '../_Global/_Table'
 
 function ShipperTable() {
   const [reportList, setReportList] = useState([]);
@@ -114,6 +115,7 @@ function ShipperTable() {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={4} data={reportList} />
       </>
     )
   }

@@ -3,6 +3,7 @@ import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { NoRecordCheck } from '../_Global/_Table'
 
 export class ShipperBidsTable extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ export class ShipperBidsTable extends React.Component {
                   Offer
                 </Link> :
                 <Link
-                  to={"/ViewBids?id=" + report.id}
+                  to={"/ShipperBids/ViewBids?id=" + report.id}
                   className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   <FontAwesomeIcon icon={faEye} />
@@ -64,6 +65,7 @@ export class ShipperBidsTable extends React.Component {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={5} data={reportList} />
       </>
     )
   }

@@ -38,7 +38,6 @@ root.render(
       <Route path="/ViewShipments/DriverStatus" element={< DriverStatus />}></Route>
       <Route path="/ViewShipments/Details" element={< ShipmentDetail />}></Route>
 
-      <Route path="/ShipperBids" element={< ShipperBids />}></Route>
       <Route path="/AddCarrier" element={< AddCarrier />}></Route>
       <Route path="/Carriers" element={< ViewCarriers />}></Route>
       <Route path="/Carriers/Edit" element={< EditCarrier />}></Route>
@@ -47,8 +46,11 @@ root.render(
       <Route path="/Shippers" element={< ViewShipper />}></Route>
       <Route path="/Shippers/Edit" element={< EditShipper />}></Route>
       <Route path="/AssignCarriers" element={< AssignCarriers />}></Route>
+
       <Route path="/BidInfo" element={< BidInfo />}></Route>
-      <Route path="/ViewBids" element={< ViewBids />}></Route>
+      <Route path="/ShipperBids" element={< ShipperBids />}></Route>
+      <Route path="/ShipperBids/ViewBids" element={< ViewBids />}></Route>
+
       <Route path="/ShipperCarriers/RequestCarrier" element={< RequestCarrier />}></Route>
       <Route path="/AssignShippers" element={< AssignShippers />}></Route>
 

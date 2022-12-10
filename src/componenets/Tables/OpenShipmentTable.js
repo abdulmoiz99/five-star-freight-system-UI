@@ -3,6 +3,7 @@ import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { NoRecordCheck } from '../_Global/_Table'
 
 export class OpenShipmentTable extends React.Component {
   constructor(props) {
@@ -72,6 +73,7 @@ export class OpenShipmentTable extends React.Component {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={7} data={reportList} />
       </>
     )
   }

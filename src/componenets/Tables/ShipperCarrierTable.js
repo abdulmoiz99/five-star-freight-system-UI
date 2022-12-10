@@ -1,6 +1,7 @@
 import React from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
+import { NoRecordCheck } from '../_Global/_Table'
 
 export class ShipperCarrierTable extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ export class ShipperCarrierTable extends React.Component {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={3} data={reportList} />
       </>
     )
   }

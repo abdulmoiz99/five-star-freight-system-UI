@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../Alerts/Alert'
+import { NoRecordCheck } from '../_Global/_Table'
 
 export class CarrierTable extends React.Component {
   constructor(props) {
@@ -115,6 +116,7 @@ export class CarrierTable extends React.Component {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={7} data={reportList} />
       </>
     )
   }

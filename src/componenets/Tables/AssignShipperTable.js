@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
+import { NoRecordCheck } from '../_Global/_Table';
 import Table from './_Table'
 
 function AssignShipperTable() {
@@ -40,6 +41,7 @@ function AssignShipperTable() {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={2} data={reportList} />
       </>
     )
   }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
+import { NavigationButton } from '../_Global/_Button';
+import { NoRecordCheck } from '../_Global/_Table';
 
 function BidDetailsTable() {
   const [reportList, setReportList] = useState([]);
@@ -84,6 +86,7 @@ function BidDetailsTable() {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={4} data={reportList} />
       </>
     )
   }
@@ -105,6 +108,7 @@ function BidDetailsTable() {
                 Bid Details
               </h3>
             </div>
+            <NavigationButton To="/ShipperBids" Text="View Bids" />
           </div>
         </div>
         <div className="block w-full overflow-x-auto">

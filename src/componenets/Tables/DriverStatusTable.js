@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { baseURL } from '../../shared/LoacalStorage'
+import { NoRecordCheck } from '../_Global/_Table';
 import Table from './_Table'
 
 function DriverStatusTable() {
@@ -43,6 +44,7 @@ function DriverStatusTable() {
           </tr>
         ))
         }
+        <NoRecordCheck colCount={3} data={reportList} />
       </>
     )
   }
