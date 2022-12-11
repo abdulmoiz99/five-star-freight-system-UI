@@ -3,7 +3,7 @@ import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { NoRecordCheck } from '../_Global/_Table'
+import { NoRecordCheck, TableData, TableHeader } from '../_Global/_Table'
 import Alert from '../Alerts/Alert'
 import Table from './_Table'
 import DeleteModal from '../_Global/_Modal'
@@ -22,15 +22,18 @@ export function OpenShipmentTable() {
   })
   const [showModal, setShowModal] = React.useState(false);
 
-  var columns = [
+  const columns = [
     { name: "ORDER ID" },
     { name: "PO NUMBER" },
     { name: "PICK UP DATE" },
+    { name: "PICK UP STATE" },
+    { name: "PICK UP CITY" },
     { name: "DELIVERY DATE" },
+    { name: "DELIVERY STATE" },
+    { name: "DELIVERY CITY" },
     { name: "CARRIER" },
     { name: "DRIVER STATUS" },
     { name: "ACTIONS" },
-
   ]
 
   useEffect(() => {
@@ -97,26 +100,16 @@ export function OpenShipmentTable() {
       <>
         {reportList?.map((report) => (
           <tr key={report.id}>
-            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-              <span className="font-bold text-blueGray-600"  >
-                {report.loadId}
-              </span>
-            </th>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.purchaseOrderNumber}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickUpDateTime}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.deliveryDateTime}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.carrierName}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.driverStatus}
-            </td>
+            <TableHeader Text={report.loadId} />
+            <TableData Text={report.purchaseOrderNumber} />
+            <TableData Text={report.pickUpDateTime} />
+            <TableData Text={report.pickUpState} />
+            <TableData Text={report.pickUpCity} />
+            <TableData Text={report.deliveryDateTime} />
+            <TableData Text={report.deliveryState} />
+            <TableData Text={report.deliveryCity} />
+            <TableData Text={report.carrierName} />
+            <TableData Text={report.driverStatus} />
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               {
                 IsCarrier() ?
@@ -147,7 +140,7 @@ export function OpenShipmentTable() {
           </tr>
         ))
         }
-        <NoRecordCheck colCount={7} data={reportList} />
+        <NoRecordCheck colCount={columns.length} data={reportList} />
       </>
     )
   }

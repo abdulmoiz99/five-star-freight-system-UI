@@ -3,7 +3,7 @@ import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { NoRecordCheck } from '../_Global/_Table'
+import { NoRecordCheck, TableData, TableHeader } from '../_Global/_Table'
 import Alert from '../Alerts/Alert'
 import Table from './_Table'
 import DeleteModal from '../_Global/_Modal'
@@ -20,10 +20,15 @@ export function ShipperBidsTable() {
   })
   const [showModal, setShowModal] = React.useState(false);
 
-  var columns = [
+  const columns = [
     { name: "PO NUMBER" },
     { name: "PICK UP DATE	" },
+    { name: "PICK STATE" },
+    { name: "PICK CITY" },
     { name: "DELIVERY DATE	" },
+    { name: "DELIVERY STATE" },
+    { name: "DELIVERY CITY" },
+    { name: "SHIPPER" },
     { name: "TOTAL BIDS	" },
     { name: "ACTIONS" },
   ]
@@ -31,7 +36,6 @@ export function ShipperBidsTable() {
   useEffect(() => {
     populateTableData()
   }, []);
-
   const populateTableData = async () => {
     let token = getStorage('token')
     const response = await fetch(
@@ -92,20 +96,15 @@ export function ShipperBidsTable() {
       <>
         {reportList?.map((report) => (
           <tr key={report.id}>
-            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
-              <span className="font-bold text-blueGray-600"  >
-                {report.purchaseOrderNumber}
-              </span>
-            </th>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.pickUpDateTime}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-              {report.deliveryDateTime}
-            </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 font-semibold">
-              {report.bidCount}
-            </td>
+            <TableHeader Text={report.purchaseOrderNumber} />
+            <TableData Text={report.pickUpDateTime} />
+            <TableData Text={report.pickUpState} />
+            <TableData Text={report.pickUpCity} />
+            <TableData Text={report.deliveryDateTime} />
+            <TableData Text={report.deliveryCity} />
+            <TableData Text={report.deliveryState} />
+            <TableData Text={report.shipperName} />
+            <TableData Text={report.bidCount} />
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               {getUserRole() === "CARRIER" ?
                 <Link
@@ -133,7 +132,7 @@ export function ShipperBidsTable() {
           </tr>
         ))
         }
-        <NoRecordCheck colCount={5} data={reportList} />
+        <NoRecordCheck colCount={columns.length} data={reportList} />
       </>
     )
   }
