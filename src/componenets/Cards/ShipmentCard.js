@@ -2,7 +2,7 @@ import React from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
-import { typesOfTrucks, lengthOfTrucks } from '../../shared/DropDownCache'
+import { typesOfTrucks, lengthOfTrucks, states, cities } from '../../shared/DropDownCache'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
@@ -18,6 +18,7 @@ export class ShipmentCard extends React.Component {
       GeneratingReport: true,
       Carriers: [],
       SelectedBiders: [],
+      AddressSuggestion: [],
       isEdit: false
     }
     this.state = {
@@ -49,7 +50,24 @@ export class ShipmentCard extends React.Component {
     this.setState({ GeneratingReport: false })
     this.populateCarriers()
     this.CheckEdit();
+    this.GetAddresses();
   }
+  GetAddresses = async () => {
+    let token = getStorage('token')
+    const response = await fetch(
+      `${baseURL()}/api/Shipment/address-suggestions`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
+    const data = await response.json()
+    if (data.success === true) {
+      this.setState({
+        AddressSuggestion: data.result,
+      })
+    }
+  }
+
   populateCarriers = async () => {
     let token = getStorage('token')
     const response = await fetch(
@@ -574,12 +592,14 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
+                      list="suggestions"
                       name="PickUpAddress"
                       value={this.state.PickUpAddress}
                       onChange={this.handleChange}
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
+                    <datalist id="suggestions"> {this.state.AddressSuggestion?.map((suggestion) => (<option value={suggestion.address} />))}  </datalist>
                   </div>
                 </div>
                 <div className="w-full lg:w-3/12 px-4">
@@ -594,13 +614,14 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <input
-                      required
-                      name="PickUpCity"
-                      value={this.state.PickUpCity}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    <Select
+                      options={cities}
+                      value={{ value: this.state.PickUpCity, label: this.state.PickUpCity }}
+                      onChange={(selectedOption) => {
+                        this.setState({
+                          PickUpCity: selectedOption.value,
+                        })
+                      }}
                     />
                   </div>
                 </div>
@@ -616,13 +637,14 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <input
-                      required
-                      name="PickUpState"
-                      value={this.state.PickUpState}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    <Select
+                      options={states}
+                      value={{ value: this.state.PickUpState, label: this.state.PickUpState }}
+                      onChange={(selectedOption) => {
+                        this.setState({
+                          PickUpState: selectedOption.value,
+                        })
+                      }}
                     />
                   </div>
                 </div>
@@ -685,6 +707,7 @@ export class ShipmentCard extends React.Component {
                     </label>
                     <input
                       required
+                      list="suggestions"
                       name="DeliveryAddress"
                       value={this.state.DeliveryAddress}
                       onChange={this.handleChange}
@@ -705,13 +728,14 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <input
-                      required
-                      name="DeliveryCity"
-                      value={this.state.DeliveryCity}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    <Select
+                      options={cities}
+                      value={{ value: this.state.DeliveryCity, label: this.state.DeliveryCity }}
+                      onChange={(selectedOption) => {
+                        this.setState({
+                          DeliveryCity: selectedOption.value,
+                        })
+                      }}
                     />
                   </div>
                 </div>
@@ -727,13 +751,14 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <input
-                      required
-                      name="DeliveryState"
-                      value={this.state.DeliveryState}
-                      onChange={this.handleChange}
-                      type="text"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    <Select
+                      options={states}
+                      value={{ value: this.state.DeliveryState, label: this.state.DeliveryState }}
+                      onChange={(selectedOption) => {
+                        this.setState({
+                          DeliveryState: selectedOption.value,
+                        })
+                      }}
                     />
                   </div>
                 </div>
