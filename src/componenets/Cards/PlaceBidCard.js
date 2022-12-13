@@ -15,7 +15,7 @@ function PlaceBidCard() {
     message: '',
     hasLastBid: false
   })
-  
+
   const clearForm = () => {
     setAmount('');
     setMessage('')
@@ -121,7 +121,7 @@ function PlaceBidCard() {
             {renderLastBid()}
             <div className="flex flex-wrap">
 
-              <Input Label="Bid Amount" State={amount} Setter={setAmount} type="number" />
+              <Input Label="Bid Amount" State={amount} Setter={setAmount} isRequired ={true} type="number" />
               <Input Label=" Message" State={message} Setter={setMessage} type="text" />
 
             </div>
@@ -159,13 +159,15 @@ function Input(props) {
           htmlFor="grid-password"
         >
           {props.Label}{' '}
-          <span style={{ color: 'red', justifyContent: 'center' }}>
-            {' '}
-            *
-          </span>
+          {props.isRequired ?
+            <span style={{ color: 'red', justifyContent: 'center' }}>
+              {' '}
+              *
+            </span> : null
+          }
         </label>
         <input
-          required
+          required = {props.isRequired}
           name="number"
           value={props.State}
           onChange={e => props.Setter(e.target.value)}

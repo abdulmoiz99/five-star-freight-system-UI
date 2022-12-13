@@ -78,9 +78,9 @@ export function UpdatePassword() {
             <br />
             {renderAlert()}
             <div className="flex flex-wrap">
-              <Input Label="CurrentPassword" State={currentPassword} Setter={setCurrentPassword} type="password" />
-              <Input Label="New  Passowrd" State={newPassword} Setter={setNewPassword} type="password" />
-              <Input Label="Confirm New Passowrd" State={confirmPassword} Setter={setConfirmPassword} type="password" />
+              <Input Label="Current Password" State={currentPassword} Setter={setCurrentPassword} type="password" />
+              <Input Label="New  Password" State={newPassword} Setter={setNewPassword} type="password" />
+              <Input Label="Confirm New Password" State={confirmPassword} Setter={setConfirmPassword} type="password" />
             </div>
             <div className="w-full lg:w-12/12 px-4">
               <div className="relative w-full mb-3">

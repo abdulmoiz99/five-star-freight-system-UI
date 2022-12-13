@@ -91,16 +91,20 @@ export function ShipperBidsTable() {
       )
     }
   }
+  const removeTime = (s) => {
+    s = s?.substring(0, s?.indexOf('T'));
+    return s;
+  }
   const reportReportList = (reportList) => {
     return (
       <>
         {reportList?.map((report) => (
           <tr key={report.id}>
             <TableHeader Text={report.purchaseOrderNumber} />
-            <TableData Text={report.pickUpDateTime} />
+            <TableData Text={removeTime(report.pickUpDateTime)} />
             <TableData Text={report.pickUpState} />
             <TableData Text={report.pickUpCity} />
-            <TableData Text={report.deliveryDateTime} />
+            <TableData Text={removeTime(report.deliveryDateTime)} />
             <TableData Text={report.deliveryCity} />
             <TableData Text={report.deliveryState} />
             <TableData Text={report.shipperName} />

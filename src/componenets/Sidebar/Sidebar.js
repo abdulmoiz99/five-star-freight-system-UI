@@ -20,12 +20,17 @@ export default function Sidebar({ isAdmin }) {
           {/* Toggler */}
 
           {/* Brand */}
-          <Link
-            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-            to="/"
+          <h2
+            className="md:block text-center md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-md uppercase font-bold p-3 px-0 pt-15"
           >
-            Logistics
-          </Link>
+            Five Star Freight Systems
+          </h2>
+
+          <h2
+            className="md:block text-center md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-3 px-0"
+          >
+           {getUserRole()} Portal
+          </h2>
           {/* Collapse */}
           <div
             className={

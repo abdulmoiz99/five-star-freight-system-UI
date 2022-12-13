@@ -264,6 +264,10 @@ export class ShipmentCard extends React.Component {
       )
     }
   }
+  checkIfNumber(event) {
+    const regex = new RegExp(/(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight)/);
+    return !event.key.match(regex) && event.preventDefault();
+  }
   render() {
     return (
       <>
@@ -450,6 +454,7 @@ export class ShipmentCard extends React.Component {
                       name="Weight"
                       value={this.state.Weight}
                       onChange={this.handleChange}
+                      onKeyDown={(event) => this.checkIfNumber(event)}
                       type="number"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />

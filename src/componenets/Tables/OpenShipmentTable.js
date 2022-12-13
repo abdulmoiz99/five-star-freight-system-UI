@@ -51,6 +51,10 @@ export function OpenShipmentTable() {
     const data = await response.json()
     setReportList(data.result)
   }
+  const removeTime = (s) => {
+    s = s?.substring(0, s?.indexOf('T'));
+    return s;
+  }
   const deleteShipment = async () => {
     setAlert({ ...alert, display: false });
     let token = getStorage('token')
@@ -102,10 +106,10 @@ export function OpenShipmentTable() {
           <tr key={report.id}>
             <TableHeader Text={report.loadId} />
             <TableData Text={report.purchaseOrderNumber} />
-            <TableData Text={report.pickUpDateTime} />
+            <TableData Text={removeTime(report.pickUpDateTime)} />
             <TableData Text={report.pickUpState} />
             <TableData Text={report.pickUpCity} />
-            <TableData Text={report.deliveryDateTime} />
+            <TableData Text={removeTime(report.deliveryDateTime)} />
             <TableData Text={report.deliveryState} />
             <TableData Text={report.deliveryCity} />
             <TableData Text={report.carrierName} />
