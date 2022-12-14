@@ -3044,3 +3044,34 @@ select {
 
 @media (min-width: 1536px) {
 }
+
+svg.loading {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes loading {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}

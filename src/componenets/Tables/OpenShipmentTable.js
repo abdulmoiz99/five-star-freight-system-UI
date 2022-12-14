@@ -26,11 +26,11 @@ export function OpenShipmentTable() {
     { name: "ORDER ID" },
     { name: "PO NUMBER" },
     { name: "PICK UP DATE" },
-    { name: "PICK UP STATE" },
     { name: "PICK UP CITY" },
+    { name: "PICK UP STATE" },
     { name: "DELIVERY DATE" },
-    { name: "DELIVERY STATE" },
     { name: "DELIVERY CITY" },
+    { name: "DELIVERY STATE" },
     { name: "CARRIER" },
     { name: "DRIVER STATUS" },
     { name: "ACTIONS" },
@@ -107,11 +107,11 @@ export function OpenShipmentTable() {
             <TableHeader Text={report.loadId} />
             <TableData Text={report.purchaseOrderNumber} />
             <TableData Text={removeTime(report.pickUpDateTime)} />
-            <TableData Text={report.pickUpState} />
             <TableData Text={report.pickUpCity} />
+            <TableData Text={report.pickUpState} />
             <TableData Text={removeTime(report.deliveryDateTime)} />
-            <TableData Text={report.deliveryState} />
             <TableData Text={report.deliveryCity} />
+            <TableData Text={report.deliveryState} />
             <TableData Text={report.carrierName} />
             <TableData Text={report.driverStatus} />
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">

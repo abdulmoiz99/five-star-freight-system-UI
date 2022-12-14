@@ -6,7 +6,10 @@ import { typesOfTrucks, lengthOfTrucks, states, cities } from '../../shared/Drop
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
+import MultiSelect from '../_Global/MultiSelect'
+import makeAnimated from "react-select/animated";
 
+const animatedComponents = makeAnimated();
 export class ShipmentCard extends React.Component {
   constructor(props) {
     super(props)
@@ -18,6 +21,7 @@ export class ShipmentCard extends React.Component {
       GeneratingReport: true,
       Carriers: [],
       SelectedBiders: [],
+      SelctedOptions: [],
       AddressSuggestion: [],
       isEdit: false
     }
@@ -250,10 +254,14 @@ export class ShipmentCard extends React.Component {
       isLoadQuoted: event.target.checked,
     })
   }
-  handleMultiSelect = (e) => {
+  handleMultiSelect = (selected) => {
     this.setState({
-      SelectedBiders: Array.isArray(e) ? e.map(x => x.value) : []
+      SelctedOptions: selected
     });
+    this.setState({
+      SelectedBiders: Array.isArray(selected) ? selected.map(x => x.value) : []
+    });
+
   }
   renderAlert = () => {
     if (this.state.displayAlert) {
@@ -569,13 +577,17 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <Select
-                      closeMenuOnSelect={false}
-                      isMulti
-                      options={this.state.Carriers}
-                      isClearable
-                      onChange={this.handleMultiSelect}
-                    />
+                    {this.state.Carriers ?
+                      <MultiSelect
+                        options={this.state.Carriers}
+                        isMulti
+                        closeMenuOnSelect={false}
+                        hideSelectedOptions={false}
+                        components={animatedComponents}
+                        onChange={this.handleMultiSelect}
+                        allowSelectAll={true}
+                        value={this.state.SelctedOptions}
+                      /> : null}
                   </div>
                 </div>
               }

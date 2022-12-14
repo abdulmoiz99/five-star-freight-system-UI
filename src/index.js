@@ -13,7 +13,6 @@ import { AddCarrier } from './views/Carriers/AddCarrier';
 import { ViewShipper } from './views/Shippers/ViewShipper';
 import { AddShipper } from './views/Shippers/AddShipper';
 import { AssignCarriers } from './views/Shippers/AssignCarriers';
-import { ViewShipperCarrier } from './views/Carriers/ViewShipperCarrier';
 import { BidInfo } from './views/Bids/BidInfo';
 import { ViewBids } from './views/Bids/ViewBids';
 import { RequestCarrier } from './views/Carriers/RequestCarrier';
@@ -41,7 +40,6 @@ root.render(
       <Route path="/AddCarrier" element={< AddCarrier />}></Route>
       <Route path="/Carriers" element={< ViewCarriers />}></Route>
       <Route path="/Carriers/Edit" element={< EditCarrier />}></Route>
-      <Route path="/ShipperCarriers" element={< ViewShipperCarrier />}></Route>
       <Route path="/AddShipper" element={< AddShipper />}></Route>
       <Route path="/Shippers" element={< ViewShipper />}></Route>
       <Route path="/Shippers/Edit" element={< EditShipper />}></Route>
@@ -51,7 +49,7 @@ root.render(
       <Route path="/ShipperBids" element={< ShipperBids />}></Route>
       <Route path="/ShipperBids/ViewBids" element={< ViewBids />}></Route>
 
-      <Route path="/ShipperCarriers/RequestCarrier" element={< RequestCarrier />}></Route>
+      <Route path="/Carriers/RequestCarrier" element={< RequestCarrier />}></Route>
       <Route path="/AssignShippers" element={< AssignShippers />}></Route>
 
       <Route path="/FreightSpend" element={< FreightSpend />}></Route>

@@ -23,15 +23,17 @@ export function ShipperBidsTable() {
   const columns = [
     { name: "PO NUMBER" },
     { name: "PICK UP DATE	" },
-    { name: "PICK STATE" },
     { name: "PICK CITY" },
+    { name: "PICK STATE" },
     { name: "DELIVERY DATE	" },
-    { name: "DELIVERY STATE" },
     { name: "DELIVERY CITY" },
+    { name: "DELIVERY STATE" },
     { name: "SHIPPER" },
-    { name: "TOTAL BIDS	" },
+    getUserRole() !== "CARRIER" ? { name: "TOTAL BIDS	" } : null,
     { name: "ACTIONS" },
-  ]
+  ].filter(x => x !== null)
+
+
 
   useEffect(() => {
     populateTableData()
@@ -102,13 +104,16 @@ export function ShipperBidsTable() {
           <tr key={report.id}>
             <TableHeader Text={report.purchaseOrderNumber} />
             <TableData Text={removeTime(report.pickUpDateTime)} />
-            <TableData Text={report.pickUpState} />
             <TableData Text={report.pickUpCity} />
+            <TableData Text={report.pickUpState} />
             <TableData Text={removeTime(report.deliveryDateTime)} />
-            <TableData Text={report.deliveryCity} />
             <TableData Text={report.deliveryState} />
+            <TableData Text={report.deliveryCity} />
             <TableData Text={report.shipperName} />
-            <TableData Text={report.bidCount} />
+            {getUserRole() !== "CARRIER" ?
+              <TableData Text={report.bidCount} />
+              : null
+            }
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
               {getUserRole() === "CARRIER" ?
                 <Link

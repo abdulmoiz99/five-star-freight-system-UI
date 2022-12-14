@@ -92,7 +92,7 @@ export class RequestCarrierCard extends React.Component {
                 Create New Carrier
               </h6>
               <Link
-                to="/ShipperCarriers"
+                to="/Carriers"
                 className="bg-emerald-500 text-white active:bg-emerald-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               >
                 View Carriers

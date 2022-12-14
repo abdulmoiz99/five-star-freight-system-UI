@@ -61,7 +61,7 @@ export default function FreightSpendCard() {
               </div>
               <div className="w-full lg:w-3/12 xl:w-5/12 px-4 ">
                 <CardStats
-                  statSubtitle="Currect Month"
+                  statSubtitle="Current Month"
                   statTitle={numberWithCommas(freight.month?.amount)}
                   statDescripiron={freight.month?.label}
                   statIconColor="bg-blueGray-600"
