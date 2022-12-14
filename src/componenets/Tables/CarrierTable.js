@@ -100,6 +100,9 @@ export class CarrierTable extends React.Component {
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
               {report.dotNumber}
             </td>
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+              {report.scacCode}
+            </td>
             {getUserRole() === "ADMIN" ?
               <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4">
                 <Link
@@ -157,7 +160,7 @@ export class CarrierTable extends React.Component {
                   Add New Carrier
                 </Link>
                 :
-                <NavigationButton To="/Carriers/RequestCarrier" Text= "Request new carrier" />}
+                <NavigationButton To="/Carriers/RequestCarrier" Text="Request new carrier" />}
             </div>
           </div>
           <div className="block w-full overflow-x-auto">
@@ -181,6 +184,9 @@ export class CarrierTable extends React.Component {
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     DOT Number
+                  </th>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                    SCAC
                   </th>
                   {getUserRole() === "ADMIN" ?
                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">

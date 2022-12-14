@@ -11,6 +11,7 @@ export function AddShipperCard() {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [address, setAddress] = useState();
+  const [contactNo, setContactNo] = useState();
   const [commodity, setCommodity] = useState();
   const [taxId, setTaxId] = useState();
 
@@ -42,6 +43,7 @@ export function AddShipperCard() {
         setName(data.result.name)
         setEmail(data.result.email)
         setAddress(data.result.address)
+        setContactNo(data.result.phoneNumber)
         setCommodity(data.result.commodity)
         setTaxId(data.result.taxId)
       }
@@ -50,7 +52,10 @@ export function AddShipperCard() {
   const clearForm = () => {
     setName('')
     setEmail('')
+    setPassword('')
+    setConfirmPassword('')
     setAddress('')
+    setContactNo('')
     setCommodity('')
     setTaxId('')
   }
@@ -74,6 +79,7 @@ export function AddShipperCard() {
           password: password,
           confirmPassword: confirmPassword,
           address: address,
+          phoneNumber: contactNo,
           commodity: commodity,
           taxId: taxId
         }),
@@ -99,7 +105,7 @@ export function AddShipperCard() {
           message: isEdit ? "Shipper Updated Successfully." : "Shipper created successfully.",
           success: true
         });
-        if (isEdit)
+        if (!isEdit)
           clearForm();
       }
       else {
@@ -148,6 +154,7 @@ export function AddShipperCard() {
             <div className="flex flex-wrap">
               <Input Label="Name" State={name} Setter={setName} type="text" />
               <Input Label="Address" State={address} Setter={setAddress} type="text" />
+              <Input Label="Contact Number" State={contactNo} Setter={setContactNo} type="text" />
               <Input Label="Commodity" State={commodity} Setter={setCommodity} type="text" />
               <Input Label="Tax Id" State={taxId} Setter={setTaxId} type="text" />
             </div>

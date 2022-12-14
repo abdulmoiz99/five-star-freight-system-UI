@@ -26,6 +26,7 @@ export class AddCarrrierCard extends React.Component {
       DotNumber: '',
       TaxId: '',
       CarrierOrBroker: '',
+      Scac:'',
       AccountingEmail: '',
     }
   }
@@ -55,6 +56,7 @@ export class AddCarrrierCard extends React.Component {
         DotNumber: data.result.dotNumber,
         TaxId: data.result.taxId,
         CarrierOrBroker: data.result.carrierOrBroker,
+        Scac: data.result.scacCode,
         AccountingEmail: data.result.accountingEmail,
       })
     }
@@ -72,6 +74,7 @@ export class AddCarrrierCard extends React.Component {
       DotNumber: '',
       TaxId: '',
       CarrierOrBroker: '',
+      Scac:'',
       AccountingEmail: '',
     })
   }
@@ -91,6 +94,7 @@ export class AddCarrrierCard extends React.Component {
       DotNumber,
       TaxId,
       CarrierOrBroker,
+      Scac,
       AccountingEmail,
       isEdit
     } = this.state
@@ -116,6 +120,7 @@ export class AddCarrrierCard extends React.Component {
           dotNumber: DotNumber,
           taxId: TaxId,
           carrierOrBroker: CarrierOrBroker,
+          scacCode: Scac,
           accountingEmail: AccountingEmail,
         }),
       }
@@ -441,7 +446,28 @@ export class AddCarrrierCard extends React.Component {
                     />
                   </div>
                 </div>
-
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      SCAC{' '}
+                      <span style={{ color: 'red', justifyContent: 'center' }}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <input
+                      required
+                      name="Scac"
+                      value={this.state.Scac}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
                 <div className="w-full lg:w-6/12 px-4">
                   <div className="relative w-full mb-3">
                     <label
