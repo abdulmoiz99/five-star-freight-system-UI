@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/83d5dcfd-61d0-4f13-87b1-6f6b8726ceeb/AppServices/subscriptions/83d5dcfd-61d0-4f13-87b1-6f6b8726ceeb/resourceGroups/Logistics/providers/Microsoft.Web/sites/fivestartlogistics",
+    "appService.deploySubpath": "."
+}
