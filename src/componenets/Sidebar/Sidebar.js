@@ -1,13 +1,12 @@
 /*eslint-disable*/
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { getUserRole } from '../../shared/LoacalStorage'
 import { SideBarButton } from '../_Global/_Button'
 import AdminSideBar from './AdminSideBar'
 import CarrierSideBar from './CarrierSideBar'
 import ShipperSideBar from './ShipperSideBar'
 
-export default function Sidebar({ isAdmin }) {
+export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState('hidden')
   const [role] = React.useState(getUserRole())
 
@@ -18,9 +17,10 @@ export default function Sidebar({ isAdmin }) {
           <nav className="flex flex-wrap items-center justify-between px-2 py-3 bg-blueGray-700 ">
             <div className="container px-4  flex flex-wrap items-center justify-between">
               <div className="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
-                <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white" href="#pablo">
-                  FIVE STAR FREIGHT SYSTEMS |  {getUserRole()} Portal
-                </a>
+                <p className="leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-white uppercase">
+                  <span className="text-sm font-bold" > FIVE STAR FREIGHT SYSTEMS | </span>
+                  <span className="text-sm font-semibold" > {getUserRole()} Portal </span>
+                </p>
               </div>
             </div>
             <div className="ml-auto mr-0" style={{ float: "right" }}>

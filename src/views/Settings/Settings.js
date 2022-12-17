@@ -1,25 +1,20 @@
 import React from 'react'
 import Sidebar from '../../componenets/Sidebar/Sidebar'
-import FooterAdmin from '../../componenets/Footers/FooterAdmin'
-import { IsAdmin } from '../../shared/LoacalStorage'
 import HeaderBar from '../../componenets/Headers/HeaderBar'
-import { UpdatePassword } from '../../componenets/Auth/UpdatePassword'
+import SettingsTabs from '../../componenets/Tabs/SettingsTabs'
 
 export function Settings() {
   return (
     <>
-      <Sidebar isAdmin={IsAdmin()} />
+      <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100">
         <HeaderBar />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
-          <div className="flex flex-wrap">
-            <div className="w-full xl:w-6/12 mb-19 xl:mb-0 px-4">
-              <UpdatePassword />
-            </div>
+          <div className="flex flex-wrap pt-15">
+            <SettingsTabs />
           </div>
         </div>
       </div>
-      <FooterAdmin />
     </>
   )
 }
