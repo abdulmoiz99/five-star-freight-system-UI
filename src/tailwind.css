@@ -2470,6 +2470,11 @@ select {
   background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
 }
 
+.hover\:bg-blueGray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(71, 85, 105, var(--tw-bg-opacity));
+}
+
 .uppercase {
   text-transform: uppercase;
 }

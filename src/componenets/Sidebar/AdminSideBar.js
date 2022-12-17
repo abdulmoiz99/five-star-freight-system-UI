@@ -1,93 +1,20 @@
-/*eslint-disable*/
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { SideBarButton } from '../_Global/_Button'
 
 export default function AdminSideBar() {
   return (
     <>
       <li className="items-center">
-        <Link
-          className={
-            'text-xs uppercase py-3 font-bold block ' +
-            (window.location.href.indexOf('/Shippers') !== -1
-              ? 'text-lightBlue-500 hover:text-lightBlue-600'
-              : 'text-blueGray-700 hover:text-blueGray-500')
-          }
-          to="/Shippers"
-        >
-          <i
-            className={
-              'fas fa-tv mr-2 text-sm ' +
-              (window.location.href.indexOf('/Shippers') !== -1
-                ? 'opacity-75'
-                : 'text-blueGray-300')
-            }
-          ></i>{' '}
-          Shippers
-        </Link>
+        <SideBarButton To="/Shippers" Text="Shippers" />
       </li>
       <li className="items-center">
-        <Link
-          className={
-            'text-xs uppercase py-3 font-bold block ' +
-            (window.location.href.indexOf('/Carriers') !== -1
-              ? 'text-lightBlue-500 hover:text-lightBlue-600'
-              : 'text-blueGray-700 hover:text-blueGray-500')
-          }
-          to="/Carriers"
-        >
-          <i
-            className={
-              'fas fa-tv mr-2 text-sm ' +
-              (window.location.href.indexOf('/Carriers') !== -1
-                ? 'opacity-75'
-                : 'text-blueGray-300')
-            }
-          ></i>{' '}
-          Carriers
-        </Link>
+        <SideBarButton To="/Carriers" Text="Carriers" />
       </li>
       <li className="items-center">
-        <Link
-          className={
-            'text-xs uppercase py-3 font-bold block ' +
-            (window.location.href.indexOf('/ViewShipments') !== -1
-              ? 'text-lightBlue-500 hover:text-lightBlue-600'
-              : 'text-blueGray-700 hover:text-blueGray-500')
-          }
-          to="/ViewShipments"
-        >
-          <i
-            className={
-              'fas fa-tv mr-2 text-sm ' +
-              (window.location.href.indexOf('/ViewShipments') !== -1
-                ? 'opacity-75'
-                : 'text-blueGray-300')
-            }
-          ></i>{' '}
-          Load Status
-        </Link>
+        <SideBarButton To="/ViewShipments" Text="Load Status" />
       </li>
       <li className="items-center">
-        <Link
-          className={
-            'text-xs uppercase py-3 font-bold block ' +
-            (window.location.href.indexOf('/ShipperBids') !== -1
-              ? 'text-lightBlue-500 hover:text-lightBlue-600'
-              : 'text-blueGray-700 hover:text-blueGray-500')
-          }
-          to="/ShipperBids"
-        >
-          <i
-            className={
-              'fas fa-tv mr-2 text-sm ' +
-              (window.location.href.indexOf('/ShipperBids') !== -1
-                ? 'opacity-75'
-                : 'text-blueGray-300')
-            }
-          ></i>{' '}
-          Bids
-        </Link>
+        <SideBarButton To="/ShipperBids" Text="Bids" />
       </li>
     </>
   )
