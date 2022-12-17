@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { default as ReactSelect } from "react-select";
 
-const MySelect = props => {
+const MultiSelect = props => {
   if (props.allowSelectAll) {
     return (
       <ReactSelect
@@ -25,7 +25,7 @@ const MySelect = props => {
   return <ReactSelect {...props} />;
 };
 
-MySelect.propTypes = {
+MultiSelect.propTypes = {
   options: PropTypes.array,
   value: PropTypes.any,
   onChange: PropTypes.func,
@@ -35,12 +35,11 @@ MySelect.propTypes = {
     value: PropTypes.string
   })
 };
-
-MySelect.defaultProps = {
+MultiSelect.defaultProps = {
   allOption: {
     label: "Select all",
     value: "*"
   }
 };
 
-export default MySelect;
+export default MultiSelect;

@@ -101,7 +101,7 @@ export function ShipperBidsTable() {
     return (
       <>
         {reportList?.map((report) => (
-          <tr key={report.id}>
+          <tr key={report.id} class="hover:bg-blueGray-100">
             <TableHeader Text={report.purchaseOrderNumber} />
             <TableData Text={removeTime(report.pickUpDateTime)} />
             <TableData Text={report.pickUpCity} />

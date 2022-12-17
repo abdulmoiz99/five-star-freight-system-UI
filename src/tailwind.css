@@ -2465,6 +2465,11 @@ select {
   color: rgba(30, 41, 59, var(--tw-text-opacity));
 }
 
+.hover\:bg-blueGray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+}
+
 .uppercase {
   text-transform: uppercase;
 }
