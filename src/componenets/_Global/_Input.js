@@ -30,7 +30,7 @@ export function CheckFeild({ Label, Description, state, setter }) {
         <input
           type="checkbox"
           defaultChecked={state}
-          className="form-checkbox border border-gray-300 rounded text-blueGray-700 ml-1 w-3 h-4 ease-linear transition-all duration-150"
+          className="form-checkbox border border-gray-300 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
           value={state}
           onChange={(event) => { setter(event.target.checked) }}
         />

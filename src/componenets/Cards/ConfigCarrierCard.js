@@ -106,46 +106,42 @@ export function ConfigCarrierCard() {
 
   return (
     <>
-      <div className="mt-5 sm:mt-0 pl-5">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="mt-2 md:col-span-2 md:mt-0">
-            <form onSubmit={handleSubmit}>
-              <div className="overflow-hidden shadow sm:rounded">
-                <div className="bg-white px-4 py-5 sm:p-6">
-                  {renderAlert()}
-                  <fieldset>
-                    <h1 className="text-blueGray-600 text-lg  mb-6 font-semibold uppercase font-semibold pl-10">
-                      By Email
-                    </h1>
-                    {!isProcessing ?
-                      <div className="mt-4 p-10 pl-10">
-                        <CheckFeild Label="New shipper added " Description="Get notified when a new shipper is added to the network."
-                          state={newShipperAdded} setter={setnewShipperAdded}
-                        />
-                        <CheckFeild Label="Awarded load" Description="Get notified when a shipment is awarded."
-                          state={awardedLoad} setter={setawardedLoad}
-                        />
-                        <CheckFeild Label="Status update needed " Description="Get notified when a status update is required for the shipment."
-                          state={statusUpdateNeeded} setter={setstatusUpdateNeeded}
-                        />
-                        <CheckFeild Label="New RFP" Description="Get notified when a new RFP is uploaded."
-                          state={newRFP} setter={setnewRFP}
-                        />
-                      </div>
-                      : null}
-                  </fieldset>
-                </div>
-                <div className="bg-blueGray-50 px-4 py-3 text-right sm:px-6">
-                  {!isLoading ? (
-                    <SubmitButton Text="Update" />
-                  ) : (
-                    <LoadingButton Text="Updating" />
-                  )}
-                </div>
-              </div>
-            </form>
+      <div className="mt-5 sm:mt-0">
+        <form onSubmit={handleSubmit}>
+          <div className="overflow-hidden shadow sm:rounded">
+            <div className="bg-white py-5 sm:p-6">
+              {renderAlert()}
+              <fieldset>
+                <h1 className="text-blueGray-600 text-lg font-semibold uppercase font-semibold pl-10">
+                  By Email
+                </h1>
+                {!isProcessing ?
+                  <div className="p-5 pl-10">
+                    <CheckFeild Label="New shipper added " Description="Get notified when a new shipper is added to the network."
+                      state={newShipperAdded} setter={setnewShipperAdded}
+                    />
+                    <CheckFeild Label="Awarded load" Description="Get notified when a shipment is awarded."
+                      state={awardedLoad} setter={setawardedLoad}
+                    />
+                    <CheckFeild Label="Status update needed " Description="Get notified when a status update is required for the shipment."
+                      state={statusUpdateNeeded} setter={setstatusUpdateNeeded}
+                    />
+                    <CheckFeild Label="New RFP" Description="Get notified when a new RFP is uploaded."
+                      state={newRFP} setter={setnewRFP}
+                    />
+                  </div>
+                  : null}
+              </fieldset>
+            </div>
+            <div className="bg-blueGray-50 px-4 py-3 text-right sm:px-6">
+              {!isLoading ? (
+                <SubmitButton Text="Update" />
+              ) : (
+                <LoadingButton Text="Updating" />
+              )}
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   )

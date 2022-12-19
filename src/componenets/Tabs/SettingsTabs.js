@@ -20,7 +20,7 @@ const SettingsTabs = () => {
                                     className={
                                         "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                         (openTab === 1
-                                            ? "text-white bg-blueGray-600"
+                                            ? "text-white bg-lightBlue-600"
                                             : "text-blueGray-600 bg-white")
                                     }
                                     onClick={e => {
@@ -39,7 +39,7 @@ const SettingsTabs = () => {
                                     className={
                                         "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                         (openTab === 2
-                                            ? "text-white bg-blueGray-600"
+                                            ? "text-white bg-lightBlue-600"
                                             : "text-blueGray-600 bg-white")
                                     }
                                     onClick={e => {
@@ -56,14 +56,12 @@ const SettingsTabs = () => {
                         </ul>
                         <div className="relative flex flex-col min-w-0 break-words bg-transparent w-full mb-3  rounded">
                             <div className=" py-1 flex-auto">
-                                <div className="tab-content tab-space">
-                                    <div className={openTab === 1 ? "block" : "hidden"} id="updatePassword">
-                                        <UpdatePassword />
-                                    </div>
-                                    <div className={openTab === 2 ? "block" : "hidden"} id="notifications">
-                                        {getUserRole() === "SHIPPER" && <ConfigShipperCard />}
-                                        {getUserRole() === "CARRIER" && <ConfigCarrierCard />}
-                                    </div>
+                                <div className={openTab === 1 ? "block" : "hidden"} id="updatePassword">
+                                    <UpdatePassword />
+                                </div>
+                                <div className={openTab === 2 ? "block" : "hidden"} id="notifications">
+                                    {getUserRole() === "SHIPPER" && <ConfigShipperCard />}
+                                    {getUserRole() === "CARRIER" && <ConfigCarrierCard />}
                                 </div>
                             </div>
                         </div>

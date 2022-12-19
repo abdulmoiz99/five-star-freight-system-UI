@@ -117,58 +117,54 @@ export function ConfigShipperCard() {
   }
   return (
     <>
-      <div className="mt-5 sm:mt-0 pl-5">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="mt-2 md:col-span-2 md:mt-0">
-            <form onSubmit={handleSubmit}>
-              <div className="overflow-hidden shadow sm:rounded">
-                <div className="bg-white px-4 py-5 sm:p-6">
-                  {renderAlert()}
-                  <fieldset>
-                    <h1 className="text-blueGray-600 text-lg  mb-6 font-semibold uppercase font-semibold pl-10">
-                      By Email
-                    </h1>
-                    {!isProcessing ?
-                      <div className="mt-4 p-10 pl-10">
-                        <CheckFeild Label="LOAD STATUS UPDATE" Description="Get notified about the current status or progress of a load or transfer process."
-                          state={loadStatusUpdate} setter={setloadStatusUpdate}
-                        />
-                        <CheckFeild Label="CARRIER TENDER APPROVED OR DENIED" Description="Get notified when a carrier's tender has been approved or denied by the shipper."
-                          state={carrierTenderApproved} setter={setcarrierTenderApproved}
-                        />
-                        <CheckFeild Label="CARRIER ON BOARDED" Description="Get notified when a carrier has been added to a shipper's list of approved carriers and is now available to be selected for load tenders. "
-                          state={carrierOnBoarded} setter={setcarrierOnBoarded}
-                        />
-                        <CheckFeild Label="POD Requests" Description="Get notified when a POD request is sent to the carrier."
-                          state={podRequests} setter={setpodRequests}
-                        />
-                        <CheckFeild Label="Insurance Monitoring" Description="Get notified when status of insurance coverage for a shipment is updated."
-                          state={insuranceMonitoring} setter={setinsuranceMonitoring}
-                        />
-                        <CheckFeild Label="Carrier Compliance" Description="Get notified whencarrier compliance is successfull."
-                          state={carrierCompliance} setter={setcarrierCompliance}
-                        />
-                        <CheckFeild Label="New bid " Description="Get notified when a new bid is placed on the shipment."
-                          state={newBid} setter={setnewBid}
-                        />
-                        <CheckFeild Label="Tender Expired" Description="Get notified when tender expired."
-                          state={tenderExpired} setter={settenderExpired}
-                        />
-                      </div>
-                      : null}
-                  </fieldset>
-                </div>
-                <div className="bg-blueGray-50 px-4 py-3 text-right sm:px-6">
-                  {!isLoading ? (
-                    <SubmitButton Text="Update" />
-                  ) : (
-                    <LoadingButton Text="Updating" />
-                  )}
-                </div>
-              </div>
-            </form>
+      <div className="mt-5 sm:mt-0 ">
+        <form onSubmit={handleSubmit}>
+          <div className="overflow-hidden shadow sm:rounded">
+            <div className="bg-white  py-5 sm:p-6">
+              {renderAlert()}
+              <fieldset>
+                <h1 className="text-blueGray-600 text-lg font-semibold uppercase font-semibold pl-10">
+                  By Email
+                </h1>
+                {!isProcessing ?
+                  <div className="p-5 pl-10">
+                    <CheckFeild Label="LOAD STATUS UPDATE" Description="Get notified about the current status or progress of a load or transfer process."
+                      state={loadStatusUpdate} setter={setloadStatusUpdate}
+                    />
+                    <CheckFeild Label="CARRIER TENDER APPROVED OR DENIED" Description="Get notified when a carrier's tender has been approved or denied by the shipper."
+                      state={carrierTenderApproved} setter={setcarrierTenderApproved}
+                    />
+                    <CheckFeild Label="CARRIER ON BOARDED" Description="Get notified when a carrier has been added to a shipper's list of approved carriers and is now available to be selected for load tenders. "
+                      state={carrierOnBoarded} setter={setcarrierOnBoarded}
+                    />
+                    <CheckFeild Label="POD Requests" Description="Get notified when a POD request is sent to the carrier."
+                      state={podRequests} setter={setpodRequests}
+                    />
+                    <CheckFeild Label="Insurance Monitoring" Description="Get notified when status of insurance coverage for a shipment is updated."
+                      state={insuranceMonitoring} setter={setinsuranceMonitoring}
+                    />
+                    <CheckFeild Label="Carrier Compliance" Description="Get notified whencarrier compliance is successfull."
+                      state={carrierCompliance} setter={setcarrierCompliance}
+                    />
+                    <CheckFeild Label="New bid " Description="Get notified when a new bid is placed on the shipment."
+                      state={newBid} setter={setnewBid}
+                    />
+                    <CheckFeild Label="Tender Expired" Description="Get notified when tender expired."
+                      state={tenderExpired} setter={settenderExpired}
+                    />
+                  </div>
+                  : null}
+              </fieldset>
+            </div>
+            <div className="bg-blueGray-50 px-4 py-3 text-right sm:px-6">
+              {!isLoading ? (
+                <SubmitButton Text="Update" />
+              ) : (
+                <LoadingButton Text="Updating" />
+              )}
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   )
