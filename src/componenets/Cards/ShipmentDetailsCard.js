@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { baseURL, getStorage } from '../../shared/LoacalStorage';
+import Alert from '../Alerts/Alert';
+import { ActionButton } from '../_Global/_Button';
 
 function ShipmentDetailsCard() {
     const [data, setData] = useState([]);
+    const [alert, setAlert] = useState({
+        display: false,
+        message: '',
+        success: false
+    })
+    const [isLoading, setLoading] = useState(false);
 
     const getShipmentDetails = async () => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -20,11 +28,62 @@ function ShipmentDetailsCard() {
         getShipmentDetails()
     }, []);
 
+    const renderAlert = () => {
+        if (alert.display) {
+            return (<Alert message={alert.message} success={alert.success} />)
+        }
+    }
+    const requestPOD = async () => {
+        const orderId = new URLSearchParams(window.location.search).get('id');
+        setAlert({ ...alert, display: false });
+        setLoading(true)
+        let token = getStorage('token')
+        try {
+            const body = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    orderId: orderId,
+                }),
+            }
+            const response = await fetch(
+                `${baseURL()}/api/Shipment/request-pod`,
+                body,
+            )
+            const data = await response.json()
+            if (data.success) {
+                setAlert({
+                    ...alert,
+                    display: true,
+                    message: "POD request has been sent successfully.",
+                    success: true
+                });
+            }
+            else {
+                setAlert({
+                    ...alert,
+                    display: true,
+                    message: data.errors[0],
+                    success: false
+                });
+
+            }
+        } catch (e) {
+            console.log(e)
+        }
+        setLoading(false)
+    }
+
+
     return (
         <>
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full  shadow-lg rounded">
                 <div className="p-4 flex-auto">
                     <div className="relative">
+                        {renderAlert()}
                         <Header Text="Shipment Info" />
                         <Label Key="Load ID: " Value={data.loadId} />
                         <Label Key="PO#: " Value={data.purchaseOrderNumber} />
@@ -49,8 +108,13 @@ function ShipmentDetailsCard() {
                         <Header Text="Delivery Details" />
                         <Label Value={data.deliveryLocations?.[0].address + ": " + data.deliveryLocations?.[0].state + ", " + data.deliveryLocations?.[0].city + ", " + data.deliveryLocations?.[0].zip} />
                         <Label Key="Date: " Value={data.deliveryLocations?.[0].dateTime} />
-
+                  
                     </div >
+
+                    <div className="mb-2 mt-2 text-center">
+                        <ActionButton Text="Request POD" Action={requestPOD} />
+                    </div>
+
                 </div >
             </div >
 
