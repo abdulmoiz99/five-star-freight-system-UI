@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { baseURL, getStorage } from '../../shared/LoacalStorage';
+import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage';
 import Alert from '../Alerts/Alert';
 import { ActionButton } from '../_Global/_Button';
 
@@ -108,13 +108,13 @@ function ShipmentDetailsCard() {
                         <Header Text="Delivery Details" />
                         <Label Value={data.deliveryLocations?.[0].address + ": " + data.deliveryLocations?.[0].state + ", " + data.deliveryLocations?.[0].city + ", " + data.deliveryLocations?.[0].zip} />
                         <Label Key="Date: " Value={data.deliveryLocations?.[0].dateTime} />
-                  
+
                     </div >
-
-                    <div className="mb-2 mt-2 text-center">
-                        <ActionButton Text="Request POD" Action={requestPOD} />
-                    </div>
-
+                    {getUserRole() === "SHIPPER" && data.driverStatus ==="Delivered" &&
+                        <div className="mb-2 mt-2 text-center">
+                            <ActionButton Text="Request POD" Action={requestPOD} />
+                        </div>
+                    }
                 </div >
             </div >
 

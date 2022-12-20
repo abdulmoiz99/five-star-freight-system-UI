@@ -23,6 +23,8 @@ import { AssignShippers } from './views/Carriers/AssignShippers';
 import { DriverStatus } from './views/Shipment/DriverStatus';
 import { FreightSpend } from './views/FreightSpend/FreightSpend';
 import { Settings } from './views/Settings/Settings';
+import { Claims } from './views/Claims/Claims';
+import { FileClaim } from './views/Claims/FileClaim';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -57,6 +59,8 @@ root.render(
 
       <Route path="/Settings" element={< Settings />}></Route>
 
+      <Route path="/Claims" element={< Claims />}></Route>
+      <Route path="/Claims/FileClaim" element={< FileClaim />}></Route>
 
     </Routes>
   </BrowserRouter>,

@@ -51,6 +51,9 @@ export default function Sidebar() {
               ) : null
               }
               <li className="items-center">
+                <SideBarButton To="/Claims" Text="Claims" />
+              </li>
+              <li className="items-center">
                 <SideBarButton To="/Settings" Text="Settings" />
               </li>
               <li className="items-center">
