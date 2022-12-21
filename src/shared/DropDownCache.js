@@ -10920,3 +10920,10 @@ export const cities = [
     label: "Windom"
   }
 ]
+export const claimStatus = [
+  { value: 'Investigating', label: 'Investigating' },
+  { value: 'Assigned', label: 'Assigned' },
+  { value: 'Denied', label: 'Denied' },
+  { value: 'Approved', label: 'Approved' },
+  { value: 'Paid out', label: 'Paid out' },
+]
