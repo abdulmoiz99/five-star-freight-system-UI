@@ -26,6 +26,8 @@ import { Settings } from './views/Settings/Settings';
 import { Claims } from './views/Claims/Claims';
 import { FileClaim } from './views/Claims/FileClaim';
 import { RFP } from './views/Shipment/RFP';
+import { Support } from './views/Support/Support';
+import { CreateTicket } from './views/Support/CreateTicket';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -65,6 +67,9 @@ root.render(
 
       <Route path="/Claims" element={< Claims />}></Route>
       <Route path="/Claims/FileClaim" element={< FileClaim />}></Route>
+
+      <Route path="/Support" element={< Support />}></Route>
+      <Route path="/Support/CreateTicket" element={< CreateTicket />}></Route>
 
     </Routes>
   </BrowserRouter>,
