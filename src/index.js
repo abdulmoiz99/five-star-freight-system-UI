@@ -25,6 +25,7 @@ import { FreightSpend } from './views/FreightSpend/FreightSpend';
 import { Settings } from './views/Settings/Settings';
 import { Claims } from './views/Claims/Claims';
 import { FileClaim } from './views/Claims/FileClaim';
+import { RFP } from './views/Shipment/RFP';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -39,6 +40,9 @@ root.render(
       <Route path="/ViewShipments" element={< ViewShipment />}></Route>
       <Route path="/ViewShipments/DriverStatus" element={< DriverStatus />}></Route>
       <Route path="/ViewShipments/Details" element={< ShipmentDetail />}></Route>
+
+      <Route path="/RFP" element={< RFP />}></Route>
+
 
       <Route path="/AddCarrier" element={< AddCarrier />}></Route>
       <Route path="/Carriers" element={< ViewCarriers />}></Route>

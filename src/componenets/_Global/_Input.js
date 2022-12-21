@@ -1,3 +1,6 @@
+import makeAnimated from "react-select/animated";
+import MultiSelect from './MultiSelect'
+
 export function Input(props) {
   return (
     <div className="w-full px-4">
@@ -23,7 +26,7 @@ export function Input(props) {
     </div>
   )
 }
-export function FileInput({ onChange, file }) {
+export function FileInput({ onChange, file, Description }) {
   return (
     <div class="w-full px-4 pb-4">
       <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-30 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -34,7 +37,7 @@ export function FileInput({ onChange, file }) {
             :
             <>
               <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to Upload File</span> </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 10MB</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{Description}</p>
             </>
           }
         </div>
@@ -43,6 +46,34 @@ export function FileInput({ onChange, file }) {
     </div>
   )
 }
+
+const animatedComponents = makeAnimated();
+export function SelectMultiple({ Label, List, Handler, Value }) {
+  return (
+    <div className="w-full px-4">
+      <div className="relative w-full mb-3">
+        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+          {Label}
+          <span style={{ color: 'red', justifyContent: 'center' }}>
+            {' '}
+            *
+          </span>
+        </label>
+        <MultiSelect
+          options={List}
+          isMulti
+          closeMenuOnSelect={false}
+          hideSelectedOptions={false}
+          components={animatedComponents}
+          onChange={Handler}
+          allowSelectAll={true}
+          value={Value}
+        />
+      </div>
+    </div>
+  )
+}
+
 export function CheckFeild({ Label, Description, state, setter }) {
   return (
     <div className="flex items-start mt-2">
