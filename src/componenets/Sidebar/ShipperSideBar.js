@@ -8,9 +8,6 @@ export default function ShipperSideBar() {
         <SideBarButton To="/Shipment" Text="Create Load" />
       </li>
       <li className="items-center">
-        <SideBarButton To="/RFP" Text="RFP" />
-      </li>
-      <li className="items-center">
         <SideBarButton To="/ViewShipments" Text="Load Status" />
       </li>
       <li className="items-center">
