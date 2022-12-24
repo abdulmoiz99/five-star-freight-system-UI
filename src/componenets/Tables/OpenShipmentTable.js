@@ -143,7 +143,6 @@ export function OpenShipmentTable() {
   }
   const handleModal = (orderId, status) => {
     // only carrier can update the shipment status
-    console.log("Hit")
     if (IsCarrier() && status === "Waiting") {
       setId(orderId)
       setShowModal(true)
@@ -218,7 +217,7 @@ export function OpenShipmentTable() {
           </div>
         </div>
         <Table columns={columns} reportReportList={reportReportList(reportList)} />
-        <ShipmentUpdateModal showModal={showModal} setShowModal={setShowModal} orderId={id} handler={() => handleStatusChange()} />
+        <ShipmentUpdateModal showModal={showModal} setShowModal={setShowModal} orderId={id} handler={handleStatusChange} />
       </div>
     </>
   )
