@@ -1,14 +1,14 @@
-export function H6(props) {
+export function H6({ Text }) {
     return (
         <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-            {props.Text}
+            {Text}
         </h6>
     )
 }
-export function FH6(props) { // Form Headering
+export function FH6({ Text }) { // Form Heading
     return (
         <h6 className="text-blueGray-700 text-xl font-bold uppercase">
-            {props.Text}
+            {Text}
         </h6>
     )
 }

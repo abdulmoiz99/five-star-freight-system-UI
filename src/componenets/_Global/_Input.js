@@ -1,5 +1,6 @@
 import makeAnimated from "react-select/animated";
 import MultiSelect from './MultiSelect'
+import Select from 'react-select'
 
 export function Input(props) {
   return (
@@ -73,7 +74,33 @@ export function SelectMultiple({ Label, List, Handler, Value }) {
     </div>
   )
 }
-
+export function SelectSingle({ Label, List, State, Setter, Size }) {
+  //if undefined set the default value
+  Size ??= "4/12"
+  return (
+    <div className={`w-full lg:w-${Size} px-4`}>
+      <div className="relative w-full mb-3">
+        <label
+          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+          htmlFor="grid-password"
+        >
+          {Label}
+          <span style={{ color: 'red', justifyContent: 'center' }}>
+            {' '}
+            *
+          </span>
+        </label>
+        <Select
+          options={List}
+          value={{ value: State, label: State }}
+          onChange={(selectedOption) => {
+            Setter(selectedOption.value)
+          }}
+        />
+      </div>
+    </div>
+  )
+}
 export function CheckFeild({ Label, Description, state, setter }) {
   return (
     <div className="flex items-start mt-2">

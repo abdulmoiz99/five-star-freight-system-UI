@@ -28,6 +28,7 @@ import { FileClaim } from './views/Claims/FileClaim';
 import { RFP } from './views/Shipment/RFP';
 import { Support } from './views/Support/Support';
 import { CreateTicket } from './views/Support/CreateTicket';
+import { AutoTender } from './views/Shipment/AutoTender';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -69,6 +70,8 @@ root.render(
 
       <Route path="/Support" element={< Support />}></Route>
       <Route path="/Support/CreateTicket" element={< CreateTicket />}></Route>
+
+      <Route path="/AutoTender" element={< AutoTender />}></Route>
 
     </Routes>
   </BrowserRouter>,
