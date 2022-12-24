@@ -3,10 +3,11 @@ import { baseURL, getStorage, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { NoRecordCheck, TableData, TableHeader } from '../_Global/_Table'
+import { NoRecordCheck, TableData } from '../_Global/_Table'
 import Alert from '../Alerts/Alert'
 import Table from './_Table'
 import DeleteModal from '../_Global/_Modal'
+import ShipmentUpdateModal from '../Modals/ShipmentUpdateModal'
 
 
 
@@ -99,12 +100,67 @@ export function OpenShipmentTable() {
       )
     }
   }
+  const getColor = (status) => {
+    switch (status) {
+      case "Waiting":
+        return "bg-yellow-400";
+      case "Approved":
+        return "bg-green-500";
+      case "Denied":
+        return "bg-red-500";
+      default:
+        return "bg-yellow-400";
+    }
+  }
+  const handleStatusChange = async (status) => {
+    let token = getStorage('token')
+    try {
+      const body = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          orderId: id,
+          orderStatusId: status
+        }),
+      }
+      const response = await fetch(
+        `${baseURL()}/api/Shipment/change-order-status`,
+        body,
+      )
+      const data = await response.json()
+      if (data.success === true) {
+        populateTableData()
+        setShowModal(false)
+      } else if (data.success === false) {
+        setShowModal(false)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const handleModal = (orderId, status) => {
+    // only carrier can update the shipment status
+    console.log("Hit")
+    if (IsCarrier() && status === "Waiting") {
+      setId(orderId)
+      setShowModal(true)
+    }
+  }
   const reportReportList = (reportList) => {
     return (
       <>
         {reportList?.map((report) => (
           <tr key={report.id} class="hover:bg-blueGray-100">
-            <TableHeader Text={report.loadId} />
+            <th className="border-t-0 border-l-0 border-r-0  whitespace-nowrap p-4 text-left flex items-center">
+              <button class={getColor(report.shipmentStatus) + ' text-white font-semibold uppercase text-sm py-1 px-3 rounded shadow hover:shadow-md  focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'}
+                onClick={() => handleModal(report.id, report.shipmentStatus)}
+              >
+                {report.loadId}
+              </button>
+            </th>
             <TableData Text={report.purchaseOrderNumber} />
             <TableData Text={removeTime(report.pickUpDateTime)} />
             <TableData Text={report.pickUpCity} />
@@ -162,6 +218,7 @@ export function OpenShipmentTable() {
           </div>
         </div>
         <Table columns={columns} reportReportList={reportReportList(reportList)} />
+        <ShipmentUpdateModal showModal={showModal} setShowModal={setShowModal} orderId={id} handler={() => handleStatusChange()} />
       </div>
     </>
   )
