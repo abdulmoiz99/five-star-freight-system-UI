@@ -4,6 +4,7 @@ import Alert from '../Alerts/Alert'
 import { LoadingButton, NavigationButton, RoundedButton, SubmitButton } from '../_Global/_Button';
 import { FileInput, SelectMultiple } from '../_Global/_Input';
 import { FH6 } from '../_Global/_Heading';
+import axios from 'axios'
 
 function RFPCard() {
   const [carrier, setCarrier] = useState({
@@ -39,7 +40,44 @@ function RFPCard() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(file)
+    setProccesing(true)
+    setAlert({ ...alert, display: false });
+    try {
+      let token = getStorage('token')
+      let formData = new FormData()
+      formData.append('fromFile', file.name)
+      formData.append('file', file)
+      carrier.forEach((item) => {
+        formData.append('CarrierIds', item.value);
+      });
+      let url = `${baseURL()}/api/Shipment/create-bulk-order`
+      const resp = await axios.post(url, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (resp.data.success === true) {
+        setAlert({
+          ...alert,
+          display: true,
+          message: "RFP uploaded successfully",
+          success: true
+        });
+        // clearForm();
+      }
+      else if (resp.data.success === false) {
+        setAlert({
+          ...alert,
+          display: true,
+          message: resp.data.errors[0],
+          success: false
+        });
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+    setProccesing(false)
   }
 
   const renderAlert = () => {
@@ -54,8 +92,8 @@ function RFPCard() {
   const handleFileChange = (e) => {
     setFile(e.target.files[0])
   }
-  const handleSampleDileDownload = async (e) => {
-    console.log("Reached")
+
+  const handleSampleFileDownload = async (e) => {
     e.preventDefault();
     let token = getStorage('token')
     await fetch(
@@ -93,20 +131,13 @@ function RFPCard() {
             <br />
             {renderAlert()}
             <div className="flex flex-wrap">
-
               <SelectMultiple Label="Carriers" List={carrierList} Handler={handleMultiSelect} Value={carrier} />
               <FileInput file={file} onChange={handleFileChange} Description="XLSX or CSV files upto 10 MB" />
-              <RoundedButton Text="Download Sample File" Handler={handleSampleDileDownload} />
+              <RoundedButton Text="Download Sample File" Handler={handleSampleFileDownload} />
             </div>
-
             <div className="w-full lg:w-12 /12 px-4">
               <div className="relative w-full mb-3">
-                {!processing ?
-
-                  <SubmitButton Text="Upload" />
-                  :
-                  <LoadingButton Text=" Processing" />
-                }
+                {!processing ? <SubmitButton Text="Upload" /> : <LoadingButton Text=" Processing" />}
               </div>
             </div>
           </form>
