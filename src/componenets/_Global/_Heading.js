@@ -12,3 +12,10 @@ export function FH6({ Text }) { // Form Heading
         </h6>
     )
 }
+export function H3({ Text }) {
+    return (
+        <h3 className="font-bold text-lg text-blueGray-700">
+            {Text}
+        </h3>
+    )
+}

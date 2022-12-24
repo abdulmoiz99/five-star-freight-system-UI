@@ -11,6 +11,9 @@ export default function CarrierSideBar() {
         <SideBarButton To="/viewShipments" Text="Awarded" />
       </li>
       <li className="items-center">
+        <SideBarButton To="/AwaitingBids" Text=" Awaiting Bids" />
+      </li>
+      <li className="items-center">
         <SideBarButton To="/AssignShippers" Text="Shippers" />
       </li>
     </>

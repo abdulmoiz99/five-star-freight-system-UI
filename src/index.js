@@ -29,6 +29,7 @@ import { RFP } from './views/Shipment/RFP';
 import { Support } from './views/Support/Support';
 import { CreateTicket } from './views/Support/CreateTicket';
 import { AutoTender } from './views/Shipment/AutoTender';
+import { AwaitingBids } from './views/Bids/AwaitingBids';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -57,6 +58,8 @@ root.render(
       <Route path="/BidInfo" element={< BidInfo />}></Route>
       <Route path="/ShipperBids" element={< ShipperBids />}></Route>
       <Route path="/ShipperBids/ViewBids" element={< ViewBids />}></Route>
+
+      <Route path="/AwaitingBids" element={< AwaitingBids />}></Route>
 
       <Route path="/Carriers/RequestCarrier" element={< RequestCarrier />}></Route>
       <Route path="/AssignShippers" element={< AssignShippers />}></Route>
