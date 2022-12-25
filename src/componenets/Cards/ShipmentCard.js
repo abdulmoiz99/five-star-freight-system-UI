@@ -23,7 +23,8 @@ export class ShipmentCard extends React.Component {
       SelectedBiders: [],
       SelctedOptions: [],
       AddressSuggestion: [],
-      isEdit: false
+      isEdit: false,
+      isTemplate: false
     }
     this.state = {
       PickUpAddress: '',
@@ -54,6 +55,7 @@ export class ShipmentCard extends React.Component {
     this.setState({ GeneratingReport: false })
     this.populateCarriers()
     this.CheckEdit();
+    this.CheckTemplate();
     this.GetAddresses();
   }
   GetAddresses = async () => {
@@ -99,6 +101,48 @@ export class ShipmentCard extends React.Component {
     )
     const data = await response.json()
     this.setState({ Commodities: data.result })
+  }
+  CheckTemplate = async () => {
+    const templateId = new URLSearchParams(window.location.search).get('templateId');
+    console.log(templateId)
+    this.setState({ isTemplate: templateId ? true : false })
+    if (templateId) {
+      let token = getStorage('token')
+      const response = await fetch(
+        `${baseURL()}//api/Shipment/template-details?templateId=${templateId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      const data = await response.json()
+      this.setState({
+        PickUpAddress: data.result.pickupAddress,
+        PickUpState: data.result.pickupState,
+        PickUpCity: data.result.pickupCity,
+        PickUpZip: data.result.pickupZip,
+        // PickUpDateTime: data.result.pickupLocations[0].dateTime,
+        DeliveryAddress: data.result.deliveryAddress,
+        DeliveryState: data.result.deliveryState,
+        DeliveryCity: data.result.deliveryCity,
+        DeliveryZip: data.result.deliveryZip,
+        // DeliveryDateTime: data.result.deliveryLocations[0].dateTime,
+        PONumber: data.result.purchaseOrderNumber,
+        TypeOfTruck: data.result.truckType,
+        LengthOfTruck: data.result.truckLength,
+        Commodities: data.result.comodities,
+        Temperature: data.result.temperature,
+        QuantityOfPallets: data.result.palletCount,
+        QuantityOfTrucks: data.result.truckCount,
+        Price: data.result.price,
+        Carrier: data.result.carrierId,
+        Weight: data.result.weight,
+        ShippingNotes: data.result.shippingNotes,
+        DeliveryNotes: data.result.deliveryNotes,
+
+        isLoadQuoted: true
+
+      })
+    }
   }
   CheckEdit = async () => {
     const id = new URLSearchParams(window.location.search).get('id');
@@ -234,7 +278,9 @@ export class ShipmentCard extends React.Component {
       const data = await response.json()
       if (data.success === true) {
         this.setState({ displayAlert: true, AlertMessage: "Shipment created successfully.", success: true, })
-        this.clearForm();
+        if (!this.state.isTemplate) {
+          this.clearForm();
+        }
       } else if (data.success === false) {
         this.setState({ displayAlert: true, AlertMessage: data.errors[0], success: false, })
       }

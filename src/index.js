@@ -30,6 +30,7 @@ import { Support } from './views/Support/Support';
 import { CreateTicket } from './views/Support/CreateTicket';
 import { AutoTender } from './views/Shipment/AutoTender';
 import { AwaitingBids } from './views/Bids/AwaitingBids';
+import { CreateAutoTender } from './views/Shipment/CreateAutoTender';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -75,6 +76,8 @@ root.render(
       <Route path="/Support/CreateTicket" element={< CreateTicket />}></Route>
 
       <Route path="/AutoTender" element={< AutoTender />}></Route>
+      <Route path="/AutoTender/New" element={< CreateAutoTender />}></Route>
+
 
     </Routes>
   </BrowserRouter>,

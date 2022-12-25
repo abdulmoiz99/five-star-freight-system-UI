@@ -11,6 +11,9 @@ export default function ShipperSideBar() {
         <SideBarButton To="/ViewShipments" Text="Load Status" />
       </li>
       <li className="items-center">
+        <SideBarButton To="/AutoTender" Text="Auto Tender" />
+      </li>
+      <li className="items-center">
         <SideBarButton To="/FreightSpend" Text="Freight Spend" />
       </li>
       <li className="items-center">
