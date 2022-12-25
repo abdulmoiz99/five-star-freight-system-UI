@@ -22,6 +22,7 @@ export function OpenShipmentTable() {
     success: false
   })
   const [showModal, setShowModal] = React.useState(false);
+  const [showUpdateShipmentModal, setShowUpdateShipmentModal] = React.useState(false);
 
   const columns = [
     { name: "ORDER ID" },
@@ -217,7 +218,7 @@ export function OpenShipmentTable() {
           </div>
         </div>
         <Table columns={columns} reportReportList={reportReportList(reportList)} />
-        <ShipmentUpdateModal showModal={showModal} setShowModal={setShowModal} orderId={id} handler={handleStatusChange} />
+        <ShipmentUpdateModal showModal={showUpdateShipmentModal} setShowModal={setShowUpdateShipmentModal} orderId={id} handler={handleStatusChange} />
       </div>
     </>
   )
