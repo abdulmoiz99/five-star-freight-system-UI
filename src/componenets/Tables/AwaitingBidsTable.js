@@ -29,11 +29,9 @@ export default function AwaitingBidsTable() {
   }, []);
 
   const populateTableData = async () => {
-    console.log("Check" + ValidateCarrier())
     if (!ValidateCarrier()) {
       // Somewhere in your code, e.g. inside a handler:
       navigate("/login");
-      console.log("Navigation")
     }
     else {
       const response = await fetch(

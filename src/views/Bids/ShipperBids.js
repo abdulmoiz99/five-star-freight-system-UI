@@ -1,7 +1,6 @@
 import React from 'react'
 import Sidebar from '../../componenets/Sidebar/Sidebar'
 import FooterAdmin from '../../componenets/Footers/FooterAdmin'
-import { IsAdmin } from '../../shared/LoacalStorage'
 import HeaderBar from '../../componenets/Headers/HeaderBar'
 import { ShipperBidsTable } from '../../componenets/Tables/ShipperBidsTable'
 

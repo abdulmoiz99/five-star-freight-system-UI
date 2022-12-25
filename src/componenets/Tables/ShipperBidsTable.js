@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { baseURL, getStorage, getUserRole } from '../../shared/LoacalStorage'
+import { baseURL, getStorage, getUserRole, IsAdmin, IsCarrier } from '../../shared/LoacalStorage'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,8 @@ import { NoRecordCheck, TableData, TableHeader } from '../_Global/_Table'
 import Alert from '../Alerts/Alert'
 import Table from './_Table'
 import DeleteModal from '../_Global/_Modal'
+import ExportBidsModal from '../Modals/ExportBidsModal'
+import BulkOfferModal from '../Modals/BulkOfferModal'
 
 export function ShipperBidsTable() {
   const [reportList, setReportList] = useState([]);
@@ -18,7 +20,9 @@ export function ShipperBidsTable() {
     message: '',
     success: false
   })
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showBulkOfferModal, setShowBulkOfferModal] = useState(false);
 
   const columns = [
     { name: "PO NUMBER" },
@@ -155,10 +159,30 @@ export function ShipperBidsTable() {
               <h3 className="font-bold text-lg text-blueGray-700"  >
                 Bids
               </h3>
+
             </div>
+            {IsCarrier() &&
+              <>
+                <button
+                  className="bg-lightBlue-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  onClick={() => { setShowExportModal(true); }}
+                >
+                  Export Bids
+                </button>
+
+                <button
+                  className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  onClick={() => { setShowBulkOfferModal(true); }}
+                >
+                  BULK OFFER
+                </button>
+              </>
+            }
           </div>
         </div>
         <Table columns={columns} reportReportList={reportReportList(reportList)} />
+        <ExportBidsModal showModal={showExportModal} setShowModal={setShowExportModal} />
+        <BulkOfferModal showModal={showBulkOfferModal} setShowModal={setShowBulkOfferModal} />
       </div>
     </>
   )
