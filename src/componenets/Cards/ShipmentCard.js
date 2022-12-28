@@ -2,7 +2,7 @@ import React from 'react'
 import { baseURL, getStorage } from '../../shared/LoacalStorage'
 import Alert from '../Alerts/Alert'
 import Select from 'react-select'
-import { typesOfTrucks, lengthOfTrucks, states, cities } from '../../shared/DropDownCache'
+import { typesOfTrucks, lengthOfTrucks, states } from '../../shared/DropDownCache'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollar } from '@fortawesome/free-solid-svg-icons'
 import MultiSelect from '../_Global/MultiSelect'
@@ -92,24 +92,26 @@ export class ShipmentCard extends React.Component {
     })
   }
   RecallCommodity = async () => {
-    let token = getStorage('token')
-    const response = await fetch(
-      `${baseURL()}/api/Shipment/comodities`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    )
-    const data = await response.json()
-    this.setState({ Commodities: data.result })
+    const templateId = new URLSearchParams(window.location.search).get('templateId');
+    if (!templateId) {
+      let token = getStorage('token')
+      const response = await fetch(
+        `${baseURL()}/api/Shipment/comodities`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      const data = await response.json()
+      this.setState({ Commodities: data.result })
+    }
   }
   CheckTemplate = async () => {
     const templateId = new URLSearchParams(window.location.search).get('templateId');
-    console.log(templateId)
     this.setState({ isTemplate: templateId ? true : false })
     if (templateId) {
       let token = getStorage('token')
       const response = await fetch(
-        `${baseURL()}//api/Shipment/template-details?templateId=${templateId}`,
+        `${baseURL()}/api/Shipment/template-details?templateId=${templateId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -129,7 +131,7 @@ export class ShipmentCard extends React.Component {
         PONumber: data.result.purchaseOrderNumber,
         TypeOfTruck: data.result.truckType,
         LengthOfTruck: data.result.truckLength,
-        Commodities: data.result.comodities,
+        Commodities: data.result.commodities,
         Temperature: data.result.temperature,
         QuantityOfPallets: data.result.palletCount,
         QuantityOfTrucks: data.result.truckCount,
@@ -138,9 +140,7 @@ export class ShipmentCard extends React.Component {
         Weight: data.result.weight,
         ShippingNotes: data.result.shippingNotes,
         DeliveryNotes: data.result.deliveryNotes,
-
         isLoadQuoted: true
-
       })
     }
   }
@@ -239,6 +239,8 @@ export class ShipmentCard extends React.Component {
       ShippingNotes,
       DeliveryNotes,
     } = this.state
+    console.log(Carrier)
+    console.log(isLoadQuoted)
     const pickupLocations = [
       { address: PickUpAddress, state: PickUpState, city: PickUpCity, zip: PickUpZip, dateTime: PickUpDateTime ? PickUpDateTime : null },
     ];
@@ -549,6 +551,7 @@ export class ShipmentCard extends React.Component {
                   <div className="relative w-full mb-3">
                     <label className="inline-flex items-center cursor-pointer">
                       <input
+                        checked={this.state.isLoadQuoted}
                         id="customCheckLogin"
                         type="checkbox"
                         name='isLoadQuoted'
@@ -609,6 +612,7 @@ export class ShipmentCard extends React.Component {
                           })
                         }}
                       />
+
                     </div>
                   </div>
                 </div>
@@ -675,14 +679,13 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <Select
-                      options={cities}
-                      value={{ value: this.state.PickUpCity, label: this.state.PickUpCity }}
-                      onChange={(selectedOption) => {
-                        this.setState({
-                          PickUpCity: selectedOption.value,
-                        })
-                      }}
+                    <input
+                      required
+                      name="PickUpCity"
+                      value={this.state.PickUpCity}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </div>
@@ -789,14 +792,13 @@ export class ShipmentCard extends React.Component {
                         *
                       </span>
                     </label>
-                    <Select
-                      options={cities}
-                      value={{ value: this.state.DeliveryCity, label: this.state.DeliveryCity }}
-                      onChange={(selectedOption) => {
-                        this.setState({
-                          DeliveryCity: selectedOption.value,
-                        })
-                      }}
+                    <input
+                      required
+                      name="DeliveryCity"
+                      value={this.state.DeliveryCity}
+                      onChange={this.handleChange}
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </div>

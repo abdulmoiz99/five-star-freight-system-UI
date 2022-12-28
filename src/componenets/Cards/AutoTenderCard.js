@@ -12,8 +12,8 @@ function AutoTenderCard() {
   const [typeOfTruck, setTypeOfTruck] = useState("");
   const [lengthOfTruck, setLengthOfTruck] = useState("");
   const [commodities, setCommodities] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [quantityOfPallet, setQuantityOfPallet] = useState("");
+  const [temperature, setTemperature] = useState(null);
+  const [quantityOfPallet, setQuantityOfPallet] = useState(null);
   const [quantityOfTruck, setQuantityOfTruck] = useState("");
   const [weight, setWeight] = useState("");
   const [shippingNotes, setShippingNotes] = useState("");
@@ -21,8 +21,8 @@ function AutoTenderCard() {
   const [laneName, setLaneName] = useState("");
   const [price, setPrice] = useState("");
   const [carrier, setCarrier] = useState({
-    label: '',
-    value: '',
+    label: null,
+    value: null,
   })
   const [pickupAddress, setPickupAddress] = useState("");
   const [pickupCity, setPickupCity] = useState("");
@@ -50,8 +50,10 @@ function AutoTenderCard() {
     setTypeOfTruck("")
     setLengthOfTruck("")
     setCommodities("")
-    setTemperature("")
-    setQuantityOfPallet("")
+    setTemperature("0")
+    setTemperature(null)
+    setQuantityOfPallet("1")
+    setQuantityOfPallet(null)
     setQuantityOfTruck("")
     setWeight("")
     setShippingNotes("")
@@ -59,8 +61,8 @@ function AutoTenderCard() {
     setLaneName("")
     setPrice("")
     setCarrier({
-      label: '',
-      value: '',
+      label: null,
+      value: null,
     })
     setPickupAddress("")
     setPickupCity("")
@@ -161,7 +163,7 @@ function AutoTenderCard() {
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
               <FH6 Text="Create New Auto Tender" />
             </div>
-            <NavigationButton Text="View Templates" To="/AutoTender" />
+            <NavigationButton Text="View Auto Tenders" To="/AutoTender" />
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -185,7 +187,7 @@ function AutoTenderCard() {
             <H6 Text="Load Details" />
             <div className="flex flex-wrap">
               <Input Label="Lane Name" State={laneName} Setter={setLaneName} IsReq />
-              <Input Label="Price" State={price} Setter={setPrice} />
+              <Input Label="Price" State={price} Setter={setPrice} IsReq />
               <div className="w-full lg:w-4/12 px-4">
                 <div className="relative w-full mb-3">
                   <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -231,7 +233,10 @@ function AutoTenderCard() {
 }
 export default AutoTenderCard
 
-
+function checkIfNumber(event) {
+  const regex = new RegExp(/(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight)/);
+  return !event.key.match(regex) && event.preventDefault();
+}
 function Input({ Label, State, Setter, Type, IsReq, Size }) {
   //if undefined set the default value
   Size ??= "4/12"
@@ -252,6 +257,11 @@ function Input({ Label, State, Setter, Type, IsReq, Size }) {
           value={State}
           onChange={e => Setter(e.target.value)}
           type={Type}
+          onKeyDown={(event) => {
+            if (Type === "number") {
+              checkIfNumber(event)
+            }
+          }}
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
         />
       </div>

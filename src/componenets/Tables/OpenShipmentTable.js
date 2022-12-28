@@ -134,9 +134,9 @@ export function OpenShipmentTable() {
       const data = await response.json()
       if (data.success === true) {
         populateTableData()
-        setShowModal(false)
+        setShowUpdateShipmentModal(false)
       } else if (data.success === false) {
-        setShowModal(false)
+        setShowUpdateShipmentModal(false)
       }
     } catch (e) {
       console.log(e)
@@ -146,7 +146,7 @@ export function OpenShipmentTable() {
     // only carrier can update the shipment status
     if (IsCarrier() && status === "Waiting") {
       setId(orderId)
-      setShowModal(true)
+      setShowUpdateShipmentModal(true)
     }
   }
   const reportReportList = (reportList) => {
