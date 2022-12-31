@@ -336,7 +336,7 @@ export class ShipmentCard extends React.Component {
                   {this.state.isEdit ? "PO# " + this.state.PONumber : "Create New Order"}
                 </h6>
               </div>
-              <NavigationButton To="/Shipment/RFP" Text="Upload RFP" />
+              <NavigationButton To="/Shipment/RFP" Text="Upload Multiple" />
               <NavigationButton To="/viewShipments" Text="View Shipments" />
             </div>
           </div>
