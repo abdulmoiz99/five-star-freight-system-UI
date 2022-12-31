@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function ShipmentUpdateModal(props) {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+        });
+    }, [props.showModal])
     return (
         <>
             {props.showModal ? (
@@ -9,9 +16,8 @@ export default function ShipmentUpdateModal(props) {
                         className="justify-center items-center flex "
                         style={{
                             position: 'absolute',
-                            top: '50%',
+                            top: '3%',
                             right: '50%',
-                            bottom: '50%',
                             left: '50%',
                         }}
                     >
