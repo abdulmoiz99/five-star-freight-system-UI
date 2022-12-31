@@ -1,10 +1,13 @@
 /*eslint-disable*/
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { getUserRole } from '../../shared/LoacalStorage'
-import { NavigationButton, SideBarButton } from '../_Global/_Button'
+import { SideBarButton } from '../_Global/_Button'
 import AdminSideBar from './AdminSideBar'
 import CarrierSideBar from './CarrierSideBar'
 import ShipperSideBar from './ShipperSideBar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell, faCircleQuestion, faGear, faUser } from '@fortawesome/free-solid-svg-icons'
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState('hidden')
@@ -22,61 +25,57 @@ export default function Sidebar() {
           </div>
         </div>
       </nav>
-      <nav className="fixed top-0 bottom-0 md:left-0 md:block md:fixed
-       md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-gray-100 flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6 shadow-xl">
-        <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-          <div
-            className={
-              'md:flex md:flex-col md:items-stretch md:opacity-100 md:relative absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded ' +
-              collapseShow
-            }
-          >
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none mt-20">
-              {role == "ADMIN" ? (
-                <>
-                  <AdminSideBar />
-                </>
-              ) : null
-              }
-              {role == "SHIPPER" ? (
-                <>
-                  <ShipperSideBar />
-                </>
-              ) : null
-              }
-              {role == "CARRIER" ? (
-                <>
-                  <CarrierSideBar />
-                </>
-              ) : null
-              }
-              <li className="items-center">
-                <SideBarButton To="/Claims" Text="Claims" />
+      <nav class="fixed top-0 left-0 w-64 h-full shadow-xl" aria-label="Sidebar">
+        <div class="overflow-y-auto py-4 pt-16 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+          <div class="text-center text-gray-500 dark:text-gray-400">
+            <FontAwesomeIcon class="mx-auto mb-4 w-20 h-20 rounded-full" fill="" aria-hidden="true" icon={faUser} />
+            <h3 class="text-xl font-bold tracking-tight text-gray-500 dark:text-white">
+              Don Jamerson
+            </h3>
+            <Link
+              to="/login"
+              className="inline-flex items-center justify-center w-full py-2 px-5 my-5 text-sm font-medium text-gray-700 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            >
+              <svg aria-hidden="true" class="mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+              Logout
+            </Link>
+            <ul class="flex justify-center mb-4 space-x-1">
+
+              <li>
+                <Link
+                  to="/Settings"
+                  className="inline-flex text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2"
+                >
+                  <FontAwesomeIcon class="w-5 h-5" fill="currentColor" aria-hidden="true" icon={faGear} />
+                </Link>
               </li>
-              <li className="items-center">
-                <SideBarButton To="/Support" Text="Support" />
+              <li>
+                <Link
+                  to="#"
+                  className="inline-flex text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2"
+                >
+                  <FontAwesomeIcon class="w-5 h-5" fill="currentColor" aria-hidden="true" icon={faBell} />
+                </Link>
               </li>
-              <li className="items-center">
-                <SideBarButton To="/Settings" Text="Settings" />
-              </li>
-              <li className="items-center">
-                <SideBarButton To="/login" Text="Logout" />
+              <li>
+                <Link
+                  to="/Support"
+                  className="inline-flex text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2"
+                >
+                  <FontAwesomeIcon class="w-5 h-5" fill="currentColor" aria-hidden="true" icon={faCircleQuestion} />
+                </Link>
               </li>
             </ul>
-            <div id="dropdown-cta" class="p-4 mt-6 bg-blue-50 rounded-lg dark:bg-blue-900" role="alert">
-              <div class="flex items-center mb-3">
-                <span class="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-orange-200 dark:text-orange-900">Beta</span>
-                <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 inline-flex h-6 w-6 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800" data-collapse-toggle="dropdown-cta" aria-label="Close">
-                  <span class="sr-only">Close</span>
-                  <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </button>
-              </div>
-              <p class="mb-3 text-sm text-blue-900 dark:text-blue-400">
-                Preview the new FIVE STAR FREIGHT SYSTEMS user interface! Since the interface is in beta you might find some bugs.
-              </p>
-            </div>
-            <hr className="my-4 md:min-w-full" />
           </div>
+          <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            {role == "ADMIN" && <AdminSideBar />}
+            {role == "SHIPPER" && <ShipperSideBar />}
+            {role == "CARRIER" && <CarrierSideBar />}
+
+            <li className="items-center">
+              <SideBarButton To="/Claims" Text="Claims" />
+            </li>
+          </ul>
         </div>
       </nav>
     </>
