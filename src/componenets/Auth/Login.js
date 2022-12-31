@@ -36,6 +36,7 @@ export function Login() {
     // when response is sucess
     if (data.success === true) {
       setStorage('token', data.result.token.code) // save value in local storage
+      setStorage('username', data.result.user.name) // save value in local storage
       window.location.href = getDefaultRoute()
     } else if (data.success === false) {
       setDisplayAlert(true)

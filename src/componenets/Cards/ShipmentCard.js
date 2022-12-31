@@ -137,6 +137,7 @@ export class ShipmentCard extends React.Component {
         QuantityOfTrucks: data.result.truckCount,
         Price: data.result.price,
         Carrier: data.result.carrierId,
+        CarrierLabel: data.result.carrierName,
         Weight: data.result.weight,
         ShippingNotes: data.result.shippingNotes,
         DeliveryNotes: data.result.deliveryNotes,

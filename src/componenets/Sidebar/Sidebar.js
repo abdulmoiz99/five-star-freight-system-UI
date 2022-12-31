@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getUserRole } from '../../shared/LoacalStorage'
+import { getStorage, getUserRole } from '../../shared/LoacalStorage'
 import { SideBarButton } from '../_Global/_Button'
 import AdminSideBar from './AdminSideBar'
 import CarrierSideBar from './CarrierSideBar'
@@ -30,7 +30,7 @@ export default function Sidebar() {
           <div class="text-center text-gray-500 dark:text-gray-400">
             <FontAwesomeIcon class="mx-auto mb-4 w-20 h-20 rounded-full" fill="" aria-hidden="true" icon={faUser} />
             <h3 class="text-xl font-bold tracking-tight text-gray-500 dark:text-white">
-              Don Jamerson
+              {getStorage('username')}
             </h3>
             <Link
               to="/login"
